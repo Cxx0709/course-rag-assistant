@@ -1,0 +1,10 @@
+{"question":"什么是机器学习？","gold_pages":["d2l-zh-pytorch.pdf#p.56"],"answer_points":["利用经验或数据提高任务性能","统计学","数据挖掘","优化"]}
+{"question":"深度学习和传统机器学习有什么区别？","gold_pages":["d2l-zh-pytorch.pdf#p.55","d2l-zh-pytorch.pdf#p.56"],"answer_points":["深度学习是机器学习的子集","多层次表示学习","减少或取代特征工程"]}
+{"question":"机器学习中的关键组件有哪些？","gold_pages":["d2l-zh-pytorch.pdf#p.37"],"answer_points":["数据","模型","目标函数","优化算法"]}
+{"question":"什么是线性代数中的张量？","gold_pages":["d2l-zh-pytorch.pdf#p.80"],"answer_points":["标量、向量、矩阵和张量","张量具有任意数量的轴"]}
+{"question":"什么是自动微分？","gold_pages":["d2l-zh-pytorch.pdf#p.87"],"answer_points":["求导是深度学习优化的关键步骤","深度学习框架自动计算导数"]}
+{"question":"softmax回归主要用于解决什么问题？","gold_pages":["d2l-zh-pytorch.pdf#p.133"],"answer_points":["多类分类","Fashion-MNIST","输出类别概率"]}
+{"question":"多层感知机的核心结构是什么？","gold_pages":["d2l-zh-pytorch.pdf#p.153"],"answer_points":["隐藏层","非线性激活函数","输入层和输出层"]}
+{"question":"卷积神经网络为什么适合处理图像？","gold_pages":["d2l-zh-pytorch.pdf#p.235"],"answer_points":["二维像素网格","局部特征","相邻像素"]}
+{"question":"循环神经网络如何处理序列数据？","gold_pages":["d2l-zh-pytorch.pdf#p.353"],"answer_points":["序列数据","循环神经网络架构","语言模型"]}
+{"question":"注意力机制的作用是什么？","gold_pages":["d2l-zh-pytorch.pdf#p.404"],"answer_points":["查询和键交互","聚合值","生成最终输出"]}

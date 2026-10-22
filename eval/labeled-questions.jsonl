@@ -1,0 +1,3 @@
+{"question":"朴素贝叶斯为什么需要类条件独立假设？","gold_pages":["sample-notes.md#4.4 朴素贝叶斯分类"],"answer_points":["贝叶斯定理","类条件独立","各个特征相互条件独立"]}
+{"question":"条件独立和独立有什么区别？","gold_pages":["sample-notes.md#独立与条件独立"],"answer_points":["独立","条件独立是更弱的假设","A、B 本身未必独立"]}
+{"question":"贝叶斯定理的公式是什么？","gold_pages":["sample-notes.md#贝叶斯定理"],"answer_points":["后验概率","先验概率","似然"]}

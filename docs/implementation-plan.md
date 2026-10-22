@@ -70,7 +70,7 @@ quiz 模式：按语料出题 → 判分 → 错题映射概念缺口 → 复习
 | 后端 | Python + FastAPI | 生态成熟，作品集主流 |
 | 文档解析 | PyMuPDF（PDF）、python-pptx | 页码保留能力强 |
 | Embedding | BGE-M3 | 中文检索强，本地 CPU 可跑 |
-| 向量库 | PostgreSQL + pgvector（或 Qdrant） | 够用即可，先 pgvector |
+| 向量库 | 本地 numpy 文件（`data/index/`） | 单机单课万级 chunk，避免 PostgreSQL 外部依赖 |
 | 混合检索 | BM25 + 向量，RRF 融合 | 术语原文与同义转述都要抓 |
 | 重排序 | BGE Reranker（m3/v2-m3） | 中文重排效果好 |
 | 生成模型 | OpenAI 兼容 API，可替换 | 先保证效果；BGE 可本地跑兼顾隐私 |
@@ -86,7 +86,7 @@ quiz 模式：按语料出题 → 判分 → 错题映射概念缺口 → 复习
 ## 8. 开发里程碑（6–8 周）
 
 - **第 1 周**：ingest 落地。三种格式解析器 + 按段切分 + 页码/章节元数据；示例语料入库；CLI 可打印 chunk。
-- **第 2 周**：检索落地。BGE-M3 embedding + pgvector 建库；BM25 索引；RRF 融合；标注问题集完成 30 道。
+- **第 2 周**：检索落地。BM25 先跑通；向量检索先支持兼容 API，本地 BGE-M3 作为可选后端；本地 numpy 建索引；RRF 融合；标注问题集完成 30 道。
 - **第 3 周**：重排 + 约束生成。BGE Reranker 接入；答案生成 prompt（含引用格式）；引用校验器 v1。
 - **第 4 周**：评测体系。标注集补到 60–100 道 + 不可回答集；evaluate.py 跑通四项指标；第一份消融对比报告。
 - **第 5 周**：课程差异化（一）。精确引用 UI/API + 原文预览；概念依赖图 v1（先修关联）。

@@ -28,8 +28,8 @@ wrong answers back to knowledge gaps.
 course materials (PDF / PPTX / MD, page numbers preserved)
         │ ingest.py: extract → clean → page-preserving chunk
         ▼
-  chunk store (id, doc, page, section, concept tags)
-        │ retrieval.py: BM25 + dense (BGE-M3) → BGE reranker
+  local index (BM25 + optional BGE-M3 vectors, stored under data/index/)
+        │ retrieval.py: BM25 → dense (BGE-M3) → reranker
         ▼
   answer.py: constrained generation — every claim cites [doc p.N]
         │ evaluate.py: recall@k / MRR / citation precision / abstention
@@ -39,23 +39,42 @@ course materials (PDF / PPTX / MD, page numbers preserved)
 
 ## Status
 
-Project scaffold + implementation plan. See
+Ingestion, local BM25/dense retrieval, deterministic citation checking, and
+retrieval evaluation are implemented. See
 [`docs/implementation-plan.md`](docs/implementation-plan.md) for the full
 6–8 week build plan, data design, and acceptance criteria.
 
-## Quick start (planned)
+## Quick start
 
 ```bash
-pip install -e .
-python -m course_rag_assistant.ingest  data/samples/
-python -m course_rag_assistant.answer  "朴素贝叶斯为什么需要条件独立假设？"
-python -m course_rag_assistant.evaluate eval/labeled-questions.jsonl
+uv sync --extra dev
+course-rag ingest data/samples/
+course-rag search "朴素贝叶斯 条件独立" --data data/samples
+course-rag answer "朴素贝叶斯为什么需要条件独立假设？" --data data/samples
+course-rag evaluate eval/labeled-questions.jsonl --data data/samples
+course-rag evaluate eval/unanswerable-questions.jsonl --data data/samples --unanswerable
+python scripts/batch_answer.py eval/labeled-questions.jsonl --output eval/answers-bm25.jsonl
+python scripts/score_answers.py eval/labeled-questions.jsonl eval/answers-bm25.jsonl
+```
+
+`python -m course_rag_assistant ...` provides the same unified interface. To
+enable hosted generation, set `COURSE_RAG_LLM_BASE_URL`,
+`COURSE_RAG_LLM_API_KEY`, and `COURSE_RAG_LLM_MODEL`. Dense retrieval and BGE
+reranking are enabled automatically when their corresponding environment
+variables and persisted index are present.
+
+For a local Ollama embedding model, start Ollama and set the model name before
+building the index:
+
+```powershell
+$env:COURSE_RAG_OLLAMA_MODEL="nomic-embed-text"
+python scripts/build_dense_index.py --data data/raw/datamining-notes
 ```
 
 ## Tech stack
 
 Python, FastAPI · PyMuPDF ingestion · BGE-M3 embeddings · BM25 + dense hybrid
-retrieval · BGE reranker · pgvector or Qdrant · OpenAI-compatible LLM API
+retrieval · BGE reranker · local numpy indexes · OpenAI-compatible LLM API
 (pluggable, local option supported)
 
 ## License

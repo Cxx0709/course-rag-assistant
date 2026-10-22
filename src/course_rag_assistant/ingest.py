@@ -6,6 +6,7 @@ so extractors must never drop them.
 """
 from __future__ import annotations
 
+import re
 from dataclasses import dataclass, field
 from pathlib import Path
 
@@ -25,7 +26,41 @@ def extract_pdf(path: Path) -> list[Chunk]:
     TODO (week 1): implement with PyMuPDF; merge over-split lines, keep
     page boundaries, skip headers/footers, detect headings for `section`.
     """
-    raise NotImplementedError
+    try:
+        import fitz
+    except ImportError as exc:  # pragma: no cover - depends on installation
+        raise RuntimeError("PDF ingestion requires the pymupdf package") from exc
+
+    chunks: list[Chunk] = []
+    with fitz.open(path) as document:
+        for page_number, page in enumerate(document, start=1):
+            blocks = page.get_text("blocks")
+            page_height = page.rect.height
+            section = ""
+            pending: list[str] = []
+
+            for x0, y0, x1, y1, text, *_ in blocks:
+                text = " ".join(text.split())
+                if not text or (y1 < page_height * 0.06) or (y0 > page_height * 0.94):
+                    continue
+                if _looks_like_heading(text):
+                    _flush_pdf_pending(chunks, pending, path.name, page_number, section)
+                    section = text
+                    continue
+                # Group adjacent blocks up to a bounded size. This keeps a
+                # paragraph and its formula together without making the whole
+                # page a single retrieval unit.
+                if pending and sum(len(item) for item in pending) + len(text) > 900:
+                    _flush_pdf_pending(chunks, pending, path.name, page_number, section)
+                pending.append(text)
+            _flush_pdf_pending(chunks, pending, path.name, page_number, section)
+    return chunks
+
+
+def _flush_pdf_pending(chunks: list[Chunk], pending: list[str], doc: str, page: int, section: str) -> None:
+    if pending:
+        chunks.append(Chunk("\n".join(pending), doc, page, section))
+        pending.clear()
 
 
 def extract_pptx(path: Path) -> list[Chunk]:
@@ -33,7 +68,17 @@ def extract_pptx(path: Path) -> list[Chunk]:
 
     TODO (week 1): implement with python-pptx; keep speaker notes if present.
     """
-    raise NotImplementedError
+    try:
+        from pptx import Presentation
+    except ImportError as exc:  # pragma: no cover - optional dependency
+        raise RuntimeError("PPTX ingestion requires python-pptx; install it to read slides") from exc
+
+    chunks: list[Chunk] = []
+    for slide_number, slide in enumerate(Presentation(path).slides, start=1):
+        texts = [shape.text.strip() for shape in slide.shapes if hasattr(shape, "text") and shape.text.strip()]
+        if texts:
+            chunks.append(Chunk("\n".join(texts), path.name, slide_number))
+    return chunks
 
 
 def extract_markdown(path: Path) -> list[Chunk]:
@@ -41,7 +86,45 @@ def extract_markdown(path: Path) -> list[Chunk]:
 
     TODO (week 1): implement; page numbers are N/A, use section anchors.
     """
-    raise NotImplementedError
+    # Markdown has no physical pages.  Page zero is an explicit sentinel; callers
+    # should cite the section anchor instead of rendering it as a PDF page.
+    lines = path.read_text(encoding="utf-8-sig").splitlines()
+    chunks: list[Chunk] = []
+    headings: list[str] = []
+    buffer: list[str] = []
+    in_fence = False
+
+    def flush() -> None:
+        text = "\n".join(buffer).strip()
+        if text:
+            chunks.append(Chunk(text, path.name, 0, " / ".join(headings)))
+        buffer.clear()
+
+    for line in lines:
+        fence = re.match(r"^\s*(```+|~~~+)", line)
+        if fence:
+            in_fence = not in_fence
+            buffer.append(line.rstrip())
+            continue
+        heading = re.match(r"^\s{0,3}(#{1,6})\s+(.+?)\s*#*\s*$", line)
+        if heading and not in_fence:
+            flush()
+            level, title = len(heading.group(1)), heading.group(2).strip()
+            headings[:] = headings[: level - 1]
+            headings.append(title)
+            continue
+        if not line.strip() and not in_fence:
+            flush()
+        elif line.strip() or buffer:
+            buffer.append(line.rstrip())
+    flush()
+    return chunks
+
+
+def _looks_like_heading(text: str) -> bool:
+    if len(text) > 80 or any(mark in text for mark in "，,；;"):
+        return False
+    return text.endswith(":") or bool(re.match(r"^(?:\d+(?:\.\d+)*\s+)?[^。！？.!?]{2,50}$", text))
 
 
 def ingest_dir(root: Path) -> list[Chunk]:
@@ -61,3 +144,8 @@ if __name__ == "__main__":
 
     chunks = ingest_dir(Path(sys.argv[1]) if len(sys.argv) > 1 else Path("data/samples"))
     print(f"ingested {len(chunks)} chunks")
+    for index, chunk in enumerate(chunks, start=1):
+        location = f"section={chunk.section or '-'}"
+        if chunk.page:
+            location = f"page={chunk.page} {location}"
+        print(f"[{index}] {chunk.doc} {location}\n{chunk.text}\n")

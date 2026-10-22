@@ -1,0 +1,1354 @@
+{
+  "created_at": "2026-10-22T10:21:39.276882+00:00",
+  "labels": "eval\\real-labeled-questions.jsonl",
+  "labels_sha256": "65a54edcaf3887f1f767cdfc069aa004de845781b473c61c72a2988dc2806202",
+  "index_sha256": "a555e852fd0dbdee0d7e348646f043893067323d1a32520a45856cbba941a86c",
+  "chunks": 3760,
+  "dimensions": 1024,
+  "model": "bge-m3:latest",
+  "notes": [
+    "Exploratory 10-question labels; not an independently reviewed benchmark.",
+    "Gold keys use PDF physical page numbers. MRR is truncated at k=8.",
+    "Retrieval metrics do not measure answer correctness or citation entailment."
+  ],
+  "results": {
+    "bm25": {
+      "questions": 10,
+      "recall_at_k": 0.9,
+      "mrr": 0.6166666666666667,
+      "k": 8,
+      "details": [
+        {
+          "question": "什么是机器学习？",
+          "gold_pages": [
+            "d2l-zh-pytorch.pdf#p.56"
+          ],
+          "recall_at_k": 0.0,
+          "reciprocal_rank": 0.0,
+          "hits": [
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 40,
+              "section": "1.3 各种机器学习问题",
+              "score": 26.173815837624275,
+              "stage": "bm25"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 37,
+              "section": "1.2 机器学习中的关键组件",
+              "score": 19.57775180853605,
+              "stage": "bm25"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 36,
+              "section": "1.1 日常生活中的机器学习",
+              "score": 15.700426534781204,
+              "stage": "bm25"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 19,
+              "section": "前言",
+              "score": 15.425921598879961,
+              "stage": "bm25"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 47,
+              "section": "1.3.3 与环境互动",
+              "score": 14.7248447899718,
+              "stage": "bm25"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 37,
+              "section": "包含如下步骤：",
+              "score": 14.44289156388962,
+              "stage": "bm25"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 195,
+              "section": "4.9.4 学习问题的分类法",
+              "score": 14.400691808893171,
+              "stage": "bm25"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 36,
+              "section": "1.1 日常生活中的机器学习",
+              "score": 13.487863332591317,
+              "stage": "bm25"
+            }
+          ]
+        },
+        {
+          "question": "深度学习和传统机器学习有什么区别？",
+          "gold_pages": [
+            "d2l-zh-pytorch.pdf#p.55",
+            "d2l-zh-pytorch.pdf#p.56"
+          ],
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 1.0,
+          "hits": [
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 56,
+              "section": "小结",
+              "score": 29.47293127880524,
+              "stage": "bm25"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 55,
+              "section": "1.7 特点",
+              "score": 24.521195317984088,
+              "stage": "bm25"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 40,
+              "section": "1.3 各种机器学习问题",
+              "score": 24.22954442876263,
+              "stage": "bm25"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 39,
+              "section": "1.2.2 模型",
+              "score": 23.888715411811425,
+              "stage": "bm25"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 445,
+              "section": "11.1 优化和深度学习",
+              "score": 23.449666768383217,
+              "stage": "bm25"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 266,
+              "section": "7.1 深度卷积神经网络（AlexNet）",
+              "score": 23.357295243422698,
+              "stage": "bm25"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 28,
+              "section": "安装深度学习框架和d2l软件包",
+              "score": 23.299533800722607,
+              "stage": "bm25"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 37,
+              "section": "1.2 机器学习中的关键组件",
+              "score": 23.11994435885355,
+              "stage": "bm25"
+            }
+          ]
+        },
+        {
+          "question": "机器学习中的关键组件有哪些？",
+          "gold_pages": [
+            "d2l-zh-pytorch.pdf#p.37"
+          ],
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 1.0,
+          "hits": [
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 37,
+              "section": "1.2 机器学习中的关键组件",
+              "score": 65.1317228535153,
+              "stage": "bm25"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 39,
+              "section": "1.2.4 优化算法",
+              "score": 27.951217858420986,
+              "stage": "bm25"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 537,
+              "section": "12.4.4 CPU",
+              "score": 23.56448464141136,
+              "stage": "bm25"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 40,
+              "section": "1.3 各种机器学习问题",
+              "score": 22.51566670554215,
+              "stage": "bm25"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 112,
+              "section": "小结",
+              "score": 20.47023853707241,
+              "stage": "bm25"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 507,
+              "section": "11.10.1 算法",
+              "score": 18.827445824941424,
+              "stage": "bm25"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 132,
+              "section": "小结",
+              "score": 17.25105209667314,
+              "stage": "bm25"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 36,
+              "section": "1.1 日常生活中的机器学习",
+              "score": 16.906033189397995,
+              "stage": "bm25"
+            }
+          ]
+        },
+        {
+          "question": "什么是线性代数中的张量？",
+          "gold_pages": [
+            "d2l-zh-pytorch.pdf#p.80"
+          ],
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 0.5,
+          "hits": [
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 68,
+              "section": "2.3 线性代数",
+              "score": 31.525926894401607,
+              "stage": "bm25"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 80,
+              "section": "2.3.11 关于线性代数的更多信息",
+              "score": 27.21998122693324,
+              "stage": "bm25"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 80,
+              "section": "小结",
+              "score": 24.867934876387466,
+              "stage": "bm25"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 69,
+              "section": "tensor(3)",
+              "score": 21.792012402645188,
+              "stage": "bm25"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 73,
+              "section": "(continues on next page)",
+              "score": 21.41492434590134,
+              "stage": "bm25"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 75,
+              "section": "(continues on next page)",
+              "score": 21.41492434590134,
+              "stage": "bm25"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 78,
+              "section": "2.3.10 范数",
+              "score": 20.882129701373138,
+              "stage": "bm25"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 3,
+              "section": "2 预备知识 39",
+              "score": 20.40588889053827,
+              "stage": "bm25"
+            }
+          ]
+        },
+        {
+          "question": "什么是自动微分？",
+          "gold_pages": [
+            "d2l-zh-pytorch.pdf#p.87"
+          ],
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 1.0,
+          "hits": [
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 87,
+              "section": "2.5 自动微分",
+              "score": 25.779345722758933,
+              "stage": "bm25"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 89,
+              "section": "(continues on next page)",
+              "score": 23.7008003447554,
+              "stage": "bm25"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 4,
+              "section": "",
+              "score": 14.840951903527728,
+              "stage": "bm25"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 180,
+              "section": "4.7 前向传播、反向传播和计算图",
+              "score": 14.45819130822024,
+              "stage": "bm25"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 90,
+              "section": "2.5.4 Python控制流的梯度计算",
+              "score": 14.150962108178907,
+              "stage": "bm25"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 118,
+              "section": "小结",
+              "score": 14.078236617361119,
+              "stage": "bm25"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 119,
+              "section": "3.3 线性回归的简洁实现",
+              "score": 11.26692158222529,
+              "stage": "bm25"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 118,
+              "section": "练习",
+              "score": 10.237481081411893,
+              "stage": "bm25"
+            }
+          ]
+        },
+        {
+          "question": "softmax回归主要用于解决什么问题？",
+          "gold_pages": [
+            "d2l-zh-pytorch.pdf#p.133"
+          ],
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 0.5,
+          "hits": [
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 141,
+              "section": "练习",
+              "score": 22.815395323060827,
+              "stage": "bm25"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 133,
+              "section": "3.6 softmax回归的从零开始实现",
+              "score": 15.379742472528775,
+              "stage": "bm25"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 128,
+              "section": "小结",
+              "score": 15.152257828935682,
+              "stage": "bm25"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 123,
+              "section": "3.4 softmax回归",
+              "score": 15.102210915693735,
+              "stage": "bm25"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 141,
+              "section": "3.7 softmax回归的简洁实现",
+              "score": 13.865434379956413,
+              "stage": "bm25"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 128,
+              "section": "练习",
+              "score": 13.598788710224738,
+              "stage": "bm25"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 125,
+              "section": "ˆyj = argmax",
+              "score": 12.74291133327498,
+              "stage": "bm25"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 405,
+              "section": "10.2.2 平均汇聚",
+              "score": 12.15069346110765,
+              "stage": "bm25"
+            }
+          ]
+        },
+        {
+          "question": "多层感知机的核心结构是什么？",
+          "gold_pages": [
+            "d2l-zh-pytorch.pdf#p.153"
+          ],
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 0.3333333333333333,
+          "hits": [
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 156,
+              "section": "4.3 多层感知机的简洁实现",
+              "score": 39.14392718512077,
+              "stage": "bm25"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 5,
+              "section": "4 多层感知机 127",
+              "score": 36.83257528158893,
+              "stage": "bm25"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 153,
+              "section": "4.2 多层感知机的从零开始实现",
+              "score": 35.83549023303674,
+              "stage": "bm25"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 5,
+              "section": "4 多层感知机 127",
+              "score": 34.920547509792634,
+              "stage": "bm25"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 157,
+              "section": "小结",
+              "score": 31.95634669823794,
+              "stage": "bm25"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 533,
+              "section": "",
+              "score": 26.417831428356173,
+              "stage": "bm25"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 745,
+              "section": "# 将两个求和结果的连结送到多层感知机中",
+              "score": 25.873611670078283,
+              "stage": "bm25"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 237,
+              "section": "6.1.2 多层感知机的限制",
+              "score": 24.935754117853538,
+              "stage": "bm25"
+            }
+          ]
+        },
+        {
+          "question": "卷积神经网络为什么适合处理图像？",
+          "gold_pages": [
+            "d2l-zh-pytorch.pdf#p.235"
+          ],
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 0.5,
+          "hits": [
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 730,
+              "section": "15.3 情感分析：使用卷积神经网络",
+              "score": 34.92285833727298,
+              "stage": "bm25"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 235,
+              "section": "卷积神经网络",
+              "score": 32.9618447641749,
+              "stage": "bm25"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 265,
+              "section": "现代卷积神经网络",
+              "score": 29.27024397813372,
+              "stage": "bm25"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 258,
+              "section": "6.6 卷积神经网络（LeNet）",
+              "score": 29.00158882736749,
+              "stage": "bm25"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 240,
+              "section": "6.2 图像卷积",
+              "score": 28.70985857053232,
+              "stage": "bm25"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 8,
+              "section": "7 现代卷积神经网络 247",
+              "score": 27.86054278755489,
+              "stage": "bm25"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 7,
+              "section": "6 卷积神经网络 217",
+              "score": 27.434436173903585,
+              "stage": "bm25"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 427,
+              "section": "10.6.2 比较卷积神经网络、循环神经网络和自注意力",
+              "score": 27.05629622895168,
+              "stage": "bm25"
+            }
+          ]
+        },
+        {
+          "question": "循环神经网络如何处理序列数据？",
+          "gold_pages": [
+            "d2l-zh-pytorch.pdf#p.353"
+          ],
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 0.3333333333333333,
+          "hits": [
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 308,
+              "section": "8.1.1 统计工具",
+              "score": 40.84567312236129,
+              "stage": "bm25"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 9,
+              "section": "8 循环神经网络 289",
+              "score": 39.38867452271927,
+              "stage": "bm25"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 353,
+              "section": "现代循环神经网络",
+              "score": 38.4103193647797,
+              "stage": "bm25"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 307,
+              "section": "循环神经网络",
+              "score": 32.866681854849375,
+              "stage": "bm25"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 9,
+              "section": "8 循环神经网络 289",
+              "score": 31.047089225265843,
+              "stage": "bm25"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 427,
+              "section": "10.6.2 比较卷积神经网络、循环神经网络和自注意力",
+              "score": 30.923801919831536,
+              "stage": "bm25"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 9,
+              "section": "8 循环神经网络 289",
+              "score": 30.173865556593384,
+              "stage": "bm25"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 387,
+              "section": "\"\"\"用于序列到序列学习的循环神经网络解码器\"\"\"",
+              "score": 29.90635453011892,
+              "stage": "bm25"
+            }
+          ]
+        },
+        {
+          "question": "注意力机制的作用是什么？",
+          "gold_pages": [
+            "d2l-zh-pytorch.pdf#p.404"
+          ],
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 1.0,
+          "hits": [
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 404,
+              "section": "10.2 注意力汇聚：Nadaraya-Watson 核回归",
+              "score": 30.924269189803372,
+              "stage": "bm25"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 10,
+              "section": "10 注意力机制 381",
+              "score": 30.32088252941498,
+              "stage": "bm25"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 418,
+              "section": "\"\"\"带有注意力机制解码器的基本接口\"\"\"",
+              "score": 26.880098970687186,
+              "stage": "bm25"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 10,
+              "section": "10 注意力机制 381",
+              "score": 25.870775943719178,
+              "stage": "bm25"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 399,
+              "section": "注意力机制",
+              "score": 25.566293949794336,
+              "stage": "bm25"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 401,
+              "section": "10.1.2 查询、键和值",
+              "score": 25.16271653472786,
+              "stage": "bm25"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 444,
+              "section": "",
+              "score": 24.06131516690956,
+              "stage": "bm25"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 420,
+              "section": "10.4.3 训练",
+              "score": 24.005980845916127,
+              "stage": "bm25"
+            }
+          ]
+        }
+      ]
+    },
+    "bm25+dense": {
+      "questions": 10,
+      "recall_at_k": 0.9,
+      "mrr": 0.6666666666666667,
+      "k": 8,
+      "details": [
+        {
+          "question": "什么是机器学习？",
+          "gold_pages": [
+            "d2l-zh-pytorch.pdf#p.56"
+          ],
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 0.5,
+          "hits": [
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 36,
+              "section": "1.1 日常生活中的机器学习",
+              "score": 0.03149801587301587,
+              "stage": "fused"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 56,
+              "section": "小结",
+              "score": 0.0304147465437788,
+              "stage": "fused"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 19,
+              "section": "前言",
+              "score": 0.030330882352941176,
+              "stage": "fused"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 37,
+              "section": "1.2 机器学习中的关键组件",
+              "score": 0.03021353930031804,
+              "stage": "fused"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 55,
+              "section": "1.7 特点",
+              "score": 0.029957522915269395,
+              "stage": "fused"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 47,
+              "section": "1.3.3 与环境互动",
+              "score": 0.029083245521601686,
+              "stage": "fused"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 40,
+              "section": "1.3 各种机器学习问题",
+              "score": 0.027757078986587184,
+              "stage": "fused"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 40,
+              "section": "1.3.1 监督学习",
+              "score": 0.026709401709401708,
+              "stage": "fused"
+            }
+          ]
+        },
+        {
+          "question": "深度学习和传统机器学习有什么区别？",
+          "gold_pages": [
+            "d2l-zh-pytorch.pdf#p.55",
+            "d2l-zh-pytorch.pdf#p.56"
+          ],
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 1.0,
+          "hits": [
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 55,
+              "section": "1.7 特点",
+              "score": 0.03225806451612903,
+              "stage": "fused"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 56,
+              "section": "小结",
+              "score": 0.032018442622950824,
+              "stage": "fused"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 39,
+              "section": "1.2.2 模型",
+              "score": 0.032018442622950824,
+              "stage": "fused"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 19,
+              "section": "前言",
+              "score": 0.03036576949620428,
+              "stage": "fused"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 266,
+              "section": "7.1 深度卷积神经网络（AlexNet）",
+              "score": 0.02964426877470356,
+              "stage": "fused"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 209,
+              "section": "深度学习计算",
+              "score": 0.027984344422700584,
+              "stage": "fused"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 57,
+              "section": "预备知识",
+              "score": 0.027056277056277056,
+              "stage": "fused"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 36,
+              "section": "",
+              "score": 0.02694394213381555,
+              "stage": "fused"
+            }
+          ]
+        },
+        {
+          "question": "机器学习中的关键组件有哪些？",
+          "gold_pages": [
+            "d2l-zh-pytorch.pdf#p.37"
+          ],
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 1.0,
+          "hits": [
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 37,
+              "section": "1.2 机器学习中的关键组件",
+              "score": 0.03278688524590164,
+              "stage": "fused"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 39,
+              "section": "1.2.4 优化算法",
+              "score": 0.03225806451612903,
+              "stage": "fused"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 112,
+              "section": "小结",
+              "score": 0.03125763125763126,
+              "stage": "fused"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 36,
+              "section": "1.1 日常生活中的机器学习",
+              "score": 0.028991596638655463,
+              "stage": "fused"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 55,
+              "section": "1.7 特点",
+              "score": 0.0288981288981289,
+              "stage": "fused"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 209,
+              "section": "深度学习计算",
+              "score": 0.02813852813852814,
+              "stage": "fused"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 56,
+              "section": "小结",
+              "score": 0.028006267136701922,
+              "stage": "fused"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 6,
+              "section": "",
+              "score": 0.027071520029266508,
+              "stage": "fused"
+            }
+          ]
+        },
+        {
+          "question": "什么是线性代数中的张量？",
+          "gold_pages": [
+            "d2l-zh-pytorch.pdf#p.80"
+          ],
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 1.0,
+          "hits": [
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 80,
+              "section": "小结",
+              "score": 0.03200204813108039,
+              "stage": "fused"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 72,
+              "section": "2.3.5 张量算法的基本性质",
+              "score": 0.030117753623188408,
+              "stage": "fused"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 58,
+              "section": "import torch",
+              "score": 0.029551337359792925,
+              "stage": "fused"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 3,
+              "section": "2 预备知识 39",
+              "score": 0.029411764705882353,
+              "stage": "fused"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 72,
+              "section": "2.3.4 张量",
+              "score": 0.02821869488536155,
+              "stage": "fused"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 61,
+              "section": "",
+              "score": 0.02574682290807064,
+              "stage": "fused"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 78,
+              "section": "2.3.10 范数",
+              "score": 0.02502638323533846,
+              "stage": "fused"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 70,
+              "section": "len(x)",
+              "score": 0.025,
+              "stage": "fused"
+            }
+          ]
+        },
+        {
+          "question": "什么是自动微分？",
+          "gold_pages": [
+            "d2l-zh-pytorch.pdf#p.87"
+          ],
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 0.5,
+          "hits": [
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 89,
+              "section": "(continues on next page)",
+              "score": 0.03252247488101534,
+              "stage": "fused"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 87,
+              "section": "2.5 自动微分",
+              "score": 0.032266458495966696,
+              "stage": "fused"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 90,
+              "section": "2.5.4 Python控制流的梯度计算",
+              "score": 0.0315136476426799,
+              "stage": "fused"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 4,
+              "section": "",
+              "score": 0.03125763125763126,
+              "stage": "fused"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 180,
+              "section": "4.7 前向传播、反向传播和计算图",
+              "score": 0.03125,
+              "stage": "fused"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 673,
+              "section": "= −log σ",
+              "score": 0.02632034632034632,
+              "stage": "fused"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 83,
+              "section": "其中符号d",
+              "score": 0.025987006496751626,
+              "stage": "fused"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 116,
+              "section": "3.2.3 初始化模型参数",
+              "score": 0.025448143405889884,
+              "stage": "fused"
+            }
+          ]
+        },
+        {
+          "question": "softmax回归主要用于解决什么问题？",
+          "gold_pages": [
+            "d2l-zh-pytorch.pdf#p.133"
+          ],
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 1.0,
+          "hits": [
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 133,
+              "section": "3.6 softmax回归的从零开始实现",
+              "score": 0.03225806451612903,
+              "stage": "fused"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 125,
+              "section": "ˆyj = argmax",
+              "score": 0.03055037313432836,
+              "stage": "fused"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 128,
+              "section": "小结",
+              "score": 0.03036576949620428,
+              "stage": "fused"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 141,
+              "section": "练习",
+              "score": 0.029906956136464335,
+              "stage": "fused"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 137,
+              "section": "(continues on next page)",
+              "score": 0.029551337359792925,
+              "stage": "fused"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 123,
+              "section": "3.4 softmax回归",
+              "score": 0.029513888888888888,
+              "stage": "fused"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 141,
+              "section": "小结",
+              "score": 0.02803921568627451,
+              "stage": "fused"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 139,
+              "section": "def updater(batch_size):",
+              "score": 0.027884615384615386,
+              "stage": "fused"
+            }
+          ]
+        },
+        {
+          "question": "多层感知机的核心结构是什么？",
+          "gold_pages": [
+            "d2l-zh-pytorch.pdf#p.153"
+          ],
+          "recall_at_k": 0.0,
+          "reciprocal_rank": 0.0,
+          "hits": [
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 156,
+              "section": "4.3 多层感知机的简洁实现",
+              "score": 0.032266458495966696,
+              "stage": "fused"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 533,
+              "section": "",
+              "score": 0.031544957774465976,
+              "stage": "fused"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 184,
+              "section": "(continues on next page)",
+              "score": 0.029910714285714284,
+              "stage": "fused"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 237,
+              "section": "6.1.2 多层感知机的限制",
+              "score": 0.029857397504456328,
+              "stage": "fused"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 5,
+              "section": "4 多层感知机 127",
+              "score": 0.029513888888888888,
+              "stage": "fused"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 206,
+              "section": "(continues on next page)",
+              "score": 0.029273504273504274,
+              "stage": "fused"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 147,
+              "section": "",
+              "score": 0.029116045245077504,
+              "stage": "fused"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 204,
+              "section": "(continues on next page)",
+              "score": 0.028790389395194696,
+              "stage": "fused"
+            }
+          ]
+        },
+        {
+          "question": "卷积神经网络为什么适合处理图像？",
+          "gold_pages": [
+            "d2l-zh-pytorch.pdf#p.235"
+          ],
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 1.0,
+          "hits": [
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 235,
+              "section": "卷积神经网络",
+              "score": 0.03252247488101534,
+              "stage": "fused"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 258,
+              "section": "6.6 卷积神经网络（LeNet）",
+              "score": 0.03149801587301587,
+              "stage": "fused"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 240,
+              "section": "6.2 图像卷积",
+              "score": 0.03076923076923077,
+              "stage": "fused"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 730,
+              "section": "15.3 情感分析：使用卷积神经网络",
+              "score": 0.03047794966520434,
+              "stage": "fused"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 265,
+              "section": "现代卷积神经网络",
+              "score": 0.029386529386529386,
+              "stage": "fused"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 240,
+              "section": "小结",
+              "score": 0.029116045245077504,
+              "stage": "fused"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 266,
+              "section": "7.1 深度卷积神经网络（AlexNet）",
+              "score": 0.02819138376017471,
+              "stage": "fused"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 630,
+              "section": "13.10 转置卷积",
+              "score": 0.026785714285714288,
+              "stage": "fused"
+            }
+          ]
+        },
+        {
+          "question": "循环神经网络如何处理序列数据？",
+          "gold_pages": [
+            "d2l-zh-pytorch.pdf#p.353"
+          ],
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 0.3333333333333333,
+          "hits": [
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 308,
+              "section": "8.1.1 统计工具",
+              "score": 0.03278688524590164,
+              "stage": "fused"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 307,
+              "section": "循环神经网络",
+              "score": 0.031754032258064516,
+              "stage": "fused"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 353,
+              "section": "现代循环神经网络",
+              "score": 0.031746031746031744,
+              "stage": "fused"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 384,
+              "section": "9.7 序列到序列学习（seq2seq）",
+              "score": 0.02844551282051282,
+              "stage": "fused"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 9,
+              "section": "8 循环神经网络 289",
+              "score": 0.028371628371628373,
+              "stage": "fused"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 334,
+              "section": "小结",
+              "score": 0.027884615384615386,
+              "stage": "fused"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 337,
+              "section": "8.5.3 循环神经网络模型",
+              "score": 0.02749719416386083,
+              "stage": "fused"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 343,
+              "section": "8.6 循环神经网络的简洁实现",
+              "score": 0.026687875574407917,
+              "stage": "fused"
+            }
+          ]
+        },
+        {
+          "question": "注意力机制的作用是什么？",
+          "gold_pages": [
+            "d2l-zh-pytorch.pdf#p.404"
+          ],
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 0.3333333333333333,
+          "hits": [
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 406,
+              "section": "plot_kernel_reg(y_hat)",
+              "score": 0.030621785881252923,
+              "stage": "fused"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 444,
+              "section": "",
+              "score": 0.030309988518943745,
+              "stage": "fused"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 404,
+              "section": "10.2 注意力汇聚：Nadaraya-Watson 核回归",
+              "score": 0.03009207275993712,
+              "stage": "fused"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 438,
+              "section": "(continues on next page)",
+              "score": 0.03009207275993712,
+              "stage": "fused"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 418,
+              "section": "(continues on next page)",
+              "score": 0.02976190476190476,
+              "stage": "fused"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 410,
+              "section": "ylabel='Sorted testing inputs')",
+              "score": 0.029709507042253523,
+              "stage": "fused"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 399,
+              "section": "注意力机制",
+              "score": 0.02946912242686891,
+              "stage": "fused"
+            },
+            {
+              "doc": "d2l-zh-pytorch.pdf",
+              "page": 402,
+              "section": "(continues on next page)",
+              "score": 0.029437229437229435,
+              "stage": "fused"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

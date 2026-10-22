@@ -7,7 +7,11 @@ dist/
 build/
 .env
 data/raw/
+data/index/
 *.pdf
 *.pptx
 .DS_Store
 .vscode/
+.tmp/
+.uv-cache/
+eval/answers-*.jsonl
