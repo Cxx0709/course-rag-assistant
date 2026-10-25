@@ -16,6 +16,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Protocol
 
+from .content import navigation_reason
 from .ingest import Chunk
 from .text import code_identifiers, normalize_matching
 
@@ -79,6 +80,9 @@ class HybridRetriever:
         self.reranker = reranker
 
     def _rank(self, query: str, hits: list[Hit]) -> list[Hit]:
+        # Filter before candidate/top-k truncation so navigation cannot crowd out
+        # useful passages. Indexed text and vector alignment remain untouched.
+        hits = [hit for hit in hits if navigation_reason(hit.chunk.text) is None]
         # A qualified API symbol is an explicit constraint, not an interchangeable
         # mention of its namespace or member name. Use surrounding query coverage
         # within symbol groups, preserving the previous ordering on ties.
@@ -110,7 +114,7 @@ class HybridRetriever:
         ranked = sorted(range(len(scores)), key=lambda i: scores[i], reverse=True)
         bm25_hits = self._rank(query, [Hit(self.chunks[i], scores[i], "bm25") for i in ranked])[:candidate_k]
         if not self.dense_index or not self.embedding_backend:
-            result = bm25_hits[:top_k]
+            result = bm25_hits
         else:
             dense_hits = [Hit(chunk, score, "dense") for chunk, score in self.dense_index.search(query, self.embedding_backend, candidate_k)]
             result = self._rank(query, reciprocal_rank_fusion(bm25_hits, dense_hits))[:candidate_k]

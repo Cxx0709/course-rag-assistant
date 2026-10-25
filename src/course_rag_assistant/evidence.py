@@ -8,6 +8,7 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass
 
+from .content import navigation_reason
 from .facts import record_facts
 from .retrieval import Hit, _tokenize
 from .text import code_identifiers
@@ -49,6 +50,9 @@ def select_evidence(question: str, hits: list[Hit]) -> EvidenceDecision:
     candidates = [h for h in hits if h.score > 0 and h.chunk.text.strip()]
     if not candidates:
         return EvidenceDecision([], "no_evidence", 0.0)
+    candidates = [h for h in candidates if navigation_reason(h.chunk.text) is None]
+    if not candidates:
+        return EvidenceDecision([], "non_body_evidence", 0.0)
     symbols = code_identifiers(question.casefold())
     if symbols:
         candidates = [h for h in candidates if symbols <= code_identifiers(h.chunk.text.casefold())]

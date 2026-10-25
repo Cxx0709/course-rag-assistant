@@ -11,11 +11,13 @@ import hashlib
 import json
 import re
 import time
+from collections import Counter
 from pathlib import Path
 
 import numpy as np
 
 from course_rag_assistant.answer import _parse_citations, answer, generator_from_env
+from course_rag_assistant.content import navigation_reason
 from course_rag_assistant.dense import NumpyVectorIndex, embedder_from_env
 from course_rag_assistant.evaluate import evaluate_retriever, load_labeled
 from course_rag_assistant.ingest import ingest_dir
@@ -149,7 +151,7 @@ def main():
     parser.add_argument("--unanswerable", type=Path, default=Path("eval/real-unanswerable-v2.jsonl"))
     parser.add_argument("--index", type=Path, default=Path("data/index/embeddings.npy"))
     parser.add_argument("--cache", type=Path, default=Path("data/index/quality-query-v2.npy"))
-    parser.add_argument("--output", type=Path, help="Defaults to quality-v7[-chat].json")
+    parser.add_argument("--output", type=Path, help="Defaults to quality-v8[-chat].json")
     parser.add_argument("--dense", action="store_true")
     parser.add_argument("--chat", action="store_true", help="Evaluate the configured chat model, including failures")
     parser.add_argument("--modes", nargs="+", choices=["bm25", "dense", "hybrid", "hybrid+rerank"],
@@ -166,8 +168,8 @@ def main():
         parser.error("Dense, hybrid and rerank modes require --dense")
     if args.modes and "hybrid+rerank" in args.modes and reranker_from_env() is None:
         parser.error("hybrid+rerank requires a configured reranker endpoint")
-    args.output = args.output or Path("eval/reports/quality-v7-chat.json" if args.chat
-                                      else "eval/reports/quality-v7.json")
+    args.output = args.output or Path("eval/reports/quality-v8-chat.json" if args.chat
+                                      else "eval/reports/quality-v8.json")
     labels, negatives = load_labeled(args.labels), load_labeled(args.unanswerable)
     chunks = ingest_dir(args.data)
     # Validate reference snippets before measuring retrieval. Whitespace is the
@@ -223,6 +225,9 @@ def main():
         "selected_ids": {"answerable": [q["id"] for q in labels],
                          "unanswerable": [q["id"] for q in negatives]},
         "requested_modes": args.modes, "completed": False,
+        "content_filter": "explicit_navigation_before_top_k_and_sentence_selection_v1",
+        "excluded_navigation_chunks": dict(Counter(reason for chunk in chunks
+                                                    if (reason := navigation_reason(chunk.text)))),
         "answerability_policy": "offline_coverage_0.5_scoped_record_values_conflicts_and_exact_api_symbols",
         "code_sha256": {str(p): digest(p) for p in [
             Path("scripts/evaluate_quality.py"), *sorted(Path("src/course_rag_assistant").glob("*.py"))]},
@@ -242,7 +247,7 @@ def main():
             "Timing excludes parsing and query embedding generation; cached vectors are reused across modes.",
             "Model outputs are subject to exact-source-sentence verification, not free-paraphrase semantic verification.",
             "Fallback answers measure application behavior and must not be reported as successful model generation.",
-            "Selected sentence IDs are 1-based over evidence in order, using answer._sentences; model text is never rendered.",
+            "Selected sentence IDs are 1-based over answer._sentence_options(evidence), excluding explicit navigation.",
         ], "skipped": skipped, "results": {},
     }
     if args.dense:

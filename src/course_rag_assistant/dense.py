@@ -15,6 +15,7 @@ from typing import Protocol
 
 import numpy as np
 
+from .content import navigation_reason
 from .ingest import Chunk
 
 
@@ -107,6 +108,13 @@ class NumpyVectorIndex:
     chunks: list[Chunk]
     vectors: np.ndarray
 
+    def __post_init__(self):
+        self._body_mask = np.asarray([navigation_reason(c.text) is None for c in self.chunks])
+
+    def _ranked_indices(self, scores, top_k):
+        ranked = np.argsort(-scores)
+        return ranked[self._body_mask[ranked]][:top_k]
+
     @classmethod
     def build(cls, chunks: list[Chunk], backend: EmbeddingBackend) -> NumpyVectorIndex:
         vectors = _normalize(backend.embed([chunk.text for chunk in chunks]))
@@ -138,7 +146,7 @@ class NumpyVectorIndex:
             return []
         query_vector = _normalize(backend.embed([query]))[0]
         scores = self.vectors @ query_vector
-        indices = np.argsort(-scores)[:top_k]
+        indices = self._ranked_indices(scores, top_k)
         return [(self.chunks[int(i)], float(scores[int(i)])) for i in indices]
 
     def search_many(
@@ -155,7 +163,7 @@ class NumpyVectorIndex:
         output: list[list[tuple[Chunk, float]]] = []
         for query_vector in query_vectors:
             scores = self.vectors @ query_vector
-            indices = np.argsort(-scores)[: max(top_k, 0)]
+            indices = self._ranked_indices(scores, top_k)
             output.append([(self.chunks[int(i)], float(scores[int(i)])) for i in indices])
         return output
 

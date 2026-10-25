@@ -20,6 +20,7 @@ from typing import Protocol
 
 import httpx
 
+from .content import navigation_reason
 from .evidence import select_evidence
 from .retrieval import Hit
 
@@ -137,6 +138,7 @@ def answer(question: str, hits: list[Hit], generator: TextGenerator | None = Non
             "missing_requested_fact": f"相关记录中没有明确、可确认的{field}。",
             "conflicting_records": f"记录中的{field}信息存在冲突，无法确定。",
             "incomplete_record": f"现有记录无法同时提供{field}。",
+            "non_body_evidence": "检索结果只有目录或页码标记，缺少可支持答案的正文。",
         }.get(decision.reason, "")
         return CitedAnswer("资料中没有足够证据回答这个问题。" + detail, [], [], decision.reason)
 
@@ -157,7 +159,7 @@ def answer(question: str, hits: list[Hit], generator: TextGenerator | None = Non
     for hit in context[:1]:
         citation = format_citation(hit)
         for sentence in _sentences(hit.chunk.text):
-            if sentence:
+            if sentence and navigation_reason(sentence) is None:
                 lines.append(f"{sentence} {citation}")
     draft = CitedAnswer("\n".join(lines), context[:1], [])
     return verify_citations(draft)
@@ -218,7 +220,8 @@ def build_prompt(question: str, hits: Iterable[Hit]) -> str:
 
 
 def _sentence_options(hits: Iterable[Hit]) -> list[tuple[str, Hit]]:
-    return [(sentence, hit) for hit in hits for sentence in _sentences(hit.chunk.text)]
+    return [(sentence, hit) for hit in hits for sentence in _sentences(hit.chunk.text)
+            if navigation_reason(sentence) is None]
 
 
 def _unique_json_object(pairs):

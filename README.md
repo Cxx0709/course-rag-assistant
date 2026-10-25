@@ -75,6 +75,13 @@ incomplete evidence; general answer-quality acceptance is not established.
 The offline baseline is unchanged. Custom generators must now return
 `{"sentence_ids":[1,3]}` (or an empty array to abstain), rather than answer prose.
 
+The latest [v8 content-filter report](docs/content-filter-v8.md) excludes explicit
+TOC and running-title fragments before retrieval truncation and sentence selection.
+On the same development set, hybrid Recall@8 is 83.33% and chat answer-point
+coverage is 78.33%, with 0/30 answerable refusals and 10/10 unanswerable refusals.
+Reference-page citation precision decreases from 60.49% to 57.65%; human review
+is still pending. Real BGE reranking remains untested without a configured service.
+
 ## Quick start
 
 ```bash
