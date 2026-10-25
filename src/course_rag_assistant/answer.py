@@ -17,6 +17,9 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Protocol
 
+import httpx
+
+from .evidence import select_evidence
 from .retrieval import Hit
 
 
@@ -64,6 +67,8 @@ class OllamaChatGenerator:
         self.model = model
         self.base_url = base_url.rstrip("/")
         self.timeout = timeout
+        self.num_predict = int(os.getenv("COURSE_RAG_OLLAMA_CHAT_NUM_PREDICT", "512"))
+        self.think = os.getenv("COURSE_RAG_OLLAMA_CHAT_THINK", "false").lower() == "true"
 
     def generate(self, prompt: str) -> str:
         import httpx
@@ -77,7 +82,8 @@ class OllamaChatGenerator:
                     {"role": "user", "content": prompt},
                 ],
                 "stream": False,
-                "options": {"temperature": 0},
+                "options": {"temperature": 0, "num_predict": self.num_predict},
+                "think": self.think,
             },
             timeout=self.timeout,
         )
@@ -88,7 +94,7 @@ class OllamaChatGenerator:
             raise ValueError("Ollama response does not contain message content") from exc
 
 
-def generator_from_env() -> OpenAICompatibleChatGenerator | None:
+def generator_from_env() -> TextGenerator | None:
     """Create the configured chat generator, or ``None`` for offline mode."""
     ollama_model = os.getenv("COURSE_RAG_OLLAMA_CHAT_MODEL")
     if ollama_model:
@@ -110,6 +116,7 @@ class CitedAnswer:
     text: str                     # markdown with [doc, p.N] citations
     hits: list[Hit]               # passages the answer was built from
     unsupported_claims: list[str]  # claims the verifier could not anchor
+    abstention_reason: str | None = None
 
 
 def answer(question: str, hits: list[Hit], generator: TextGenerator | None = None) -> CitedAnswer:
@@ -119,14 +126,27 @@ def answer(question: str, hits: list[Hit], generator: TextGenerator | None = Non
     generator may write a smoother response, but its output always passes the
     same local citation verifier.
     """
-    usable = [hit for hit in hits if hit.score > 0 and hit.chunk.text.strip()]
+    decision = select_evidence(question, hits)
+    usable = decision.hits
     if not usable:
-        return CitedAnswer("资料中没有足够证据回答这个问题。", [], [question])
+        field = decision.requested_field or "所问字段"
+        detail = {
+            "missing_context_record": "当前资料缺少对应的个人实验记录或课程安排。",
+            "missing_requested_fact": f"相关记录中没有明确、可确认的{field}。",
+            "conflicting_records": f"记录中的{field}信息存在冲突，无法确定。",
+            "incomplete_record": f"现有记录无法同时提供{field}。",
+        }.get(decision.reason, "")
+        return CitedAnswer("资料中没有足够证据回答这个问题。" + detail, [], [], decision.reason)
 
     context = usable[:3]
     if generator is not None:
-        draft = CitedAnswer(generator.generate(build_prompt(question, context)), context, [])
-        return verify_citations(draft)
+        try:
+            draft = CitedAnswer(generator.generate(build_prompt(question, context)), context, [])
+            return verify_citations(draft)
+        except (httpx.HTTPError, OSError, RuntimeError, TimeoutError, ValueError):
+            # Local model servers can be unavailable, overloaded, or exceed the
+            # request timeout. Keep the deterministic cited answer usable.
+            generator = None
 
     lines: list[str] = []
     for hit in context[:1]:
@@ -141,9 +161,9 @@ def answer(question: str, hits: list[Hit], generator: TextGenerator | None = Non
 def verify_citations(ans: CitedAnswer) -> CitedAnswer:
     """Drop/flag claims whose citation does not match the cited passage.
 
-    The strict pass requires a citation that resolves to one of ``ans.hits``
-    and shares meaningful terms with the claim.  Unsupported claims are
-    removed from the returned text and recorded for evaluation.
+    The offline verifier accepts complete source sentences only (ignoring
+    whitespace). Lexical overlap cannot establish entailment: paraphrases
+    require a future semantic verifier and are conservatively rejected here.
     """
     supported: list[str] = []
     unsupported = list(ans.unsupported_claims)
@@ -151,12 +171,9 @@ def verify_citations(ans: CitedAnswer) -> CitedAnswer:
         citations = _parse_citations(claim)
         body = _CITATION_RE.sub("", claim).strip()
         cited_chunks = [chunk for citation in citations for chunk in _resolve(citation, ans.hits)]
-        supported_by_source = any(_overlaps(body, source, strict=True) for source in cited_chunks)
-        # Short paraphrases often share only one meaningful Chinese token;
-        # retain them when the citation resolves to a retrieved passage.
-        if not supported_by_source:
-            supported_by_source = any(_overlaps(body, source, strict=False) for source in cited_chunks)
-        if not body or not cited_chunks or not supported_by_source:
+        supported_by_source = any(_source_sentence(body, source) for source in cited_chunks)
+        all_citations_resolve = all(_resolve(citation, ans.hits) for citation in citations)
+        if not body or not cited_chunks or not all_citations_resolve or not supported_by_source:
             if body and body not in unsupported:
                 unsupported.append(body)
             continue
@@ -165,7 +182,7 @@ def verify_citations(ans: CitedAnswer) -> CitedAnswer:
         text = "资料中没有足够证据回答这个问题。"
     else:
         text = "\n".join(supported)
-    return CitedAnswer(text, ans.hits, unsupported)
+    return CitedAnswer(text, ans.hits, unsupported, None if supported else "unsupported_citations")
 
 
 _CITATION_RE = re.compile(r"\[([^,\]]+),\s*(p\.\d+|section=[^\]]+)\]")
@@ -186,24 +203,21 @@ def build_prompt(question: str, hits: Iterable[Hit]) -> str:
     for index, hit in enumerate(hits, start=1):
         passages.append(f"[{index}] {format_citation(hit)}\n{hit.chunk.text}")
     return (
-        "只依据下面的课程资料回答。每个事实性句子都必须在句末复制对应的来源标记；"
+        "只选择能回答问题的原文完整句子，逐字摘录，不改写、不添加解释。每句单独一行，句末复制对应的来源标记；"
         "资料没有支持时回答‘资料中没有足够证据回答这个问题。’\n\n"
         f"问题：{question}\n\n资料：\n" + "\n\n".join(passages)
     )
 
 
 def _sentences(text: str) -> list[str]:
-    # Do not split on the period in citation markers such as ``p.12``.
-    parts: list[str] = []
-    for part in re.split(r"(?<=[。！？!?])\s*|\n+", text):
-        part = part.strip()
-        if not part:
-            continue
-        if part.startswith("[") and parts:
-            parts[-1] += " " + part
-        else:
-            parts.append(part)
-    return parts
+    # Join PDF prose wrapped inside a word/sentence before assigning citations.
+    # Keep paragraph-ending punctuation and code-only lines as boundaries.
+    text = re.sub(r"(?<=[\u4e00-\u9fff，、])[ \t]*\r?\n[ \t]*(?=[\u4e00-\u9fffA-Za-z])", "", text)
+    # Consume citations together with the preceding sentence. A citation must
+    # not accidentally lend support to a following, uncited assertion.
+    marker = r"\[[^,\]]+,\s*(?:p\.\d+|section=[^\]]+)\]"
+    pattern = rf".*?(?:[。！？!?](?:[ \t]*(?:{marker}))*|\n|$)"
+    return [match.group().strip() for match in re.finditer(pattern, text) if match.group().strip()]
 
 
 def _parse_citations(text: str) -> list[tuple[str, str]]:
@@ -216,18 +230,16 @@ def _resolve(citation: tuple[str, str], hits: list[Hit]) -> list[str]:
         page = int(location[2:])
         return [hit.chunk.text for hit in hits if hit.chunk.doc == doc and hit.chunk.page == page]
     section = location.removeprefix("section=")
-    return [hit.chunk.text for hit in hits if hit.chunk.doc == doc and hit.chunk.section == section]
+    return [hit.chunk.text for hit in hits if hit.chunk.doc == doc and (hit.chunk.section or "document") == section]
 
 
-def _overlaps(claim: str, source: str, strict: bool = True) -> bool:
-    claim_terms = set(re.findall(r"[a-zA-Z0-9_]+|[\u4e00-\u9fff]", claim.lower()))
-    source_terms = set(re.findall(r"[a-zA-Z0-9_]+|[\u4e00-\u9fff]", source.lower()))
-    overlap = claim_terms & source_terms
-    if not overlap:
-        return False
-    if not strict:
-        return True
-    return len(overlap) >= max(2, min(4, int(len(claim_terms) * 0.3 + 0.5)))
+def _source_sentence(claim: str, source: str) -> bool:
+    """Exact sentence support, not a semantic correctness guarantee."""
+    def normalized(text: str) -> str:
+        return re.sub(r"\s+", "", text).strip()
+
+    target = normalized(claim)
+    return bool(target) and any(target == normalized(sentence) for sentence in _sentences(source))
 
 
 if __name__ == "__main__":

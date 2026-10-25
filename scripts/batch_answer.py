@@ -52,6 +52,7 @@ def run(input_path: Path, data_dir: Path, output_path: Path, config: str, top_k:
                 "answer": result.text,
                 "unsupported_claims": result.unsupported_claims,
                 "abstained": "没有足够证据" in result.text,
+                "abstention_reason": result.abstention_reason,
                 "config": config,
             }, ensure_ascii=False) + "\n")
     return 0

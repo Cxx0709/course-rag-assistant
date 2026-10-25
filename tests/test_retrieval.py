@@ -1,7 +1,12 @@
 """Tests for the local retrieval baseline."""
 
 from course_rag_assistant.ingest import Chunk
-from course_rag_assistant.retrieval import Hit, HybridRetriever, LexicalReranker, reciprocal_rank_fusion
+from course_rag_assistant.retrieval import (
+    Hit,
+    HybridRetriever,
+    LexicalReranker,
+    reciprocal_rank_fusion,
+)
 
 
 def test_bm25_prioritizes_exact_course_term():

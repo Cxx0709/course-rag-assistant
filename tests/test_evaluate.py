@@ -1,6 +1,10 @@
 """Tests for retrieval evaluation metrics."""
 
-from course_rag_assistant.evaluate import evaluate_ablation, evaluate_retriever, reciprocal_rank
+from course_rag_assistant.evaluate import (
+    evaluate_ablation,
+    evaluate_retriever,
+    reciprocal_rank,
+)
 from course_rag_assistant.ingest import Chunk
 from course_rag_assistant.retrieval import HybridRetriever, LexicalReranker
 

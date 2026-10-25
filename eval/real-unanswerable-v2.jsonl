@@ -1,0 +1,10 @@
+{"id": "d2l-unanswerable-01", "category": "out_of_domain", "question": "如何办理护照首次申请？", "reason": "教材不提供政务办事流程"}
+{"id": "d2l-unanswerable-02", "category": "out_of_domain", "question": "糖醋排骨需要哪些调料和烹饪步骤？", "reason": "教材不提供烹饪配方"}
+{"id": "d2l-unanswerable-03", "category": "out_of_domain", "question": "如何更换自行车的刹车线？", "reason": "教材不提供自行车维修指导"}
+{"id": "d2l-unanswerable-04", "category": "out_of_domain", "question": "唐代科举制度具体分为哪些考试科目？", "reason": "教材不讲唐代科举制度"}
+{"id": "d2l-unanswerable-05", "category": "missing_personal_context", "question": "我的课程期末考试几点开始，在哪个教室？", "reason": "没有用户的课程通知"}
+{"id": "d2l-unanswerable-06", "category": "missing_personal_context", "question": "老师给我们班布置的本周神经网络作业截止日期是什么？", "reason": "没有班级作业安排"}
+{"id": "d2l-unanswerable-07", "category": "missing_experiment", "question": "我昨天训练的卷积神经网络测试准确率是多少？", "reason": "没有用户的实验日志"}
+{"id": "d2l-unanswerable-08", "category": "missing_experiment", "question": "我本机训练这个模型用了多少秒？", "reason": "没有用户硬件和运行记录"}
+{"id": "d2l-unanswerable-09", "category": "missing_experiment", "question": "我上传的私人数据集有多少张猫的图片？", "reason": "当前语料只有教材，没有该私人数据集"}
+{"id": "d2l-unanswerable-10", "category": "missing_personal_context", "question": "我的学号对应哪一个机器学习课程小组？", "reason": "没有学号或分组名单"}

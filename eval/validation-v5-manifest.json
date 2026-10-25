@@ -1,0 +1,6 @@
+{
+  "frozen_date": "2026-10-25",
+  "sha256": "b66ad7c8529192fb018c2faedafef58dd42c4504d8db36469d77e552a863b9aa",
+  "count": 20,
+  "purpose": "Agent-authored synthetic reserved cases frozen before v5 implementation. Not independent human validation. Previous v4 cases are now development regressions."
+}

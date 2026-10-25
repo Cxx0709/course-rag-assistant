@@ -44,6 +44,21 @@ retrieval evaluation are implemented. See
 [`docs/implementation-plan.md`](docs/implementation-plan.md) for the full
 6–8 week build plan, data design, and acceptance criteria.
 
+The [v5 record-facts report](docs/record-facts-v5.md) evaluates the same 30 real-textbook
+questions and 10 unanswerable questions as the [v4 report](docs/matching-v4.md).
+Hybrid retrieval reaches Recall@8 0.80, rejects all 10 unanswerable development
+questions, and no longer rejects the 30 answerable questions. Answer-point
+coverage is 57.78%; not refusing is not proof of correctness. An additional
+20-case frozen synthetic validation set improves from 9/20 to 20/20 with explicit
+field/value and conflict checks; the previous v4 cases now serve as development
+regressions. These results do not establish general answer-quality acceptance.
+Personal results require an explicitly titled record source; this is a heuristic,
+not verification of ownership or recency. Supported record fields must contain
+an explicit value, and conflicting candidate records cause abstention.
+The offline citation verifier accepts
+complete source sentences only (ignoring whitespace). Free paraphrases require
+a future semantic verifier. Citation validity does not establish answer relevance.
+
 ## Quick start
 
 ```bash
@@ -69,6 +84,16 @@ building the index:
 ```powershell
 $env:COURSE_RAG_OLLAMA_MODEL="nomic-embed-text"
 python scripts/build_dense_index.py --data data/raw/datamining-notes
+```
+
+To enable local answer generation, set the chat model separately. A smaller
+`COURSE_RAG_OLLAMA_CHAT_NUM_PREDICT` keeps CPU-only responses responsive; failed
+local generation automatically falls back to the cited extractive answer.
+
+```powershell
+$env:COURSE_RAG_OLLAMA_CHAT_MODEL="qwen3.5:9b"
+$env:COURSE_RAG_OLLAMA_CHAT_THINK="false"
+$env:COURSE_RAG_OLLAMA_CHAT_NUM_PREDICT="512"
 ```
 
 ## Tech stack

@@ -11,11 +11,13 @@ from __future__ import annotations
 import json
 import math
 import re
+from collections import Counter
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Protocol
 
 from .ingest import Chunk
+from .text import code_identifiers, normalize_matching
 
 
 @dataclass
@@ -76,13 +78,24 @@ class HybridRetriever:
         self.embedding_backend = embedding_backend
         self.reranker = reranker
 
-    def search(self, query: str, top_k: int = 8) -> list[Hit]:
-        """Return the best matching chunks using the local BM25 baseline.
+    def _rank(self, query: str, hits: list[Hit]) -> list[Hit]:
+        # A qualified API symbol is an explicit constraint, not an interchangeable
+        # mention of its namespace or member name. Use surrounding query coverage
+        # within symbol groups, preserving the previous ordering on ties.
+        symbols = code_identifiers(query.casefold())
+        if not symbols:
+            return hits
+        terms = set(_tokenize(query)) - symbols
+        # Repeated API calls in short snippets otherwise outrank explanatory
+        # prose due to BM25 length normalization. Distinct surrounding query
+        # terms prefer explanations over incidental uses of the same symbol.
+        return sorted(hits, key=lambda h: (
+            len(symbols & code_identifiers(h.chunk.text.casefold())),
+            len(terms & set(_tokenize(h.chunk.text))),
+        ), reverse=True)
 
-        The dense and reranking stages will plug into this method later. Keeping
-        the result type and score direction stable lets evaluation start before
-        a model download or remote embedding API is available.
-        """
+    def search(self, query: str, top_k: int = 8) -> list[Hit]:
+        """Retrieve with BM25, optional dense fusion, and configured reranking."""
         if top_k <= 0 or not self.chunks:
             return []
         candidate_k = max(top_k, 50) if (self.dense_index and self.embedding_backend) or self.reranker else top_k
@@ -95,12 +108,12 @@ class HybridRetriever:
             for score, section_tokens in zip(scores, self._section_tokens)
         ]
         ranked = sorted(range(len(scores)), key=lambda i: scores[i], reverse=True)
-        bm25_hits = [Hit(self.chunks[i], scores[i], "bm25") for i in ranked[:candidate_k]]
+        bm25_hits = self._rank(query, [Hit(self.chunks[i], scores[i], "bm25") for i in ranked])[:candidate_k]
         if not self.dense_index or not self.embedding_backend:
             result = bm25_hits[:top_k]
         else:
             dense_hits = [Hit(chunk, score, "dense") for chunk, score in self.dense_index.search(query, self.embedding_backend, candidate_k)]
-            result = reciprocal_rank_fusion(bm25_hits, dense_hits, top_k=candidate_k)
+            result = self._rank(query, reciprocal_rank_fusion(bm25_hits, dense_hits))[:candidate_k]
         if self.reranker:
             return self.reranker.rerank(query, result, top_k)
         return result[:top_k]
@@ -124,8 +137,9 @@ class HybridRetriever:
                 for score, section_tokens in zip(scores, self._section_tokens)
             ]
             ranked = sorted(range(len(scores)), key=lambda i: scores[i], reverse=True)
-            bm25_hits = [Hit(self.chunks[i], scores[i], "bm25") for i in ranked[:candidate_k]]
-            results.append(reciprocal_rank_fusion(bm25_hits, [Hit(chunk, score, "dense") for chunk, score in dense_hits], top_k=top_k))
+            bm25_hits = self._rank(query, [Hit(self.chunks[i], scores[i], "bm25") for i in ranked])[:candidate_k]
+            fused = reciprocal_rank_fusion(bm25_hits, [Hit(chunk, score, "dense") for chunk, score in dense_hits])
+            results.append(self._rank(query, fused)[:top_k])
         return results
 
     def save(self, path: Path) -> None:
@@ -133,6 +147,7 @@ class HybridRetriever:
         path.parent.mkdir(parents=True, exist_ok=True)
         payload = {
             "version": 1,
+            "tokenizer_version": 2,
             "chunks": [
                 {
                     "text": chunk.text,
@@ -156,7 +171,7 @@ class HybridRetriever:
         chunks = [Chunk(**item) for item in payload["chunks"]]
         retriever = cls(chunks)
         tokens = payload.get("tokens")
-        if tokens is not None and len(tokens) == len(chunks):
+        if payload.get("tokenizer_version") == 2 and tokens is not None and len(tokens) == len(chunks):
             retriever._tokens = tokens
             retriever._bm25 = _BM25(tokens)
         return retriever
@@ -174,6 +189,7 @@ class _BM25:
 
     def __init__(self, corpus: list[list[str]], k1: float = 1.5, b: float = 0.75):
         self.corpus = corpus
+        self.counts = [Counter(document) for document in corpus]
         self.k1, self.b = k1, b
         self.avgdl = sum(map(len, corpus)) / max(len(corpus), 1)
         self.doc_freq: dict[str, int] = {}
@@ -184,8 +200,7 @@ class _BM25:
     def get_scores(self, query: list[str]) -> list[float]:
         scores: list[float] = []
         n_docs = len(self.corpus)
-        for document in self.corpus:
-            counts = {token: document.count(token) for token in set(document)}
+        for document, counts in zip(self.corpus, self.counts):
             score = 0.0
             for token in query:
                 if token not in counts:
@@ -201,7 +216,8 @@ class _BM25:
 
 def _tokenize(text: str) -> list[str]:
     """Tokenize mixed Chinese/English text without a heavyweight segmenter."""
-    tokens: list[str] = []
+    text = normalize_matching(text)
+    tokens: list[str] = sorted(code_identifiers(text.lower()))
     stopwords = {"的", "了", "和", "与", "及", "是", "什么", "怎么", "哪些", "为什么", "如何", "是否", "我", "你", "有", "在", "中", "对", "从", "这", "那", "用"}
     for part in re.findall(r"[a-zA-Z0-9_]+|[\u4e00-\u9fff]+", text.lower()):
         if re.fullmatch(r"[\u4e00-\u9fff]+", part):

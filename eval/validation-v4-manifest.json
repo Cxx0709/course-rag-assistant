@@ -1,0 +1,6 @@
+{
+  "frozen_date": "2026-10-24",
+  "sha256": "f16d49b10d0644f6d330971422815c148dd245e5c825d1912b0c8049371b4488",
+  "count": 20,
+  "purpose": "Synthetic reserved behavioral checks, frozen before implementation. Agent-authored, not independent human evaluation. Do not tune using outcomes this round."
+}

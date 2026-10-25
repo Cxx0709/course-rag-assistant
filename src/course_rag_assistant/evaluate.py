@@ -105,7 +105,7 @@ def evaluate_abstention(
         if "没有足够证据" in result.text:
             refused += 1
     total = len(questions)
-    return {"questions": total, "refused": refused, "hallucinated": total - refused,
+    return {"questions": total, "refused": refused, "non_abstained": total - refused,
             "abstention_rate": refused / max(total, 1)}
 
 
