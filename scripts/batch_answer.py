@@ -51,6 +51,7 @@ def run(input_path: Path, data_dir: Path, output_path: Path, config: str, top_k:
                 "question": question,
                 "answer": result.text,
                 "unsupported_claims": result.unsupported_claims,
+                "selected_sentence_ids": result.selected_sentence_ids,
                 "abstained": "没有足够证据" in result.text,
                 "abstention_reason": result.abstention_reason,
                 "config": config,

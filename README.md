@@ -59,6 +59,22 @@ The offline citation verifier accepts
 complete source sentences only (ignoring whitespace). Free paraphrases require
 a future semantic verifier. Citation validity does not establish answer relevance.
 
+The [v6 evaluation workflow](docs/quality-evaluation-v6.md) adds explicit `--chat`
+evaluation, per-question model output and fallback traces, and pending human-review
+exports. The default remains offline; missing chat configuration or an explicitly
+requested unavailable reranker fails instead of substituting another mode.
+Small `--limit` runs are marked as smoke tests, not acceptance results.
+The [v7 sentence-selection report](docs/sentence-selection-v7.md) fixes the v6
+chat citation-format failure: the model selects source sentence IDs, and the
+application renders their original text and citations before verification.
+On the same 30+10 development questions, local `qwen3.5:9b` with hybrid retrieval
+now rejects 0/30 answerable questions and 10/10 unanswerable questions, with no
+generation failures. Literal answer-point coverage is 73.33%, and reference-page
+citation precision is 60.49%. Some selections still use table-of-contents or
+incomplete evidence; general answer-quality acceptance is not established.
+The offline baseline is unchanged. Custom generators must now return
+`{"sentence_ids":[1,3]}` (or an empty array to abstain), rather than answer prose.
+
 ## Quick start
 
 ```bash

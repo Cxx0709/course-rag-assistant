@@ -1,0 +1,181 @@
+{
+  "cases_sha256": "b66ad7c8529192fb018c2faedafef58dd42c4504d8db36469d77e552a863b9aa",
+  "cases": 20,
+  "passed": 20,
+  "code_sha256": {
+    "src\\course_rag_assistant\\__init__.py": "64c4700ceb4abc71769b851411ee58675282d8c34f8ddee61e26e091e8335efe",
+    "src\\course_rag_assistant\\__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+    "src\\course_rag_assistant\\answer.py": "57f7d7bbab087bd9ed06a1c9824398e5fbaf5ef0b8fabcd58c1e8699604e9403",
+    "src\\course_rag_assistant\\cli.py": "793689beafb80697c7c48367b7b547473ce1942c2ddafbe26bbe7b4b3e2af295",
+    "src\\course_rag_assistant\\dense.py": "39c9e38e33d112e60841067f3d8189c1dd48f9a99c645b7be6a465eee8bd02c7",
+    "src\\course_rag_assistant\\evaluate.py": "114094eac52ebf4d540e930aed1aefe885771c3d09a4bf5ae59d69dffdf58c15",
+    "src\\course_rag_assistant\\evidence.py": "fc57e03724eba912dbe4d1f97372eaedbb80754f53c9987adcb1a1c3334f374f",
+    "src\\course_rag_assistant\\facts.py": "36c12337a1f7825104b76dba0b9ce3eadcd7cf765359b7066424def3b1692139",
+    "src\\course_rag_assistant\\ingest.py": "664cea5300c8a847c4655c1c8ebf82cec855d3220731afafe91e2251115d7574",
+    "src\\course_rag_assistant\\rerank.py": "99b1ca8a78b645a5782a68cb8d259efb63527d092c8fc7c40040be8ba08368ab",
+    "src\\course_rag_assistant\\retrieval.py": "9376edce2788ffb30daaee240486ca4800d7ba682bc2d2ae58e3c37056cd8a3f",
+    "src\\course_rag_assistant\\text.py": "c16b68e192280dea5287c3347c493254efab52dd0a30e8beef953700d580651a"
+  },
+  "details": [
+    {
+      "id": "v5-frozen-01",
+      "passed": true,
+      "expected_abstain": false,
+      "abstained": false,
+      "answer": "模型测试准确率为81%。 [record-0.md, section=实验记录]",
+      "reason": null
+    },
+    {
+      "id": "v5-frozen-02",
+      "passed": true,
+      "expected_abstain": true,
+      "abstained": true,
+      "answer": "资料中没有足够证据回答这个问题。相关记录中没有明确、可确认的测试准确率。",
+      "reason": "missing_requested_fact"
+    },
+    {
+      "id": "v5-frozen-03",
+      "passed": true,
+      "expected_abstain": true,
+      "abstained": true,
+      "answer": "资料中没有足够证据回答这个问题。记录中的测试准确率信息存在冲突，无法确定。",
+      "reason": "conflicting_records"
+    },
+    {
+      "id": "v5-frozen-04",
+      "passed": true,
+      "expected_abstain": false,
+      "abstained": false,
+      "answer": "模型测试准确率为81%。 [record-0.md, section=实验记录]",
+      "reason": null
+    },
+    {
+      "id": "v5-frozen-05",
+      "passed": true,
+      "expected_abstain": false,
+      "abstained": false,
+      "answer": "模型损失为0.27。 [record-0.md, section=实验记录]",
+      "reason": null
+    },
+    {
+      "id": "v5-frozen-06",
+      "passed": true,
+      "expected_abstain": true,
+      "abstained": true,
+      "answer": "资料中没有足够证据回答这个问题。相关记录中没有明确、可确认的损失。",
+      "reason": "missing_requested_fact"
+    },
+    {
+      "id": "v5-frozen-07",
+      "passed": true,
+      "expected_abstain": false,
+      "abstained": false,
+      "answer": "本机训练模型耗时12秒。 [record-0.md, section=实验记录]",
+      "reason": null
+    },
+    {
+      "id": "v5-frozen-08",
+      "passed": true,
+      "expected_abstain": true,
+      "abstained": true,
+      "answer": "资料中没有足够证据回答这个问题。相关记录中没有明确、可确认的耗时。",
+      "reason": "missing_requested_fact"
+    },
+    {
+      "id": "v5-frozen-09",
+      "passed": true,
+      "expected_abstain": true,
+      "abstained": true,
+      "answer": "资料中没有足够证据回答这个问题。相关记录中没有明确、可确认的测试准确率。",
+      "reason": "missing_requested_fact"
+    },
+    {
+      "id": "v5-frozen-10",
+      "passed": true,
+      "expected_abstain": true,
+      "abstained": true,
+      "answer": "资料中没有足够证据回答这个问题。相关记录中没有明确、可确认的测试准确率。",
+      "reason": "missing_requested_fact"
+    },
+    {
+      "id": "v5-frozen-11",
+      "passed": true,
+      "expected_abstain": false,
+      "abstained": false,
+      "answer": "我上传的数据集共有768张图片。 [record-0.md, section=数据集统计]",
+      "reason": null
+    },
+    {
+      "id": "v5-frozen-12",
+      "passed": true,
+      "expected_abstain": true,
+      "abstained": true,
+      "answer": "资料中没有足够证据回答这个问题。相关记录中没有明确、可确认的图片数量。",
+      "reason": "missing_requested_fact"
+    },
+    {
+      "id": "v5-frozen-13",
+      "passed": true,
+      "expected_abstain": true,
+      "abstained": true,
+      "answer": "资料中没有足够证据回答这个问题。记录中的图片数量信息存在冲突，无法确定。",
+      "reason": "conflicting_records"
+    },
+    {
+      "id": "v5-frozen-14",
+      "passed": true,
+      "expected_abstain": false,
+      "abstained": false,
+      "answer": "我们班考试上午10点开始。 [record-0.md, section=课程通知]",
+      "reason": null
+    },
+    {
+      "id": "v5-frozen-15",
+      "passed": true,
+      "expected_abstain": true,
+      "abstained": true,
+      "answer": "资料中没有足够证据回答这个问题。相关记录中没有明确、可确认的考试时间。",
+      "reason": "missing_requested_fact"
+    },
+    {
+      "id": "v5-frozen-16",
+      "passed": true,
+      "expected_abstain": false,
+      "abstained": false,
+      "answer": "本周作业截止日期为11月5日。 [record-0.md, section=作业通知]",
+      "reason": null
+    },
+    {
+      "id": "v5-frozen-17",
+      "passed": true,
+      "expected_abstain": true,
+      "abstained": true,
+      "answer": "资料中没有足够证据回答这个问题。相关记录中没有明确、可确认的截止日期。",
+      "reason": "missing_requested_fact"
+    },
+    {
+      "id": "v5-frozen-18",
+      "passed": true,
+      "expected_abstain": false,
+      "abstained": false,
+      "answer": "训练集用于拟合参数，测试集用于评价模型。 [record-0.md, section=课程笔记]",
+      "reason": null
+    },
+    {
+      "id": "v5-frozen-19",
+      "passed": true,
+      "expected_abstain": false,
+      "abstained": false,
+      "answer": "提高模型测试准确率可以使用更多训练数据。 [record-0.md, section=课程笔记]",
+      "reason": null
+    },
+    {
+      "id": "v5-frozen-20",
+      "passed": true,
+      "expected_abstain": true,
+      "abstained": true,
+      "answer": "资料中没有足够证据回答这个问题。相关记录中没有明确、可确认的测试准确率。",
+      "reason": "missing_requested_fact"
+    }
+  ]
+}

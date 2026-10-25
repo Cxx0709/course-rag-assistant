@@ -1,0 +1,181 @@
+{
+  "cases_sha256": "f16d49b10d0644f6d330971422815c148dd245e5c825d1912b0c8049371b4488",
+  "cases": 20,
+  "passed": 20,
+  "code_sha256": {
+    "src\\course_rag_assistant\\__init__.py": "64c4700ceb4abc71769b851411ee58675282d8c34f8ddee61e26e091e8335efe",
+    "src\\course_rag_assistant\\__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+    "src\\course_rag_assistant\\answer.py": "57f7d7bbab087bd9ed06a1c9824398e5fbaf5ef0b8fabcd58c1e8699604e9403",
+    "src\\course_rag_assistant\\cli.py": "793689beafb80697c7c48367b7b547473ce1942c2ddafbe26bbe7b4b3e2af295",
+    "src\\course_rag_assistant\\dense.py": "39c9e38e33d112e60841067f3d8189c1dd48f9a99c645b7be6a465eee8bd02c7",
+    "src\\course_rag_assistant\\evaluate.py": "114094eac52ebf4d540e930aed1aefe885771c3d09a4bf5ae59d69dffdf58c15",
+    "src\\course_rag_assistant\\evidence.py": "fc57e03724eba912dbe4d1f97372eaedbb80754f53c9987adcb1a1c3334f374f",
+    "src\\course_rag_assistant\\facts.py": "36c12337a1f7825104b76dba0b9ce3eadcd7cf765359b7066424def3b1692139",
+    "src\\course_rag_assistant\\ingest.py": "664cea5300c8a847c4655c1c8ebf82cec855d3220731afafe91e2251115d7574",
+    "src\\course_rag_assistant\\rerank.py": "99b1ca8a78b645a5782a68cb8d259efb63527d092c8fc7c40040be8ba08368ab",
+    "src\\course_rag_assistant\\retrieval.py": "9376edce2788ffb30daaee240486ca4800d7ba682bc2d2ae58e3c37056cd8a3f",
+    "src\\course_rag_assistant\\text.py": "c16b68e192280dea5287c3347c493254efab52dd0a30e8beef953700d580651a"
+  },
+  "details": [
+    {
+      "id": "frozen-01",
+      "passed": true,
+      "expected_abstain": false,
+      "abstained": false,
+      "answer": "nn.Conv2d的第一个参数表示输入通道数量。 [evidence.md, section=课程笔记]",
+      "reason": null
+    },
+    {
+      "id": "frozen-02",
+      "passed": true,
+      "expected_abstain": false,
+      "abstained": false,
+      "answer": "torch.sum的dim参数指定求和的维度。 [evidence.md, section=课程笔记]",
+      "reason": null
+    },
+    {
+      "id": "frozen-03",
+      "passed": true,
+      "expected_abstain": false,
+      "abstained": false,
+      "answer": "输出为负代表预测结果小于零。 [evidence.md, section=课程笔记]",
+      "reason": null
+    },
+    {
+      "id": "frozen-04",
+      "passed": true,
+      "expected_abstain": false,
+      "abstained": false,
+      "answer": "权重为正表示该特征对输出有正向贡献。 [evidence.md, section=课程笔记]",
+      "reason": null
+    },
+    {
+      "id": "frozen-05",
+      "passed": true,
+      "expected_abstain": false,
+      "abstained": false,
+      "answer": "自动微分依赖计算图来跟踪运算。 [evidence.md, section=课程笔记]",
+      "reason": null
+    },
+    {
+      "id": "frozen-06",
+      "passed": true,
+      "expected_abstain": false,
+      "abstained": false,
+      "answer": "均方误差是预测误差平方的平均值。 [evidence.md, section=课程笔记]",
+      "reason": null
+    },
+    {
+      "id": "frozen-07",
+      "passed": true,
+      "expected_abstain": false,
+      "abstained": false,
+      "answer": "降低模型损失可以使用梯度下降。 [evidence.md, section=课程笔记]",
+      "reason": null
+    },
+    {
+      "id": "frozen-08",
+      "passed": true,
+      "expected_abstain": false,
+      "abstained": false,
+      "answer": "训练集用于拟合参数，测试集用于评估模型。 [evidence.md, section=课程笔记]",
+      "reason": null
+    },
+    {
+      "id": "frozen-09",
+      "passed": true,
+      "expected_abstain": false,
+      "abstained": false,
+      "answer": "模型精度为87%。 [evidence.md, section=实验日志]",
+      "reason": null
+    },
+    {
+      "id": "frozen-10",
+      "passed": true,
+      "expected_abstain": false,
+      "abstained": false,
+      "answer": "我们班考试下午3点开始。 [evidence.md, section=考试通知]",
+      "reason": null
+    },
+    {
+      "id": "frozen-11",
+      "passed": true,
+      "expected_abstain": false,
+      "abstained": false,
+      "answer": "我上传的数据集有512张图片。 [evidence.md, section=数据集统计]",
+      "reason": null
+    },
+    {
+      "id": "frozen-12",
+      "passed": true,
+      "expected_abstain": true,
+      "abstained": true,
+      "answer": "资料中没有足够证据回答这个问题。",
+      "reason": "insufficient_query_coverage"
+    },
+    {
+      "id": "frozen-13",
+      "passed": true,
+      "expected_abstain": true,
+      "abstained": true,
+      "answer": "资料中没有足够证据回答这个问题。",
+      "reason": "insufficient_query_coverage"
+    },
+    {
+      "id": "frozen-14",
+      "passed": true,
+      "expected_abstain": true,
+      "abstained": true,
+      "answer": "资料中没有足够证据回答这个问题。当前资料缺少对应的个人实验记录或课程安排。",
+      "reason": "missing_context_record"
+    },
+    {
+      "id": "frozen-15",
+      "passed": true,
+      "expected_abstain": true,
+      "abstained": true,
+      "answer": "资料中没有足够证据回答这个问题。当前资料缺少对应的个人实验记录或课程安排。",
+      "reason": "missing_context_record"
+    },
+    {
+      "id": "frozen-16",
+      "passed": true,
+      "expected_abstain": true,
+      "abstained": true,
+      "answer": "资料中没有足够证据回答这个问题。相关记录中没有明确、可确认的精度。",
+      "reason": "missing_requested_fact"
+    },
+    {
+      "id": "frozen-17",
+      "passed": true,
+      "expected_abstain": true,
+      "abstained": true,
+      "answer": "资料中没有足够证据回答这个问题。",
+      "reason": "insufficient_query_coverage"
+    },
+    {
+      "id": "frozen-18",
+      "passed": true,
+      "expected_abstain": true,
+      "abstained": true,
+      "answer": "资料中没有足够证据回答这个问题。相关记录中没有明确、可确认的图片数量。",
+      "reason": "missing_requested_fact"
+    },
+    {
+      "id": "frozen-19",
+      "passed": true,
+      "expected_abstain": true,
+      "abstained": true,
+      "answer": "资料中没有足够证据回答这个问题。相关记录中没有明确、可确认的精度。",
+      "reason": "missing_requested_fact"
+    },
+    {
+      "id": "frozen-20",
+      "passed": true,
+      "expected_abstain": true,
+      "abstained": true,
+      "answer": "资料中没有足够证据回答这个问题。",
+      "reason": "missing_code_identifier"
+    }
+  ]
+}

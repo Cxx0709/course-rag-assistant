@@ -1,0 +1,508 @@
+{
+  "schema_version": 3,
+  "benchmark": "d2l-v2-development-not-held-out",
+  "run_scope": "smoke_test",
+  "full_dataset_counts": {
+    "answerable": 30,
+    "unanswerable": 10
+  },
+  "selected_ids": {
+    "answerable": [
+      "d2l-v2-01",
+      "d2l-v2-02",
+      "d2l-v2-03"
+    ],
+    "unanswerable": [
+      "d2l-unanswerable-01",
+      "d2l-unanswerable-02",
+      "d2l-unanswerable-03"
+    ]
+  },
+  "requested_modes": [
+    "hybrid"
+  ],
+  "completed": true,
+  "answerability_policy": "offline_coverage_0.5_scoped_record_values_conflicts_and_exact_api_symbols",
+  "code_sha256": {
+    "scripts\\evaluate_quality.py": "e8fe2e268ac5994f6aeb6155275b3f78da95c14a7c549c12939227d50b087fd0",
+    "src\\course_rag_assistant\\__init__.py": "64c4700ceb4abc71769b851411ee58675282d8c34f8ddee61e26e091e8335efe",
+    "src\\course_rag_assistant\\__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+    "src\\course_rag_assistant\\answer.py": "40ec231701cd00bb10c4877c96b99e047e666518130a97b0abf5bb60586c4d35",
+    "src\\course_rag_assistant\\cli.py": "793689beafb80697c7c48367b7b547473ce1942c2ddafbe26bbe7b4b3e2af295",
+    "src\\course_rag_assistant\\dense.py": "39c9e38e33d112e60841067f3d8189c1dd48f9a99c645b7be6a465eee8bd02c7",
+    "src\\course_rag_assistant\\evaluate.py": "114094eac52ebf4d540e930aed1aefe885771c3d09a4bf5ae59d69dffdf58c15",
+    "src\\course_rag_assistant\\evidence.py": "fc57e03724eba912dbe4d1f97372eaedbb80754f53c9987adcb1a1c3334f374f",
+    "src\\course_rag_assistant\\facts.py": "36c12337a1f7825104b76dba0b9ce3eadcd7cf765359b7066424def3b1692139",
+    "src\\course_rag_assistant\\ingest.py": "664cea5300c8a847c4655c1c8ebf82cec855d3220731afafe91e2251115d7574",
+    "src\\course_rag_assistant\\rerank.py": "99b1ca8a78b645a5782a68cb8d259efb63527d092c8fc7c40040be8ba08368ab",
+    "src\\course_rag_assistant\\retrieval.py": "9376edce2788ffb30daaee240486ca4800d7ba682bc2d2ae58e3c37056cd8a3f",
+    "src\\course_rag_assistant\\text.py": "c16b68e192280dea5287c3347c493254efab52dd0a30e8beef953700d580651a"
+  },
+  "labels_sha256": "7b93f442c19834c0a63b8a1b03c315fd94cb3d1eb3c72bbf2e5d6dbbf2b5b063",
+  "unanswerable_sha256": "c44a38da7ae733de86cc8a411c60af278302837b4670d3454e6903c5fc6bb9d6",
+  "corpus_sha256": {
+    "d2l-zh-pytorch.pdf": "db978acf18dac28f4de1412839ca1f804302c6a29b971b024595369afa69cbea"
+  },
+  "chunks": 3760,
+  "generation": "chat_with_exact_sentence_verification_and_extractive_fallback",
+  "chat_config": {
+    "backend": "OllamaChatGenerator",
+    "model": "qwen3.5:9b",
+    "timeout": 60.0,
+    "num_predict": 512,
+    "think": false
+  },
+  "notes": [
+    "Agent-checked evidence; independent human review and held-out evaluation are still required.",
+    "Gold pages are selected reference evidence, not exhaustive relevant-page judgments.",
+    "Page citation precision is not semantic entailment; keyword coverage is not answer correctness.",
+    "Non-abstention on negatives means unsupported answering, not necessarily fabricated text.",
+    "Timing excludes parsing and query embedding generation; cached vectors are reused across modes.",
+    "Model outputs are subject to exact-source-sentence verification, not free-paraphrase semantic verification.",
+    "Fallback answers measure application behavior and must not be reported as successful model generation."
+  ],
+  "skipped": {
+    "hybrid+rerank": "No configured BGE reranker endpoint; lexical reranking is not a substitute."
+  },
+  "results": {
+    "hybrid": {
+      "retrieval": {
+        "questions": 3,
+        "recall_at_k": 1.0,
+        "mrr": 0.8333333333333334,
+        "k": 8,
+        "details": [
+          {
+            "question": "什么是机器学习？",
+            "gold_pages": [
+              "d2l-zh-pytorch.pdf#p.56"
+            ],
+            "recall_at_k": 1.0,
+            "reciprocal_rank": 0.5,
+            "hits": [
+              {
+                "doc": "d2l-zh-pytorch.pdf",
+                "page": 36,
+                "section": "1.1 日常生活中的机器学习",
+                "score": 0.03149801587301587,
+                "stage": "fused"
+              },
+              {
+                "doc": "d2l-zh-pytorch.pdf",
+                "page": 56,
+                "section": "小结",
+                "score": 0.0304147465437788,
+                "stage": "fused"
+              },
+              {
+                "doc": "d2l-zh-pytorch.pdf",
+                "page": 19,
+                "section": "前言",
+                "score": 0.030330882352941176,
+                "stage": "fused"
+              },
+              {
+                "doc": "d2l-zh-pytorch.pdf",
+                "page": 37,
+                "section": "1.2 机器学习中的关键组件",
+                "score": 0.03021353930031804,
+                "stage": "fused"
+              },
+              {
+                "doc": "d2l-zh-pytorch.pdf",
+                "page": 55,
+                "section": "1.7 特点",
+                "score": 0.029957522915269395,
+                "stage": "fused"
+              },
+              {
+                "doc": "d2l-zh-pytorch.pdf",
+                "page": 47,
+                "section": "1.3.3 与环境互动",
+                "score": 0.029083245521601686,
+                "stage": "fused"
+              },
+              {
+                "doc": "d2l-zh-pytorch.pdf",
+                "page": 40,
+                "section": "1.3 各种机器学习问题",
+                "score": 0.027757078986587184,
+                "stage": "fused"
+              },
+              {
+                "doc": "d2l-zh-pytorch.pdf",
+                "page": 40,
+                "section": "1.3.1 监督学习",
+                "score": 0.026709401709401708,
+                "stage": "fused"
+              }
+            ]
+          },
+          {
+            "question": "深度学习和传统机器学习有什么区别？",
+            "gold_pages": [
+              "d2l-zh-pytorch.pdf#p.55"
+            ],
+            "recall_at_k": 1.0,
+            "reciprocal_rank": 1.0,
+            "hits": [
+              {
+                "doc": "d2l-zh-pytorch.pdf",
+                "page": 55,
+                "section": "1.7 特点",
+                "score": 0.03225806451612903,
+                "stage": "fused"
+              },
+              {
+                "doc": "d2l-zh-pytorch.pdf",
+                "page": 56,
+                "section": "小结",
+                "score": 0.032018442622950824,
+                "stage": "fused"
+              },
+              {
+                "doc": "d2l-zh-pytorch.pdf",
+                "page": 39,
+                "section": "1.2.2 模型",
+                "score": 0.032018442622950824,
+                "stage": "fused"
+              },
+              {
+                "doc": "d2l-zh-pytorch.pdf",
+                "page": 19,
+                "section": "前言",
+                "score": 0.03036576949620428,
+                "stage": "fused"
+              },
+              {
+                "doc": "d2l-zh-pytorch.pdf",
+                "page": 266,
+                "section": "7.1 深度卷积神经网络（AlexNet）",
+                "score": 0.029877369007803793,
+                "stage": "fused"
+              },
+              {
+                "doc": "d2l-zh-pytorch.pdf",
+                "page": 209,
+                "section": "深度学习计算",
+                "score": 0.027984344422700584,
+                "stage": "fused"
+              },
+              {
+                "doc": "d2l-zh-pytorch.pdf",
+                "page": 36,
+                "section": "",
+                "score": 0.027984344422700584,
+                "stage": "fused"
+              },
+              {
+                "doc": "d2l-zh-pytorch.pdf",
+                "page": 57,
+                "section": "预备知识",
+                "score": 0.027056277056277056,
+                "stage": "fused"
+              }
+            ]
+          },
+          {
+            "question": "机器学习中的关键组件有哪些？",
+            "gold_pages": [
+              "d2l-zh-pytorch.pdf#p.37"
+            ],
+            "recall_at_k": 1.0,
+            "reciprocal_rank": 1.0,
+            "hits": [
+              {
+                "doc": "d2l-zh-pytorch.pdf",
+                "page": 37,
+                "section": "1.2 机器学习中的关键组件",
+                "score": 0.03278688524590164,
+                "stage": "fused"
+              },
+              {
+                "doc": "d2l-zh-pytorch.pdf",
+                "page": 39,
+                "section": "1.2.4 优化算法",
+                "score": 0.03225806451612903,
+                "stage": "fused"
+              },
+              {
+                "doc": "d2l-zh-pytorch.pdf",
+                "page": 112,
+                "section": "小结",
+                "score": 0.03125763125763126,
+                "stage": "fused"
+              },
+              {
+                "doc": "d2l-zh-pytorch.pdf",
+                "page": 209,
+                "section": "深度学习计算",
+                "score": 0.02964426877470356,
+                "stage": "fused"
+              },
+              {
+                "doc": "d2l-zh-pytorch.pdf",
+                "page": 36,
+                "section": "1.1 日常生活中的机器学习",
+                "score": 0.028991596638655463,
+                "stage": "fused"
+              },
+              {
+                "doc": "d2l-zh-pytorch.pdf",
+                "page": 55,
+                "section": "1.7 特点",
+                "score": 0.02871794871794872,
+                "stage": "fused"
+              },
+              {
+                "doc": "d2l-zh-pytorch.pdf",
+                "page": 56,
+                "section": "小结",
+                "score": 0.027799227799227798,
+                "stage": "fused"
+              },
+              {
+                "doc": "d2l-zh-pytorch.pdf",
+                "page": 6,
+                "section": "",
+                "score": 0.026875901875901876,
+                "stage": "fused"
+              }
+            ]
+          }
+        ]
+      },
+      "answerable": {
+        "questions": 3,
+        "abstention_rate": 1.0,
+        "abstention_reasons": {
+          "unsupported_citations": 3
+        },
+        "literal_answer_point_coverage": 0.0,
+        "gold_page_citation_precision": null,
+        "details": [
+          {
+            "id": "d2l-v2-01",
+            "question": "什么是机器学习？",
+            "answer": "资料中没有足够证据回答这个问题。",
+            "abstained": true,
+            "abstention_reason": "unsupported_citations",
+            "matched_points": [],
+            "point_count": 2,
+            "citation_count": 0,
+            "gold_page_citations": 0,
+            "unsupported_claims": [
+              "机器学习研究计算机系统如何利用经验（通常是数据）来提高特定任务的性能。",
+              "它结合了统计学、数据挖掘和优化的思想。",
+              "通常，它是被用作实现人工智能解决方案的一种手段。",
+              "利用机器学习算法，我们不需要设计一个“明确地”识别唤醒词的系统。",
+              "相反，我们只需要定义一个灵活的程序算法，其输出由许多参数（parameter）决定，然后使用数据集来确定当下的“最佳参数集”，这些参数通过某种性能度量方式来达到完成任务的最佳性能。",
+              "几年前，在大公司和初创公司中，并没有大量的深度学习科学家开发智能产品和服务。",
+              "我们中年轻人（作者）进入这个领域时，机器学习并没有在报纸上获得头条新闻。",
+              "我们的父母根本不知道什么是机器学习，更不用说为什么我们可能更喜欢机器学习，而不是从事医学或法律职业。",
+              "机器学习是一门具有前瞻性的学科，在现实世界的应用范围很窄。",
+              "而那些应用，例如语音识别和计算机视觉，需要大量的领域知识，以至于它们通常被认为是完全独立的领域，而机器学习对这些领域来说只是一个小组件。",
+              "因此，神经网络——我们在本书中关注的深度学习模型的前身，被认为是过时的工具。",
+              "就在过去的五年里，深度学习给世界带来了惊喜，推动了计算机视觉、自然语言处理、自动语音识别、强化学学习和统计建模等领域的快速发展。",
+              "有了这些进步，我们现在可以制造比以往任何时候都更自主的汽车（不过可能没有一些公司试图让大家相信的那么自主），可以自动起草普通邮件的智能回复系统，帮助人们从令人压抑的大收件箱中解放出来。",
+              "在围棋等棋类游戏中，软件超越了世界上最优秀的人，这曾被认为是几十年后的事。",
+              "这些工具已经对工业和社会产生了越来越广泛的影响，改变了电影的制作方式、疾病的诊断方式，并在基础科学中扮演着越来越重要的角色——从天体物理学到生物学。"
+            ],
+            "generation_status": "model_output_checked",
+            "generation_error_type": null,
+            "raw_model_output": "机器学习研究计算机系统如何利用经验（通常是数据）来提高特定任务的性能。它结合了统计学、数据挖掘和优化的思想。通常，它是被用作实现人工智能解决方案的一种手段。\n利用机器学习算法，我们不需要设计一个“明确地”识别唤醒词的系统。相反，我们只需要定义一个灵活的程序算法，其输出由许多参数（parameter）决定，然后使用数据集来确定当下的“最佳参数集”，这些参数通过某种性能度量方式来达到完成任务的最佳性能。\n几年前，在大公司和初创公司中，并没有大量的深度学习科学家开发智能产品和服务。我们中年轻人（作者）进入这个领域时，机器学习并没有在报纸上获得头条新闻。我们的父母根本不知道什么是机器学习，更不用说为什么我们可能更喜欢机器学习，而不是从事医学或法律职业。机器学习是一门具有前瞻性的学科，在现实世界的应用范围很窄。而那些应用，例如语音识别和计算机视觉，需要大量的领域知识，以至于它们通常被认为是完全独立的领域，而机器学习对这些领域来说只是一个小组件。因此，神经网络——我们在本书中关注的深度学习模型的前身，被认为是过时的工具。\n就在过去的五年里，深度学习给世界带来了惊喜，推动了计算机视觉、自然语言处理、自动语音识别、强化学学习和统计建模等领域的快速发展。有了这些进步，我们现在可以制造比以往任何时候都更自主的汽车（不过可能没有一些公司试图让大家相信的那么自主），可以自动起草普通邮件的智能回复系统，帮助人们从令人压抑的大收件箱中解放出来。在围棋等棋类游戏中，软件超越了世界上最优秀的人，这曾被认为是几十年后的事。这些工具已经对工业和社会产生了越来越广泛的影响，改变了电影的制作方式、疾病的诊断方式，并在基础科学中扮演着越来越重要的角色——从天体物理学到生物学。",
+            "generation_seconds": 42.700863700010814,
+            "answer_seconds": 42.70794200000819,
+            "evidence": [
+              {
+                "doc": "d2l-zh-pytorch.pdf",
+                "page": 36,
+                "section": "1.1 日常生活中的机器学习",
+                "text": "机器学习应用在日常生活中的方方面面。现在，假设本书的作者们一起驱车去咖啡店。阿斯顿拿起一部iPhone，\n对它说道：“Hey Siri！”手机的语音识别系统就被唤醒了。接着，李沐对Siri说道：“去星巴克咖啡店。”语音\n识别系统就自动触发语音转文字功能，并启动地图应用程序，地图应用程序在启动后筛选了若干条路线，每\n条路线都显示了预计的通行时间⋯⋯由此可见，机器学习渗透在生活中的方方面面，在短短几秒钟的时间里，\n人们与智能手机的日常互动就可以涉及几种机器学习模型。\n现在，假如需要我们编写程序来响应一个“唤醒词”（比如“Alexa”“小爱同学”和“Hey Siri”）。我们试\n着用一台计算机和一个代码编辑器编写代码，如图1.1.1中所示。问题看似很难解决：麦克风每秒钟将收集大\n约44000个样本，每个样本都是声波振幅的测量值。而该测量值与唤醒词难以直接关联。那又该如何编写程\n序，令其输入麦克风采集到的原始音频片段,输出{是, 否}（表示该片段是否包含唤醒词）的可靠预测呢？我\n们对编写这个程序毫无头绪，这就是需要机器学习的原因。\n图1.1.1: 识别唤醒词\n通常，即使我们不知道怎样明确地告诉计算机如何从输入映射到输出，大脑仍然能够自己执行认知功能。换\n句话说，即使我们不知道如何编写计算机程序来识别“Alexa”这个词，大脑自己也能够识别它。有了这一能\n力，我们就可以收集一个包含大量音频样本的数据集（dataset），并对包含和不包含唤醒词的样本进行标记。\n利用机器学习算法，我们不需要设计一个“明确地”识别唤醒词的系统。相反，我们只需要定义一个灵活的\n程序算法，其输出由许多参数（parameter）决定，然后使用数据集来确定当下的“最佳参数集”，这些参数\n通过某种性能度量方式来达到完成任务的最佳性能。\n那么到底什么是参数呢？参数可以被看作旋钮，旋钮的转动可以调整程序的行为。任一调整参数后的程序被\n称为模型（model）。通过操作参数而生成的所有不同程序（输入‐输出映射）的集合称为“模型族”。使用数\n据集来选择参数的元程序被称为学习算法（learning algorithm）。"
+              },
+              {
+                "doc": "d2l-zh-pytorch.pdf",
+                "page": 56,
+                "section": "小结",
+                "text": "• 机器学习研究计算机系统如何利用经验（通常是数据）来提高特定任务的性能。它结合了统计学、数据\n挖掘和优化的思想。通常，它是被用作实现人工智能解决方案的一种手段。\n• 表示学习作为机器学习的一类，其研究的重点是如何自动找到合适的数据表示方式。深度学习是通过\n学习多层次的转换来进行的多层次的表示学习。\n• 深度学习不仅取代了传统机器学习的浅层模型，而且取代了劳动密集型的特征工程。\n• 最近在深度学习方面取得的许多进展，大都是由廉价传感器和互联网规模应用所产生的大量数据，以\n及（通过GPU）算力的突破来触发的。\n• 整个系统优化是获得高性能的关键环节。有效的深度学习框架的开源使得这一点的设计和实现变得非\n常容易。"
+              },
+              {
+                "doc": "d2l-zh-pytorch.pdf",
+                "page": 19,
+                "section": "前言",
+                "text": "几年前，在大公司和初创公司中，并没有大量的深度学习科学家开发智能产品和服务。我们中年轻人（作者）\n进入这个领域时，机器学习并没有在报纸上获得头条新闻。我们的父母根本不知道什么是机器学习，更不用\n说为什么我们可能更喜欢机器学习，而不是从事医学或法律职业。机器学习是一门具有前瞻性的学科，在现\n实世界的应用范围很窄。而那些应用，例如语音识别和计算机视觉，需要大量的领域知识，以至于它们通常\n被认为是完全独立的领域，而机器学习对这些领域来说只是一个小组件。因此，神经网络——我们在本书中\n关注的深度学习模型的前身，被认为是过时的工具。\n就在过去的五年里，深度学习给世界带来了惊喜，推动了计算机视觉、自然语言处理、自动语音识别、强化学\n习和统计建模等领域的快速发展。有了这些进步，我们现在可以制造比以往任何时候都更自主的汽车（不过\n可能没有一些公司试图让大家相信的那么自主），可以自动起草普通邮件的智能回复系统，帮助人们从令人\n压抑的大收件箱中解放出来。在围棋等棋类游戏中，软件超越了世界上最优秀的人，这曾被认为是几十年后\n的事。这些工具已经对工业和社会产生了越来越广泛的影响，改变了电影的制作方式、疾病的诊断方式，并\n在基础科学中扮演着越来越重要的角色——从天体物理学到生物学。"
+              }
+            ]
+          },
+          {
+            "id": "d2l-v2-02",
+            "question": "深度学习和传统机器学习有什么区别？",
+            "answer": "资料中没有足够证据回答这个问题。",
+            "abstained": true,
+            "abstention_reason": "unsupported_citations",
+            "matched_points": [],
+            "point_count": 3,
+            "citation_count": 0,
+            "gold_page_citations": 0,
+            "unsupported_claims": [
+              "深度学习是“深度”的，模型学习了许多“层”的转换，每一层提供一个层次的表示。",
+              "深度学习与经典方法的区别主要在于：前者关注的功能强大的模型，这些模型由神经网络错综复杂的交织在一起，包含层层数据转换，因此被称为深度学习（deep learning）。",
+              "深度学习不仅取代了传统机器学习的浅层模型，而且取代了劳动密集型的特征工程。"
+            ],
+            "generation_status": "model_output_checked",
+            "generation_error_type": null,
+            "raw_model_output": "深度学习是“深度”的，模型学习了许多“层”的转换，每一层提供一个层次的表示。\n深度学习与经典方法的区别主要在于：前者关注的功能强大的模型，这些模型由神经网络错综复杂的交织在一起，包含层层数据转换，因此被称为深度学习（deep learning）。\n深度学习不仅取代了传统机器学习的浅层模型，而且取代了劳动密集型的特征工程。",
+            "generation_seconds": 2.7908202999969944,
+            "answer_seconds": 2.793407200020738,
+            "evidence": [
+              {
+                "doc": "d2l-zh-pytorch.pdf",
+                "page": 55,
+                "section": "1.7 特点",
+                "text": "到目前为止，本节已经广泛地讨论了机器学习，它既是人工智能的一个分支，也是人工智能的一种方法。虽\n然深度学习是机器学习的一个子集，但令人眼花缭乱的算法和应用程序集让人很难评估深度学习的具体成分\n是什么。这就像试图确定披萨所需的配料一样困难，因为几乎每种成分都是可以替代的。\n如前所述，机器学习可以使用数据来学习输入和输出之间的转换，例如在语音识别中将音频转换为文本。在\n这样做时，通常需要以适合算法的方式表示数据，以便将这种表示转换为输出。深度学习是“深度”的，模型\n学习了许多“层”的转换，每一层提供一个层次的表示。例如，靠近输入的层可以表示数据的低级细节，而\n接近分类输出的层可以表示用于区分的更抽象的概念。由于表示学习（representation learning）目的是寻\n找表示本身，因此深度学习可以称为“多级表示学习”。\n本节到目前为止讨论的问题，例如从原始音频信号中学习，图像的原始像素值，或者任意长度的句子与外语\n中的对应句子之间的映射，都是深度学习优于传统机器学习方法的问题。事实证明，这些多层模型能够以以\n前的工具所不能的方式处理低级的感知数据。毋庸置疑，深度学习方法中最显著的共同点是使用端到端训练。\n也就是说，与其基于单独调整的组件组装系统，不如构建系统，然后联合调整它们的性能。例如，在计算机视\n觉中，科学家们习惯于将特征工程的过程与建立机器学习模型的过程分开。Canny边缘检测器(Canny, 1987)\n和SIFT特征提取器(Lowe, 2004) 作为将图像映射到特征向量的算法，在过去的十年里占据了至高无上的地\n位。在过去的日子里，将机器学习应用于这些问题的关键部分是提出人工设计的特征工程方法，将数据转换\n为某种适合于浅层模型的形式。然而，与一个算法自动执行的数百万个选择相比，人类通过特征工程所能完\n成的事情很少。当深度学习开始时，这些特征抽取器被自动调整的滤波器所取代，产生了更高的精确度。\n因此，深度学习的一个关键优势是它不仅取代了传统学习管道末端的浅层模型，而且还取代了劳动密集型的\n特征工程过程。此外，通过取代大部分特定领域的预处理，深度学习消除了以前分隔计算机视觉、语音识别、"
+              },
+              {
+                "doc": "d2l-zh-pytorch.pdf",
+                "page": 56,
+                "section": "小结",
+                "text": "• 机器学习研究计算机系统如何利用经验（通常是数据）来提高特定任务的性能。它结合了统计学、数据\n挖掘和优化的思想。通常，它是被用作实现人工智能解决方案的一种手段。\n• 表示学习作为机器学习的一类，其研究的重点是如何自动找到合适的数据表示方式。深度学习是通过\n学习多层次的转换来进行的多层次的表示学习。\n• 深度学习不仅取代了传统机器学习的浅层模型，而且取代了劳动密集型的特征工程。\n• 最近在深度学习方面取得的许多进展，大都是由廉价传感器和互联网规模应用所产生的大量数据，以\n及（通过GPU）算力的突破来触发的。\n• 整个系统优化是获得高性能的关键环节。有效的深度学习框架的开源使得这一点的设计和实现变得非\n常容易。"
+              },
+              {
+                "doc": "d2l-zh-pytorch.pdf",
+                "page": 39,
+                "section": "1.2.2 模型",
+                "text": "大多数机器学习会涉及到数据的转换。比如一个“摄取照片并预测笑脸”的系统。再比如通过摄取到的一组\n传感器读数预测读数的正常与异常程度。虽然简单的模型能够解决如上简单的问题，但本书中关注的问题超\n出了经典方法的极限。深度学习与经典方法的区别主要在于：前者关注的功能强大的模型，这些模型由神经\n网络错综复杂的交织在一起，包含层层数据转换，因此被称为深度学习（deep learning）。在讨论深度模型\n的过程中，本书也将提及一些传统方法。"
+              }
+            ]
+          },
+          {
+            "id": "d2l-v2-03",
+            "question": "机器学习中的关键组件有哪些？",
+            "answer": "资料中没有足够证据回答这个问题。",
+            "abstained": true,
+            "abstention_reason": "unsupported_citations",
+            "matched_points": [],
+            "point_count": 4,
+            "citation_count": 0,
+            "gold_page_citations": 0,
+            "unsupported_claims": [
+              "无论什么类型的机器学习问题，都会遇到这些组件：",
+              "1. 可以用来学习的数据（data）；",
+              "2. 如何转换数据的模型（model）；",
+              "3. 一个目标函数（objective function），用来量化模型的有效性；",
+              "4. 调整模型参数以优化目标函数的算法（algorithm）。",
+              "机器学习模型中的关键要素是训练数据、损失函数、优化算法，还有模型本身。"
+            ],
+            "generation_status": "model_output_checked",
+            "generation_error_type": null,
+            "raw_model_output": "无论什么类型的机器学习问题，都会遇到这些组件：\n1. 可以用来学习的数据（data）；\n2. 如何转换数据的模型（model）；\n3. 一个目标函数（objective function），用来量化模型的有效性；\n4. 调整模型参数以优化目标函数的算法（algorithm）。\n机器学习模型中的关键要素是训练数据、损失函数、优化算法，还有模型本身。",
+            "generation_seconds": 2.7706040000193752,
+            "answer_seconds": 2.7742223999812268,
+            "evidence": [
+              {
+                "doc": "d2l-zh-pytorch.pdf",
+                "page": 37,
+                "section": "1.2 机器学习中的关键组件",
+                "text": "首先介绍一些核心组件。无论什么类型的机器学习问题，都会遇到这些组件：\n1. 可以用来学习的数据（data）；\n2. 如何转换数据的模型（model）；\n3. 一个目标函数（objective function），用来量化模型的有效性；\n4. 调整模型参数以优化目标函数的算法（algorithm）。\n1.2. 机器学习中的关键组件 19"
+              },
+              {
+                "doc": "d2l-zh-pytorch.pdf",
+                "page": 39,
+                "section": "1.2.4 优化算法",
+                "text": "当我们获得了一些数据源及其表示、一个模型和一个合适的损失函数，接下来就需要一种算法，它能够搜索出\n最佳参数，以最小化损失函数。深度学习中，大多流行的优化算法通常基于一种基本方法–梯度下降（gradient\ndescent）。简而言之，在每个步骤中，梯度下降法都会检查每个参数，看看如果仅对该参数进行少量变动，训\n练集损失会朝哪个方向移动。然后，它在可以减少损失的方向上优化参数。\n1.2. 机器学习中的关键组件 21"
+              },
+              {
+                "doc": "d2l-zh-pytorch.pdf",
+                "page": 112,
+                "section": "小结",
+                "text": "• 机器学习模型中的关键要素是训练数据、损失函数、优化算法，还有模型本身。\n• 矢量化使数学表达上更简洁，同时运行的更快。\n• 最小化目标函数和执行极大似然估计等价。\n• 线性回归模型也是一个简单的神经网络。"
+              }
+            ]
+          }
+        ],
+        "generation_status_counts": {
+          "model_output_checked": 3
+        },
+        "model_calls": 3,
+        "generation_failures": 0,
+        "model_outputs_fully_rejected": 3
+      },
+      "unanswerable": {
+        "questions": 3,
+        "abstention_rate": 1.0,
+        "abstention_reasons": {
+          "insufficient_query_coverage": 3
+        },
+        "literal_answer_point_coverage": 0.0,
+        "gold_page_citation_precision": null,
+        "details": [
+          {
+            "id": "d2l-unanswerable-01",
+            "question": "如何办理护照首次申请？",
+            "answer": "资料中没有足够证据回答这个问题。",
+            "abstained": true,
+            "abstention_reason": "insufficient_query_coverage",
+            "matched_points": [],
+            "point_count": 0,
+            "citation_count": 0,
+            "gold_page_citations": 0,
+            "unsupported_claims": [],
+            "generation_status": "skipped_no_evidence",
+            "generation_error_type": null,
+            "raw_model_output": null,
+            "generation_seconds": 0.0,
+            "answer_seconds": 0.0008440000237897038,
+            "evidence": []
+          },
+          {
+            "id": "d2l-unanswerable-02",
+            "question": "糖醋排骨需要哪些调料和烹饪步骤？",
+            "answer": "资料中没有足够证据回答这个问题。",
+            "abstained": true,
+            "abstention_reason": "insufficient_query_coverage",
+            "matched_points": [],
+            "point_count": 0,
+            "citation_count": 0,
+            "gold_page_citations": 0,
+            "unsupported_claims": [],
+            "generation_status": "skipped_no_evidence",
+            "generation_error_type": null,
+            "raw_model_output": null,
+            "generation_seconds": 0.0,
+            "answer_seconds": 0.00047810000251047313,
+            "evidence": []
+          },
+          {
+            "id": "d2l-unanswerable-03",
+            "question": "如何更换自行车的刹车线？",
+            "answer": "资料中没有足够证据回答这个问题。",
+            "abstained": true,
+            "abstention_reason": "insufficient_query_coverage",
+            "matched_points": [],
+            "point_count": 0,
+            "citation_count": 0,
+            "gold_page_citations": 0,
+            "unsupported_claims": [],
+            "generation_status": "skipped_no_evidence",
+            "generation_error_type": null,
+            "raw_model_output": null,
+            "generation_seconds": 0.0,
+            "answer_seconds": 0.0006815000087954104,
+            "evidence": []
+          }
+        ],
+        "generation_status_counts": {
+          "skipped_no_evidence": 3
+        },
+        "model_calls": 0,
+        "generation_failures": 0,
+        "model_outputs_fully_rejected": 0
+      },
+      "evaluation_seconds": 48.31145999999717
+    }
+  },
+  "model": "bge-m3:latest",
+  "index_sha256": "a555e852fd0dbdee0d7e348646f043893067323d1a32520a45856cbba941a86c",
+  "index_metadata_sha256": "b390554d73923bdf32b5e71feafb1d1ea7d3ba854271926fc6f97a43b9f5adff",
+  "query_vectors_sha256": "ffe953b35f75d198f8114ab7345eea84ef17edc60c85bb64ffc0cab22c73d1cc"
+}
