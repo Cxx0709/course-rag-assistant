@@ -20,6 +20,7 @@ dev = ["pytest>=8.0", "ruff>=0.4"]
 
 [project.scripts]
 course-rag = "course_rag_assistant.cli:main"
+course-rag-web = "course_rag_assistant.web:main"
 
 [build-system]
 requires = ["setuptools>=68"]
@@ -27,3 +28,6 @@ build-backend = "setuptools.build_meta"
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.setuptools.package-data]
+course_rag_assistant = ["web_assets/*.html", "web_assets/*.css", "web_assets/*.js", "web_assets/sample/*.md"]

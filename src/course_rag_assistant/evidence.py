@@ -69,6 +69,12 @@ def select_evidence(question: str, hits: list[Hit]) -> EvidenceDecision:
             if not candidates:
                 return EvidenceDecision([], "missing_context_record", 0.0)
     cleaned = question
+    # In a concept/structure question, the requested explanation need not repeat
+    # generic wording such as "核心结构" verbatim. Keep the named subject intact.
+    concept = re.fullmatch(r"(.+?)的(?:核心结构|结构|组成|工作原理)(?:是什么|有哪些)[？?]?", question)
+    if (concept and any(h.stage == "chat_reranked" for h in candidates)
+            and not local_record and not _PERSONAL.search(question)):
+        cleaned = concept.group(1)
     if local_record:
         # A source label routes the question; it need not be repeated in its body.
         for role in roles:

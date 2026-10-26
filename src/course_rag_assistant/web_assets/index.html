@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#176653">
+  <title>课内 · 资料问答</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="/assets/style.css">
+  <script src="/assets/app.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#question">跳到提问</a>
+  <div class="workspace">
+    <aside class="sidebar" aria-label="资料库">
+      <a class="brand" href="/" aria-label="课内首页">
+        <span class="brand-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 4.5c4-1 7 0 9 2v14c-2-2-5-3-9-2zm18 0c-4-1-7 0-9 2v14c2-2 5-3 9-2z"/></svg></span>
+        <span>课内<small>COURSE NOTES</small></span>
+      </a>
+      <div class="library-heading"><h2>我的资料</h2><span id="document-count" class="count">0</span></div>
+      <div id="dropzone" class="dropzone">
+        <span class="upload-icon" aria-hidden="true">↥</span>
+        <button id="upload-button" class="upload-button" type="button">添加课程资料</button>
+        <p>或将文件拖到这里</p>
+        <small>PDF · PPTX · Markdown<br>每份最多 25 MB</small>
+        <input id="file-input" type="file" accept=".pdf,.pptx,.md" multiple hidden>
+      </div>
+      <div class="selection-toolbar"><span id="selection-count">尚未添加资料</span><button id="select-all" class="text-button" type="button" hidden>全选</button></div>
+      <div id="documents" class="document-list" aria-label="选择提问使用的资料"></div>
+      <p id="empty-library" class="empty-library">你的讲义、笔记和教材，<br>都可以从这里开始整理。</p>
+      <div class="sidebar-bottom"><span class="status-dot" aria-hidden="true"></span><span>资料保存在这台电脑</span></div>
+    </aside>
+
+    <main>
+      <header class="topbar"><div><span class="breadcrumb">学习空间</span><span class="separator">/</span><strong>资料问答</strong></div><span id="connection" class="mode-badge">正在连接…</span></header>
+      <div class="main-content">
+        <section class="welcome" aria-labelledby="welcome-title">
+          <div class="eyebrow"><span></span>从你的资料出发</div>
+          <h1 id="welcome-title">每一个问题，<br>都有迹可循。</h1>
+          <p>把课程资料放进来，问一个你想弄懂的问题。<br>回答附上原文出处，理解和核对都更轻松。</p>
+        </section>
+
+        <form id="ask-form" class="question-card">
+          <label for="question">你想弄懂什么？</label>
+          <textarea id="question" rows="3" maxlength="1000" placeholder="例如：训练集和测试集的用途有什么不同？" aria-describedby="question-help"></textarea>
+          <div class="question-actions">
+            <label class="model-option"><input id="use-model" type="checkbox" disabled><span>模型辅助</span><span id="model-note" class="model-note">未配置时可直接查原文</span></label>
+            <button id="ask-button" class="primary" type="submit" disabled><span id="ask-label">开始提问</span><span aria-hidden="true">↗</span></button>
+          </div>
+          <p id="question-help" class="question-help">先添加资料，或使用下方示例体验。Ctrl / ⌘ + Enter 提问</p>
+        </form>
+
+        <div id="notice" class="notice" role="status" aria-live="polite" hidden></div>
+        <div id="error" class="error" role="alert" hidden></div>
+
+        <section id="getting-started" class="getting-started">
+          <div class="section-label">第一次使用</div>
+          <div class="start-grid">
+            <div class="start-step"><span class="step-number">01</span><h3>放入资料</h3><p>上传教材、课堂讲义<br>或自己的学习笔记。</p></div>
+            <div class="start-step"><span class="step-number">02</span><h3>问一个问题</h3><p>勾选要查阅的资料，<br>把问题描述清楚。</p></div>
+            <div class="start-step"><span class="step-number">03</span><h3>回到原文</h3><p>点击回答旁的引用，<br>核对原文和页码。</p></div>
+          </div>
+          <div class="demo-row"><span>手边没有资料？</span><button id="demo-button" class="text-button" type="button">用一份机器学习示例试试 <span aria-hidden="true">→</span></button></div>
+        </section>
+
+        <section id="suggestions" class="suggestions" aria-label="示例问题" hidden><span>可以从这里开始</span><div>
+          <button type="button" data-question="训练集和测试集的用途有什么不同？">训练集与测试集</button>
+          <button type="button" data-question="多层感知机的核心结构是什么？">多层感知机</button>
+          <button type="button" data-question="什么是过拟合？">什么是过拟合</button>
+        </div></section>
+
+        <section id="answer" class="answer-card" aria-labelledby="answer-title" hidden>
+          <div class="answer-heading"><div><span class="eyebrow">资料中的回答</span><h2 id="answer-title"></h2></div><span id="answer-mode" class="mode-badge"></span></div>
+          <p id="answer-scope" class="answer-scope"></p>
+          <div id="answer-content" class="answer-content" aria-live="polite" aria-busy="false"></div>
+          <div id="answer-sources" class="answer-sources" hidden><h3>查看引用原文</h3><div id="source-list" class="source-list"></div></div>
+          <p class="answer-footnote">回答可能遗漏关键信息，建议结合引用原文核对。</p>
+        </section>
+        <footer>课内 <span>·</span> 把知识读懂，也把出处留住。</footer>
+      </div>
+    </main>
+  </div>
+
+  <dialog id="source-dialog" aria-labelledby="source-title">
+    <div class="dialog-top"><span class="eyebrow">引用原文</span><button id="close-source" class="icon-button" type="button" aria-label="关闭原文">×</button></div>
+    <h2 id="source-title"></h2><p id="source-location" class="source-location"></p>
+    <pre id="source-text"></pre>
+    <div class="dialog-bottom"><span id="source-page-note"></span><a id="source-open" class="primary" target="_blank" rel="noopener noreferrer">打开文件 ↗</a></div>
+  </dialog>
+</body>
+</html>

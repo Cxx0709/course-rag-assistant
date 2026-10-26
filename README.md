@@ -4,6 +4,14 @@ A course-focused RAG system that answers from *your own course materials* — wi
 page-exact citations, prerequisite-aware explanations, and a quiz loop that maps
 wrong answers back to knowledge gaps.
 
+## 网页版：直接使用
+
+双击项目里的 **`start-web.cmd`**，然后打开 **http://127.0.0.1:8000**。
+点击“用一份机器学习示例试试”即可体验；也可以上传自己的 PDF、PPTX 或 Markdown，输入问题，点击引用查看原文和页码。资料保存在本机，重启后仍可使用。
+
+默认无需模型；已有 Ollama 时可运行 `.\start-web.ps1 -Model qwen3.5:9b`，再在页面勾选“模型辅助”。首次安装运行 `uv sync --extra dev`。
+详细说明和实际截图见 [网页版使用说明](docs/local-web.md)。
+
 ## Why this is not "yet another PDF chatbot"
 
 1. **Verifiable answers.** Every factual claim is anchored to a retrieved
@@ -75,12 +83,41 @@ incomplete evidence; general answer-quality acceptance is not established.
 The offline baseline is unchanged. Custom generators must now return
 `{"sentence_ids":[1,3]}` (or an empty array to abstain), rather than answer prose.
 
-The latest [v8 content-filter report](docs/content-filter-v8.md) excludes explicit
+The [v8 content-filter report](docs/content-filter-v8.md) excludes explicit
 TOC and running-title fragments before retrieval truncation and sentence selection.
 On the same development set, hybrid Recall@8 is 83.33% and chat answer-point
 coverage is 78.33%, with 0/30 answerable refusals and 10/10 unanswerable refusals.
 Reference-page citation precision decreases from 60.49% to 57.65%; human review
 is still pending. Real BGE reranking remains untested without a configured service.
+
+The [v9 answer-completeness report](docs/answer-completeness-v9.md) adds
+optional chat-model passage selection with `answer --chat-rerank` and
+`search --chat-rerank`. In a same-configuration development comparison,
+answer-point coverage increases from 75.00% to 85.28%; all 30 answerable
+questions receive answers and all 10 unanswerable questions are rejected.
+Reference-page citation precision decreases from 58.54% to 50.41%, and the
+40-question run takes 164 seconds instead of 45 seconds. This mode remains
+opt-in; these results do not establish general answer correctness.
+See [actual answer examples](docs/answer-examples-v9.md) for the improved
+definitions and remaining repetition.
+
+The [v10 concise-answer report](docs/concise-answers-v10.md) preserves
+the model's answer order, removes identical selected sentences, and repairs PDF
+line breaks around parenthetical terms. With the same development questions,
+model configuration, and passage selections, average answer text is 17.4%
+shorter; literal answer-point coverage changes from 85.28% to 81.39%, while
+reference-page citation precision increases from 50.41% to 56.38%.
+The report explains the keyword mismatches and remaining incomplete excerpts.
+See [before-and-after answers](docs/answer-examples-v10.md).
+
+The latest [v11 PDF sentence-integrity report](docs/pdf-sentence-integrity-v11.md)
+filters obvious PDF fragments before selection, fallback answering, and citation
+verification. Complete list items and code remain eligible; PDF passages with no
+usable units no longer crowd out later complete evidence. Both tested chat modes
+answer all 30 positive development questions and reject all 10 negatives.
+Chat-reranked answer-point coverage decreases from 81.39% to 78.61%; the report
+records missing selections and model variability instead of claiming overall
+quality acceptance. See [actual answers](docs/answer-examples-v11.md).
 
 ## Quick start
 

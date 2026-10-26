@@ -21,7 +21,7 @@ from course_rag_assistant.content import navigation_reason
 from course_rag_assistant.dense import NumpyVectorIndex, embedder_from_env
 from course_rag_assistant.evaluate import evaluate_retriever, load_labeled
 from course_rag_assistant.ingest import ingest_dir
-from course_rag_assistant.rerank import reranker_from_env
+from course_rag_assistant.rerank import ChatReranker, reranker_from_env
 from course_rag_assistant.retrieval import Hit, HybridRetriever
 
 
@@ -151,14 +151,19 @@ def main():
     parser.add_argument("--unanswerable", type=Path, default=Path("eval/real-unanswerable-v2.jsonl"))
     parser.add_argument("--index", type=Path, default=Path("data/index/embeddings.npy"))
     parser.add_argument("--cache", type=Path, default=Path("data/index/quality-query-v2.npy"))
-    parser.add_argument("--output", type=Path, help="Defaults to quality-v8[-chat].json")
+    parser.add_argument("--output", type=Path, help="Defaults to quality-v9[-chat].json")
     parser.add_argument("--dense", action="store_true")
     parser.add_argument("--chat", action="store_true", help="Evaluate the configured chat model, including failures")
-    parser.add_argument("--modes", nargs="+", choices=["bm25", "dense", "hybrid", "hybrid+rerank"],
+    parser.add_argument("--chat-rerank", action="store_true", help="Include chat passage selection (not BGE)")
+    parser.add_argument("--modes", nargs="+", choices=["bm25", "dense", "hybrid", "hybrid+rerank", "hybrid+chat-rerank"],
                         help="Evaluate only these modes; unavailable requested modes are errors")
     parser.add_argument("--limit", type=int, help="First N questions per split for smoke testing, not acceptance")
     parser.add_argument("--model", default="bge-m3:latest", help="Expected embedding model, including on cache replay")
     args = parser.parse_args()
+    if args.chat_rerank and not (args.chat and args.dense):
+        parser.error("--chat-rerank requires --chat and --dense")
+    if args.modes and "hybrid+chat-rerank" in args.modes and not args.chat_rerank:
+        parser.error("hybrid+chat-rerank requires --chat-rerank")
     if args.limit is not None and args.limit < 1:
         parser.error("--limit must be positive")
     generator = generator_from_env() if args.chat else None
@@ -168,8 +173,8 @@ def main():
         parser.error("Dense, hybrid and rerank modes require --dense")
     if args.modes and "hybrid+rerank" in args.modes and reranker_from_env() is None:
         parser.error("hybrid+rerank requires a configured reranker endpoint")
-    args.output = args.output or Path("eval/reports/quality-v8-chat.json" if args.chat
-                                      else "eval/reports/quality-v8.json")
+    args.output = args.output or Path("eval/reports/quality-v9-chat.json" if args.chat
+                                      else "eval/reports/quality-v9.json")
     labels, negatives = load_labeled(args.labels), load_labeled(args.unanswerable)
     chunks = ingest_dir(args.data)
     # Validate reference snippets before measuring retrieval. Whitespace is the
@@ -211,6 +216,8 @@ def main():
             retrievers["hybrid+rerank"] = HybridRetriever(chunks, index, backend, reranker)
         else:
             skipped["hybrid+rerank"] = "No configured BGE reranker endpoint; lexical reranking is not a substitute."
+        if args.chat_rerank:
+            retrievers["hybrid+chat-rerank"] = HybridRetriever(chunks, index, backend, ChatReranker(generator))
     else:
         skipped["dense/hybrid/rerank"] = "Run with --dense and matching embedding backend or cached query vectors."
     if args.modes:
@@ -238,6 +245,7 @@ def main():
         "chat_config": ({"backend": type(generator).__name__, "model": generator.model,
                          "timeout": generator.timeout,
                          "num_predict": getattr(generator, "num_predict", None),
+                         "num_ctx": getattr(generator, "num_ctx", None),
                          "think": getattr(generator, "think", None)} if args.chat else None),
         "notes": [
             "Agent-checked evidence; independent human review and held-out evaluation are still required.",
@@ -265,6 +273,14 @@ def main():
         negative = answer_metrics(ranked, negatives, 8, generator, progress=args.chat)
         report["results"][name] = {"retrieval": retrieval, "answerable": positive,
                                    "unanswerable": negative, "evaluation_seconds": time.perf_counter() - start}
+        if isinstance(getattr(retriever, "reranker", None), ChatReranker):
+            ranker = retriever.reranker
+            report["results"][name]["chat_reranking"] = {
+                "max_candidates": ranker.max_candidates, "excerpt_chars": ranker.excerpt_chars,
+                "calls": len(ranker.diagnostics),
+                "fallbacks": sum(t["status"] != "selected" for t in ranker.diagnostics),
+                "details": ranker.diagnostics,
+            }
         print(name, "Recall@8", round(retrieval['recall_at_k'], 4), "MRR@8", round(retrieval['mrr'], 4),
               "negative abstention", round(negative['abstention_rate'], 4), flush=True)
         args.output.parent.mkdir(parents=True, exist_ok=True)

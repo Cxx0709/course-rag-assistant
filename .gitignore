@@ -8,6 +8,7 @@ build/
 .env
 data/raw/
 data/index/
+data/web/
 *.pdf
 *.pptx
 .DS_Store
