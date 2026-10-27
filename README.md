@@ -17,15 +17,20 @@ wrong answers back to knowledge gaps.
 1. **Verifiable answers.** Every factual claim is anchored to a retrieved
    passage; answers cite the exact source file, page number, and paragraph.
    Claims without a supporting passage are flagged, not hallucinated.
-2. **Prerequisite linking.** Concepts are linked in a dependency graph
-   (e.g. "Naive Bayes → conditional independence → Bayes' theorem"), so
-   answers point back to what you should review first.
-3. **Cross-source comparison.** The same concept from different textbooks or
-   lecture decks is aligned side-by-side, with definitions and notation
-   differences made explicit.
-4. **Error-gap analysis.** Quiz mode generates questions from the corpus,
-   grades answers, and maps mistakes to missing concepts — producing a review
-   list instead of just a score.
+2. **Prerequisite linking.** Explicit prerequisite declarations in selected notes
+   form a dependency graph. Web answers and wrong-answer review show a foundation-first
+   study order, source excerpts for each relation, and links to prerequisite lessons.
+   Missing lessons and cyclic dependencies are reported; relationships are not inferred
+   from co-occurrence. See [the supported note format](docs/local-web.md#先修概念与复习顺序).
+3. **Cross-source comparison.** Select two documents and enter a concept to compare
+   literal excerpts by definition, notation, assumptions and applicability. Each
+   excerpt links to its source; literal differences are highlighted without claiming
+   semantic conflict. Missing evidence is shown explicitly. Try the two Markdown
+   files in [`data/comparison-samples/`](data/comparison-samples/).
+4. **Source-backed practice.** Quiz mode creates concept cloze multiple-choice
+   questions from complete source statements, grades the selected options, and
+   saves mistakes as a review list with source links. This measures literal
+   recognition; general concept mastery and semantic free-answer grading remain planned.
 5. **Evaluated, not demoed.** A labeled question set measures retrieval
    accuracy, citation correctness, and abstention quality, with an ablation
    study (dense-only vs hybrid vs +rerank).
@@ -46,6 +51,32 @@ course materials (PDF / PPTX / MD, page numbers preserved)
 ```
 
 ## Status
+
+The [terminology alignment record](docs/course-alignment-v1.md) adds scoped
+development/validation-set correspondence backed by model-selection evidence
+from each selected source. Variance requires a choice of meaning before comparison;
+unsupported senses and uncertain correspondences are not highlighted as aligned.
+All 302 tests and 11 repeated real-textbook development checks pass. These are
+limited reading rules; independent semantic review and broader coverage remain pending.
+Run `python -m scripts.evaluate_course_pairs --manifest eval/course-alignment-v1.json --output eval/reports/course-alignment-v1.json`.
+A [separate reading-plan draft](docs/course-pairs-v2.md) has checked graph orders
+and PDF page links, with human review pending. Run
+`python -m scripts.evaluate_course_paths` for its structure check.
+
+Configuration now lives in `config.py`; the local Web app is organized under
+`web/` with separate storage, routes, answering, security and static resources.
+Existing startup commands and API URLs remain supported. See
+[module layout and configuration](docs/project-structure.md) for settings and
+the 233-test / installed-wheel validation record.
+
+The [v12 evidence and baseline report](docs/evidence-baseline-v12.md) describes
+per-citation source verification, deduplication in all answer modes, quotation
+and English sentence integrity, and a frozen, repeated offline regression gate.
+The web app now includes source-backed quizzes and persistent wrong-answer review.
+Answers, quiz results and review lists also include source-declared prerequisite paths.
+Run `python -m scripts.evaluate_baseline` from the repository root to verify the
+frozen local corpus, labels, index and cached query vectors before repeated evaluation.
+This is a development regression baseline, not independent semantic acceptance.
 
 Ingestion, local BM25/dense retrieval, deterministic citation checking, and
 retrieval evaluation are implemented. See

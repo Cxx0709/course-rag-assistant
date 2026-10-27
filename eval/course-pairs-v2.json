@@ -1,0 +1,144 @@
+{
+  "purpose": "Agent-curated development checks on two real textbooks; source grounding and literal comparison, not independent semantic acceptance.",
+  "sources": [
+    {
+      "path": "data/raw/datamining-notes/d2l-zh-pytorch.pdf",
+      "sha256": "db978acf18dac28f4de1412839ca1f804302c6a29b971b024595369afa69cbea"
+    },
+    {
+      "path": "data/raw/course-comparison/MLY-zh-cn.pdf",
+      "sha256": "d016cefe31b57bac625bfddd7e367d3ec634fbdd015c5879627c9ea4c2a8fb85"
+    }
+  ],
+  "cases": [
+    {
+      "concept": "训练集",
+      "kind": "shared_concept",
+      "expected_found": [
+        true,
+        true
+      ],
+      "reference_pages": [
+        [
+          39
+        ],
+        [
+          14,
+          71
+        ]
+      ],
+      "review_note": "两书均介绍用于算法学习的数据；页码为 PDF 物理页。"
+    },
+    {
+      "concept": "测试集",
+      "kind": "shared_concept",
+      "expected_found": [
+        true,
+        true
+      ],
+      "reference_pages": [
+        [
+          39
+        ],
+        [
+          14,
+          26,
+          71
+        ]
+      ],
+      "review_note": "均涉及新数据上的性能评估；具体数据划分和选择规则需阅读上下文。"
+    },
+    {
+      "concept": "过拟合",
+      "kind": "shared_concept",
+      "expected_found": [
+        true,
+        true
+      ],
+      "reference_pages": [
+        [
+          39,
+          158,
+          167
+        ],
+        [
+          43
+        ]
+      ],
+      "review_note": "MLY 的命名句依赖前文，摘录必须保留相邻解释。"
+    },
+    {
+      "concept": "方差",
+      "kind": "ambiguous_term",
+      "expected_found": [
+        true,
+        true
+      ],
+      "reference_pages": [
+        [
+          98
+        ],
+        [
+          41,
+          44,
+          45
+        ]
+      ],
+      "review_note": "同名不同语境：D2L 摘录涉及随机变量方差，MLY 在误差分析中采用操作性定义。检出两边原文不等于含义一致；需要人工消歧。"
+    },
+    {
+      "concept": "开发集",
+      "kind": "one_sided_evidence",
+      "expected_found": [
+        false,
+        true
+      ],
+      "reference_pages": [
+        [],
+        [
+          18,
+          26,
+          71
+        ]
+      ],
+      "review_note": "未进行开发集/验证集同义词对齐；左侧未检出不表示教材没有对应概念。"
+    },
+    {
+      "concept": "量子纠缠",
+      "kind": "unrelated_concept",
+      "expected_found": [
+        false,
+        false
+      ],
+      "reference_pages": [
+        [],
+        []
+      ],
+      "review_note": "不应为课程之外的概念生成原文对照。"
+    },
+    {
+      "concept": "正则化",
+      "kind": "shared_concept",
+      "expected_found": [
+        true,
+        true
+      ],
+      "reference_pages": [
+        [
+          158,
+          173
+        ],
+        [
+          50
+        ]
+      ],
+      "review_note": "MLY 的技术列表条目保留降低方差及增大偏差的完整表述；这是技术效果描述，不自动归类为定义。"
+    }
+  ],
+  "limitations": [
+    "案例由代理检查文本后整理，属于开发诊断，没有独立人工语义审核。",
+    "文字差异高亮不能判断语义一致或观点冲突；方差案例保留为需要消歧的例子。",
+    "两份原始 PDF 没有当前格式可识别的先修关系声明；真实课程学习路径仍需审核后的笔记。",
+    "仅验证七个开发案例；尚不支持任意隐含表述、同义词自动对齐及同名异义消歧。"
+  ]
+}

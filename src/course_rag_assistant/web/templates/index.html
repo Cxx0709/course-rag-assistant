@@ -6,8 +6,8 @@
   <meta name="theme-color" content="#176653">
   <title>课内 · 资料问答</title>
   <link rel="icon" href="data:,">
-  <link rel="stylesheet" href="/assets/style.css">
-  <script src="/assets/app.js" defer></script>
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <script src="/assets/js/app.js" defer></script>
 </head>
 <body>
   <a class="skip" href="#question">跳到提问</a>
@@ -22,7 +22,7 @@
         <span class="upload-icon" aria-hidden="true">↥</span>
         <button id="upload-button" class="upload-button" type="button">添加课程资料</button>
         <p>或将文件拖到这里</p>
-        <small>PDF · PPTX · Markdown<br>每份最多 25 MB</small>
+        <small>PDF · PPTX · Markdown<br><span id="upload-limit">每份最多 50 MB</span></small>
         <input id="file-input" type="file" accept=".pdf,.pptx,.md" multiple hidden>
       </div>
       <div class="selection-toolbar"><span id="selection-count">尚未添加资料</span><button id="select-all" class="text-button" type="button" hidden>全选</button></div>
@@ -74,7 +74,33 @@
           <p id="answer-scope" class="answer-scope"></p>
           <div id="answer-content" class="answer-content" aria-live="polite" aria-busy="false"></div>
           <div id="answer-sources" class="answer-sources" hidden><h3>查看引用原文</h3><div id="source-list" class="source-list"></div></div>
+          <div id="answer-prerequisites" class="learning-plans" aria-live="polite" hidden></div>
           <p class="answer-footnote">回答可能遗漏关键信息，建议结合引用原文核对。</p>
+        </section>
+        <section id="comparison" class="answer-card" aria-labelledby="compare-title">
+          <h2 id="compare-title">同一概念 · 对照着读</h2>
+          <p>选中两份资料，按定义、符号、假设和适用条件并排核对原文。</p>
+          <form id="compare-form">
+            <label for="compare-concept">要比较的概念</label>
+            <div class="compare-controls">
+              <input id="compare-concept" type="text" minlength="2" maxlength="80" placeholder="例如：条件独立" aria-describedby="compare-help" required>
+              <button id="compare-button" class="primary" type="submit" disabled>开始对比</button>
+            </div>
+            <p id="compare-help" class="question-help">请在资料库中恰好选中两份资料。</p>
+          </form>
+          <div id="compare-result" aria-live="polite" aria-busy="false" hidden></div>
+        </section>
+        <section class="answer-card" aria-labelledby="quiz-title">
+          <h2 id="quiz-title">练一练 · 回到原文</h2>
+          <p>从已选资料生成概念填空选择题。提交后查看原文解释，答错的概念会加入复习清单。</p>
+          <p class="answer-footnote">这是原文识记练习；复习清单提示值得回顾的章节，不代表完整的知识掌握评估。首次提交后记录锁定，可重新出题练习。</p>
+          <div class="question-actions">
+            <button id="quiz-create" class="primary" type="button" disabled>生成练习</button>
+            <button id="review-load" class="text-button" type="button" disabled>查看错题复习清单</button>
+          </div>
+          <form id="quiz-form" hidden><div id="quiz-questions"></div><button id="quiz-submit" class="primary" type="submit">提交答案</button></form>
+          <div id="quiz-result" aria-live="polite"></div>
+          <div id="review-list" aria-live="polite"></div>
         </section>
         <footer>课内 <span>·</span> 把知识读懂，也把出处留住。</footer>
       </div>

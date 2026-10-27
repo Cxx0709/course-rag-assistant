@@ -7,7 +7,6 @@ metadata are persisted locally; no database service is required.
 from __future__ import annotations
 
 import json
-import os
 from collections.abc import Sequence
 from dataclasses import dataclass
 from pathlib import Path
@@ -15,6 +14,7 @@ from typing import Protocol
 
 import numpy as np
 
+from .config import Settings, get_settings
 from .content import navigation_reason
 from .ingest import Chunk
 
@@ -80,19 +80,19 @@ class OllamaEmbedder:
         return _normalize(np.asarray(vectors, dtype=np.float32))
 
 
-def embedder_from_env() -> EmbeddingBackend | None:
+def embedder_from_env(settings: Settings | None = None) -> EmbeddingBackend | None:
     """Create an API embedder from ``COURSE_RAG_*`` variables if configured."""
-    ollama_model = os.getenv("COURSE_RAG_OLLAMA_MODEL")
+    config = settings or get_settings()
+    ollama_model = config.ollama_model
     if ollama_model:
-        batch_size = int(os.getenv("COURSE_RAG_OLLAMA_BATCH_SIZE", "128"))
         return OllamaEmbedder(
             ollama_model,
-            os.getenv("COURSE_RAG_OLLAMA_BASE_URL", "http://127.0.0.1:11434"),
-            batch_size=batch_size,
+            config.ollama_base_url,
+            batch_size=config.ollama_batch_size,
         )
-    base_url = os.getenv("COURSE_RAG_EMBEDDING_BASE_URL")
-    api_key = os.getenv("COURSE_RAG_EMBEDDING_API_KEY")
-    model = os.getenv("COURSE_RAG_EMBEDDING_MODEL")
+    base_url = config.embedding_base_url
+    api_key = config.embedding_api_key
+    model = config.embedding_model
     if not any((base_url, api_key, model)):
         return None
     if not all((base_url, api_key, model)):

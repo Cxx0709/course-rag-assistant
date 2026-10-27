@@ -1,0 +1,12 @@
+{"id":"integrity-01","question":"训练数据","passages":[{"text":"模型需要训练数据。模型需要训练数据。","doc":"book.pdf","page":1}],"expected_text":"模型需要训练数据。 [book.pdf, p.1]"}
+{"id":"integrity-02","question":"训练数据","passages":[{"text":"模型需要训练数据。","doc":"book.pdf","page":1},{"text":"模型不需要训练数据。","doc":"book.pdf","page":2}],"claim":"模型需要训练数据。 [book.pdf, p.1] [book.pdf, p.2]","expected_reason":"unsupported_citations"}
+{"id":"integrity-03","question":"模型","passages":[{"text":"模型的流程如下：","doc":"book.pdf","page":1}],"expected_reason":"incomplete_source_sentences"}
+{"id":"integrity-04","question":"训练数据","passages":[{"text":"模型需要训练数据（training data。","doc":"book.pdf","page":1}],"expected_reason":"incomplete_source_sentences"}
+{"id":"integrity-05","question":"模型","passages":[{"text":"教材指出：“模型需要训练数据。数据也需要清洗。”","doc":"book.pdf","page":1}],"expected_text":"教材指出：“模型需要训练数据。数据也需要清洗。” [book.pdf, p.1]"}
+{"id":"integrity-06","question":"学习率","passages":[{"text":"学习率的设置为“每次0.03。","doc":"book.pdf","page":1}],"expected_reason":"incomplete_source_sentences"}
+{"id":"integrity-07","question":"训练数据","passages":[{"text":"模型需要训练数据。模型不需要训练数据。","doc":"book.pdf","page":1}],"expected_text":"模型需要训练数据。 [book.pdf, p.1]\n模型不需要训练数据。 [book.pdf, p.1]"}
+{"id":"integrity-08","question":"训练数据","passages":[{"text":"训练数据需要清洗。","doc":"book.md","page":0,"section":"清洗"}],"expected_text":"训练数据需要清洗。 [book.md, section=清洗]"}
+{"id":"integrity-09","question":"模型","passages":[{"text":"模型只在输入满足","doc":"book.pdf","page":1},{"text":"时更新参数。","doc":"book.pdf","page":2}],"expected_reason":"incomplete_source_sentences"}
+{"id":"integrity-10","question":"模型","passages":[{"text":"模型只在输入为正时更新参数。","doc":"book.pdf","page":1}],"claim":"模型在任何输入下都更新参数。 [book.pdf, p.1]","expected_reason":"unsupported_citations"}
+{"id":"integrity-11","question":"learning rate","passages":[{"text":"The learning rate is 0.03. Training uses torch.optim.SGD.","doc":"book.pdf","page":1}],"expected_text":"The learning rate is 0.03. [book.pdf, p.1]\nTraining uses torch.optim.SGD. [book.pdf, p.1]"}
+{"id":"integrity-12","question":"模型","passages":[{"text":"模型的代码如下：\nprint('第一句。第二句。')","doc":"book.pdf","page":1}],"expected_text":"print('第一句。第二句。') [book.pdf, p.1]"}

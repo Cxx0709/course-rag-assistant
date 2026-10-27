@@ -4,3 +4,37 @@
 @media(max-width:1000px){.workspace{grid-template-columns:240px minmax(0,1fr)}.sidebar{padding:26px 17px}.main-content{padding:35px 27px 0}.topbar{padding:20px 27px}.model-note{display:none}h1{font-size:37px}.start-grid{gap:15px}}
 @media(max-width:700px){.workspace{display:block}.sidebar{position:static;max-height:none;padding:18px 20px 15px;border-right:0;border-bottom:1px solid var(--line)}.brand{font-size:20px;margin-bottom:23px;gap:10px}.brand-icon{width:36px;height:38px;border-radius:10px}.brand small{font-size:8px;margin-top:4px}.library-heading{margin-bottom:10px}.dropzone{display:flex;align-items:center;justify-content:center;gap:7px;padding:11px 10px}.upload-icon{font-size:20px;margin:0}.dropzone p,.dropzone small{display:none}.document-list{max-height:180px}.selection-toolbar{margin:13px 0 4px}.empty-library,.sidebar-bottom{display:none}.document{padding:8px;margin-bottom:3px}.topbar{height:55px;padding:14px 22px}.main-content{padding:28px 22px 0}.welcome{margin-bottom:22px}h1{font-size:34px;margin:12px 0}.welcome p{font-size:12px}.question-card{padding:17px 17px 11px}.question-card textarea{font-size:16px;min-height:100px}.question-card textarea::placeholder{font-size:13px}.question-help{font-size:9px}.primary{padding:10px 14px;gap:8px}.start-grid{gap:12px}.start-step{padding:0}.start-step p{font-size:10px}.demo-row{flex-wrap:wrap;gap:4px 10px}.answer-card{padding:20px 17px 12px}.answer-heading{display:block}.answer-heading .mode-badge{margin-top:8px}.answer-content{font-size:13px}.answer-heading h2{font-size:16px}dialog{padding:20px}.dialog-bottom{align-items:flex-start;flex-direction:column}footer{margin-top:28px}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;scroll-behavior:auto!important;transition:none!important}}
+/* Source-backed practice uses the same cards and controls as material Q&A. */
+#quiz-questions fieldset { border: 1px solid #d8ddd8; border-radius: 12px; padding: 16px; margin: 18px 0; }
+#quiz-questions legend { padding: 0 6px; line-height: 1.8; }
+#quiz-questions label { display: block; padding: 8px; cursor: pointer; }
+#quiz-questions input { margin-right: 10px; }
+#quiz-result, #review-list { line-height: 1.9; overflow-wrap: anywhere; }
+.learning-plans { border-top: 1px solid #d8ddd8; margin-top: 24px; padding-top: 16px; overflow-wrap: anywhere; }
+.learning-plans h4 { margin: 18px 0 10px; }
+.learning-steps { padding-left: 24px; }
+.learning-steps li { padding: 8px 0; }
+.learning-plans details { margin: 10px 0; }
+.learning-plans summary { cursor: pointer; line-height: 1.7; }
+.learning-excerpt { white-space: pre-wrap; background: #f4f7f4; padding: 12px; border-radius: 8px; line-height: 1.8; }
+.compare-controls { display: flex; gap: 12px; margin-top: 8px; }
+#compare-concept { flex: 1; min-width: 0; border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; background: var(--white); color: var(--ink); }
+#compare-result { margin-top: 24px; overflow-wrap: anywhere; }
+.comparison-row { border-top: 1px solid var(--line); padding: 18px 0; }
+.comparison-row h4 { margin: 0; font-size: 16px; }
+.comparison-note { font-size: 12px; color: #63766a; }
+.comparison-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.comparison-column { min-width: 0; padding: 14px; border: 1px solid var(--line); border-radius: 10px; }
+.comparison-column h5 { font-size: 13px; margin: 0 0 12px; }
+.comparison-excerpt { margin: 12px 0 18px; }
+.comparison-excerpt blockquote { margin: 0 0 10px; white-space: pre-wrap; line-height: 1.85; }
+.comparison-excerpt mark { background: #fff0c2; color: inherit; border-radius: 2px; }
+.comparison-excerpt a, .comparison-excerpt summary { font-size: 11px; }
+.comparison-excerpt details { margin-top: 8px; }
+.comparison-excerpt summary { cursor: pointer; }
+.comparison-missing { background: #f8f3e7; padding: 12px; border-radius: 8px; }
+.comparison-alignment { background: #edf5f0; border-left: 3px solid #286854; padding: 12px; line-height: 1.8; }
+.comparison-senses { display: flex; flex-wrap: wrap; gap: 10px; margin: 16px 0; }
+.comparison-senses button { padding: 10px 14px; border: 1px solid var(--line); border-radius: 8px; background: var(--white); color: var(--ink); white-space: normal; }
+.comparison-senses button[aria-pressed="true"] { border-color: #286854; background: #edf5f0; }
+@media(max-width:700px) { .comparison-grid { grid-template-columns: 1fr; } .compare-controls { flex-direction: column; } }

@@ -1,0 +1,92 @@
+{
+  "purpose": "Chrome checks using temporary copies of two real PDFs and one synthetic insufficient-evidence note",
+  "results": [
+    {
+      "action": "开发集",
+      "status": "ready",
+      "alignment": "role_correspondence",
+      "sense": null,
+      "found": [
+        "found",
+        "found"
+      ]
+    },
+    {
+      "action": "验证集",
+      "status": "ready",
+      "alignment": "role_correspondence",
+      "sense": null,
+      "found": [
+        "found",
+        "found"
+      ]
+    },
+    {
+      "action": "方差",
+      "status": "needs_disambiguation",
+      "alignment": "needs_disambiguation",
+      "sense": null,
+      "found": [
+        "pending",
+        "pending"
+      ]
+    },
+    {
+      "action": "choose statistical variance",
+      "status": "partial",
+      "alignment": "sense_selected",
+      "sense": "random_variable_variance",
+      "found": [
+        "found",
+        "not_found"
+      ]
+    },
+    {
+      "action": "choose model-error variance",
+      "status": "partial",
+      "alignment": "sense_selected",
+      "sense": "model_error_variance",
+      "found": [
+        "not_found",
+        "found"
+      ]
+    },
+    {
+      "action": "随机变量的方差",
+      "status": "partial",
+      "alignment": "sense_selected",
+      "sense": "random_variable_variance",
+      "found": [
+        "found",
+        "not_found"
+      ]
+    },
+    {
+      "action": "训练集",
+      "status": "ready",
+      "alignment": "literal_name",
+      "sense": null,
+      "found": [
+        "found",
+        "found"
+      ]
+    },
+    {
+      "action": "开发集",
+      "status": "needs_review",
+      "alignment": "insufficient_evidence",
+      "sense": null,
+      "found": [
+        "found",
+        "found"
+      ]
+    }
+  ],
+  "exactSourceSpans": true,
+  "termLabels": true,
+  "sourceLinks": true,
+  "inputAndScopeReset": true,
+  "noUnconfirmedHighlights": true,
+  "mobileOverflow": false,
+  "browserErrors": []
+}

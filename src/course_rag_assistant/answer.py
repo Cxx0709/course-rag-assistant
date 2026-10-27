@@ -12,7 +12,6 @@ from __future__ import annotations
 
 import ast
 import json
-import os
 import re
 from collections.abc import Iterable
 from dataclasses import dataclass, field
@@ -21,6 +20,7 @@ from typing import Protocol
 
 import httpx
 
+from .config import Settings, get_settings
 from .content import navigation_reason
 from .evidence import select_evidence
 from .ingest import Chunk
@@ -67,14 +67,15 @@ class OpenAICompatibleChatGenerator:
 class OllamaChatGenerator:
     """Synchronous chat generator for a local Ollama model."""
 
-    def __init__(self, model: str, base_url: str = "http://127.0.0.1:11434", timeout: float = 120.0):
+    def __init__(self, model: str, base_url: str = "http://127.0.0.1:11434", timeout: float = 120.0,
+                 *, settings: Settings | None = None):
         self.model = model
         self.base_url = base_url.rstrip("/")
         self.timeout = timeout
-        self.num_predict = int(os.getenv("COURSE_RAG_OLLAMA_CHAT_NUM_PREDICT", "512"))
-        context = os.getenv("COURSE_RAG_OLLAMA_CHAT_NUM_CTX")
-        self.num_ctx = int(context) if context else None
-        self.think = os.getenv("COURSE_RAG_OLLAMA_CHAT_THINK", "false").lower() == "true"
+        config = settings or get_settings()
+        self.num_predict = config.ollama_chat_num_predict
+        self.num_ctx = config.ollama_chat_num_ctx
+        self.think = config.ollama_chat_think
 
     def generate(self, prompt: str) -> str:
         import httpx
@@ -101,18 +102,20 @@ class OllamaChatGenerator:
             raise ValueError("Ollama response does not contain message content") from exc
 
 
-def generator_from_env() -> TextGenerator | None:
+def generator_from_env(settings: Settings | None = None) -> TextGenerator | None:
     """Create the configured chat generator, or ``None`` for offline mode."""
-    ollama_model = os.getenv("COURSE_RAG_OLLAMA_CHAT_MODEL")
+    config = settings or get_settings()
+    ollama_model = config.ollama_chat_model
     if ollama_model:
         return OllamaChatGenerator(
             ollama_model,
-            os.getenv("COURSE_RAG_OLLAMA_BASE_URL", "http://127.0.0.1:11434"),
-            float(os.getenv("COURSE_RAG_OLLAMA_CHAT_TIMEOUT", "120")),
+            config.ollama_base_url,
+            config.ollama_chat_timeout,
+            settings=config,
         )
-    base_url = os.getenv("COURSE_RAG_LLM_BASE_URL")
-    api_key = os.getenv("COURSE_RAG_LLM_API_KEY")
-    model = os.getenv("COURSE_RAG_LLM_MODEL")
+    base_url = config.llm_base_url
+    api_key = config.llm_api_key
+    model = config.llm_model
     if not all((base_url, api_key, model)):
         return None
     return OpenAICompatibleChatGenerator(base_url, api_key, model)
@@ -163,13 +166,10 @@ def answer(question: str, hits: list[Hit], generator: TextGenerator | None = Non
             # extractive fallback. Only transport/generator errors fall back.
             return render_selection(selection, context)
 
-    lines: list[str] = []
-    for hit in context[:1]:
-        citation = format_citation(hit)
-        for sentence, _ in _sentence_options([hit]):
-            lines.append(f"{sentence} {citation}")
-    draft = CitedAnswer("\n".join(lines), context[:1], [])
-    return verify_citations(draft)
+    # Use the same ordering, deduplication and verification for every mode.
+    offline_context = context[:1]
+    ids = list(range(1, len(_sentence_options(offline_context)) + 1))
+    return render_selection(json.dumps({"sentence_ids": ids}), offline_context, max_sentences=None)
 
 
 def verify_citations(ans: CitedAnswer) -> CitedAnswer:
@@ -185,7 +185,9 @@ def verify_citations(ans: CitedAnswer) -> CitedAnswer:
         citations = _parse_citations(claim)
         body = _CITATION_RE.sub("", claim).strip()
         cited_chunks = [chunk for citation in citations for chunk in _resolve(citation, ans.hits)]
-        supported_by_source = any(_source_sentence(body, source) for source in cited_chunks)
+        supported_by_source = bool(citations) and all(
+            any(_source_sentence(body, source) for source in _resolve(citation, ans.hits))
+            for citation in citations)
         all_citations_resolve = all(_resolve(citation, ans.hits) for citation in citations)
         if not body or not cited_chunks or not all_citations_resolve or not supported_by_source:
             if body and body not in unsupported:
@@ -275,6 +277,8 @@ def _complete_pdf_unit(text: str) -> bool:
     text = _CITATION_RE.sub("", text).strip()
     if any(ord(char) < 32 and char not in "\n\t\r" for char in text):
         return False
+    if any(text.count(left) != text.count(right) for left, right in [("“", "”"), ("‘", "’")]):
+        return False
     # Parse, never execute, code. A complete assignment/call need not end in a
     # full stop. Bare numbers and names from fragmented equations are not code.
     if _complete_code(text):
@@ -304,7 +308,7 @@ def _unique_json_object(pairs):
     return result
 
 
-def render_selection(raw: str, context: list[Hit]) -> CitedAnswer:
+def render_selection(raw: str, context: list[Hit], *, max_sentences: int | None = 6) -> CitedAnswer:
     """Resolve a strict selection against this request's candidates only."""
     candidates = _sentence_options(context)
     try:
@@ -326,7 +330,7 @@ def render_selection(raw: str, context: list[Hit]) -> CitedAnswer:
     if not ids:
         return CitedAnswer("资料中没有足够证据回答这个问题。模型未选择支持答案的原文。",
                            context, [], "model_abstained")
-    if any(h.stage == "chat_reranked" for h in context):
+    if ids:
         # Preserve the model's answer order: a conclusion can occur late in a
         # source paragraph. Remove only identical text, not similar claims that
         # could carry distinct conditions, negations, or steps.
@@ -337,7 +341,7 @@ def render_selection(raw: str, context: list[Hit]) -> CitedAnswer:
             if key not in seen:
                 seen.add(key)
                 unique.append(i)
-        ids = unique[:6]
+        ids = unique[:max_sentences]
     lines = [f"{candidates[i - 1][0]} {format_citation(candidates[i - 1][1])}" for i in ids]
     return verify_citations(CitedAnswer("\n".join(lines), context, [], selected_sentence_ids=ids))
 
@@ -355,8 +359,24 @@ def _sentences(text: str) -> list[str]:
     # Consume citations together with the preceding sentence. A citation must
     # not accidentally lend support to a following, uncited assertion.
     marker = r"\[[^,\]]+,\s*(?:p\.\d+|section=[^\]]+)\]"
-    pattern = rf".*?(?:[。！？!?](?:[ \t]*(?:{marker}))*|\n|$)"
-    return [match.group().strip() for match in re.finditer(pattern, text) if match.group().strip()]
+    period = r"(?<!\bDr)(?<!\bMr)(?<!\bMrs)(?<!\bMs)(?<!\bProf)(?<!\be.g)(?<!\bi.e)(?<!\b[A-Z])\.(?=[ \t]+[A-Z]|$)"
+    pattern = rf".*?(?:[。！？!?][”’\"']*(?:[ \t]*(?:{marker}))*|{period}[”’\"']*(?:[ \t]*(?:{marker}))*|$)"
+    units = []
+    for line in text.splitlines():
+        # Punctuation inside a complete code statement is data, not a boundary.
+        if _complete_code(_CITATION_RE.sub("", line).strip()):
+            units.append(line.strip())
+            continue
+        pending = ""
+        for match in re.finditer(pattern, line):
+            pending += match.group()
+            if pending.strip() and all(pending.count(left) == pending.count(right)
+                                       for left, right in [("“", "”"), ("‘", "’")]):
+                units.append(pending.strip())
+                pending = ""
+        if pending.strip():
+            units.append(pending.strip())
+    return units
 
 
 def _parse_citations(text: str) -> list[tuple[str, str]]:

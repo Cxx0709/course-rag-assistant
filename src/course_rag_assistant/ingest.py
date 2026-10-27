@@ -34,7 +34,7 @@ def extract_pdf(path: Path) -> list[Chunk]:
     chunks: list[Chunk] = []
     with fitz.open(path) as document:
         for page_number, page in enumerate(document, start=1):
-            blocks = page.get_text("blocks")
+            blocks = _pdf_text_blocks(page, fitz)
             page_height = page.rect.height
             section = ""
             pending: list[str] = []
@@ -55,6 +55,37 @@ def extract_pdf(path: Path) -> list[Chunk]:
                 pending.append(text)
             _flush_pdf_pending(chunks, pending, path.name, page_number, section)
     return chunks
+
+
+def _pdf_text_blocks(page, fitz):
+    """Remove exact text overlays used to simulate bold, using glyph positions.
+
+    Equal wording elsewhere on the page is retained. Unaffected blocks use the
+    existing extraction verbatim, preserving frozen corpus/index alignment.
+    """
+    blocks = page.get_text("blocks")
+    layout = page.get_text("dict", flags=fitz.TEXTFLAGS_TEXT)
+    corrected = {}
+    for block in layout["blocks"]:
+        if block.get("type") != 0:
+            continue
+        seen, rows, duplicated = set(), {}, False
+        for line in block["lines"]:
+            for span in line["spans"]:
+                key = (span["text"], tuple(span["bbox"]), span["font"], span["size"])
+                if key in seen:
+                    duplicated = True
+                    continue
+                seen.add(key)
+                baseline = (round(span["origin"][1], 2), tuple(line["dir"]))
+                rows.setdefault(baseline, []).append(span)
+        if duplicated:
+            # Overlay rendering can split one printed line into several API
+            # lines. Reunite spans on the same baseline before joining lines.
+            corrected[block["number"]] = "\n".join(
+                "".join(s["text"] for s in sorted(spans, key=lambda s: s["origin"][0]))
+                for _, spans in sorted(rows.items()))
+    return [(*b[:4], corrected.get(b[5], b[4]), *b[5:]) for b in blocks]
 
 
 def _flush_pdf_pending(chunks: list[Chunk], pending: list[str], doc: str, page: int, section: str) -> None:

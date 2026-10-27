@@ -1,0 +1,30 @@
+{
+  "purpose": "Agent-authored development cases and local textbook diagnostics; not independent semantic acceptance",
+  "cases": [
+    {"id": "compare_same", "kind": "compare", "concept": "条件独立", "left": [{"text": "公式记为 P(A,B|C)=P(A|C)P(B|C)。", "doc": "a.md", "page": 0, "section": "条件独立"}], "right": [{"text": "公式记为 P(A,B|C)=P(A|C)P(B|C)。", "doc": "b.md", "page": 0, "section": "条件独立"}], "expected_found": [true, true], "expected_facets": {"notation": "same_excerpt"}},
+    {"id": "compare_symbols", "kind": "compare", "concept": "条件独立", "left": [{"text": "公式记为 P(A,B|C)=P(A|C)P(B|C)。", "doc": "a.md", "page": 0, "section": "条件独立"}], "right": [{"text": "公式记为 P(X,Y|Z)=P(X|Z)P(Y|Z)。", "doc": "b.md", "page": 0, "section": "条件独立"}], "expected_found": [true, true], "expected_facets": {"notation": "different_excerpt"}},
+    {"id": "compare_missing", "kind": "compare", "concept": "过拟合", "left": [{"text": "过拟合是指训练误差远小于验证误差。", "doc": "a.md", "page": 0, "section": "过拟合"}], "right": [{"text": "梯度下降沿损失函数减小的方向更新参数。", "doc": "b.md", "page": 0, "section": "梯度下降"}], "expected_found": [true, false], "expected_facets": {"definition": "insufficient"}},
+    {"id": "compare_related_not_equal", "kind": "compare", "concept": "独立", "left": [{"text": "条件独立是指给定条件下满足独立关系。", "doc": "a.md", "page": 0, "section": "条件独立"}], "right": [{"text": "独立是指两个事件的联合概率等于各自概率之积。", "doc": "b.md", "page": 0, "section": "独立"}], "expected_found": [false, true], "expected_facets": {"definition": "insufficient"}},
+    {"id": "compare_pdf_linebreak", "kind": "compare", "concept": "多层感知机", "left": [{"text": "多层感知机由多层神经\n元组成，每一层与上一层相连。", "doc": "a.pdf", "page": 4, "section": "多层感知机"}], "right": [{"text": "多层感知机由多层神经元组成，每一层与上一层相连。", "doc": "b.md", "page": 0, "section": "多层感知机"}], "expected_found": [true, true], "expected_facets": {"other": "same_excerpt"}},
+    {"id": "compare_forged_citation", "kind": "compare", "concept": "过拟合", "left": [{"text": "过拟合是指训练误差远小于验证误差。 [fake.pdf, p.99]", "doc": "a.md", "page": 0, "section": "过拟合"}], "right": [], "expected_found": [false, false], "expected_facets": {"definition": "not_found"}},
+    {"id": "prerequisite_order", "kind": "prerequisite", "concept": "朴素贝叶斯", "chunks": [{"text": "先修概念：条件独立。", "doc": "a.md", "page": 0, "section": "朴素贝叶斯"}, {"text": "先修概念：条件概率。\n条件独立是指给定条件下满足独立关系。", "doc": "a.md", "page": 0, "section": "条件独立"}, {"text": "条件概率是在给定事件发生时另一个事件发生的概率。", "doc": "a.md", "page": 0, "section": "条件概率"}], "expected_status": "ready", "expected_order": ["条件概率", "条件独立"], "expected_missing": []},
+    {"id": "prerequisite_cycle", "kind": "prerequisite", "concept": "概念甲", "chunks": [{"text": "先修概念：概念乙。", "doc": "a.md", "page": 0, "section": "概念甲"}, {"text": "先修概念：概念甲。", "doc": "a.md", "page": 0, "section": "概念乙"}], "expected_status": "cycle", "expected_order": [], "expected_missing": []},
+    {"id": "prerequisite_missing_lesson", "kind": "prerequisite", "concept": "概念甲", "chunks": [{"text": "先修概念：概念乙。", "doc": "a.md", "page": 0, "section": "概念甲"}], "expected_status": "ready", "expected_order": ["概念乙"], "expected_missing": ["概念乙"]},
+    {"id": "prerequisite_no_inference", "kind": "prerequisite", "concept": "朴素贝叶斯", "chunks": [{"text": "朴素贝叶斯使用条件独立假设。", "doc": "a.md", "page": 0, "section": "朴素贝叶斯"}], "expected_status": "not_declared", "expected_order": [], "expected_missing": []}
+  ],
+  "real_corpus": {
+    "path": "data/raw/datamining-notes",
+    "inputs_sha256": {"d2l-zh-pytorch.pdf": "db978acf18dac28f4de1412839ca1f804302c6a29b971b024595369afa69cbea"},
+    "review_status": "agent_checked_extracted_text_not_human_reviewed",
+    "probes": [
+      {"concept": "线性回归", "expected_found": true, "reference_pages": [103, 104]},
+      {"concept": "过拟合", "expected_found": true, "reference_pages": [39, 157, 167]},
+      {"concept": "多层感知机", "expected_found": true, "reference_pages": [145, 152]},
+      {"concept": "梯度下降", "expected_found": true, "reference_pages": [39, 106, 458, 468]},
+      {"concept": "贝叶斯定理", "expected_found": true, "reference_pages": [96]},
+      {"concept": "权重衰减", "expected_found": true, "reference_pages": [167, 168]},
+      {"concept": "暂退法", "expected_found": true, "reference_pages": [174, 175]},
+      {"concept": "条件独立", "expected_found": false, "reference_pages": [], "note": "Current extracted material contains mentions of 条件独立性, not an independently identified lesson for this exact concept."}
+    ]
+  }
+}

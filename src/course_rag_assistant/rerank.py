@@ -2,12 +2,12 @@
 from __future__ import annotations
 
 import json
-import os
 import re
 import time
 
 import httpx
 
+from .config import Settings, get_settings
 from .retrieval import Hit
 
 
@@ -110,9 +110,10 @@ class BGEReranker:
         return scored[:top_k]
 
 
-def reranker_from_env() -> BGEReranker | None:
-    base_url = os.getenv("COURSE_RAG_RERANK_BASE_URL")
-    api_key = os.getenv("COURSE_RAG_RERANK_API_KEY")
+def reranker_from_env(settings: Settings | None = None) -> BGEReranker | None:
+    config = settings or get_settings()
+    base_url = config.rerank_base_url
+    api_key = config.rerank_api_key
     if not base_url or not api_key:
         return None
-    return BGEReranker(base_url, api_key, os.getenv("COURSE_RAG_RERANK_MODEL", "BAAI/bge-reranker-v2-m3"))
+    return BGEReranker(base_url, api_key, config.rerank_model)

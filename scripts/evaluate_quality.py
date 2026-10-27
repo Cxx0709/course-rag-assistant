@@ -16,7 +16,15 @@ from pathlib import Path
 
 import numpy as np
 
-from course_rag_assistant.answer import _parse_citations, answer, generator_from_env
+from course_rag_assistant.answer import (
+    _CITATION_RE,
+    _parse_citations,
+    _resolve,
+    _sentences,
+    _source_sentence,
+    answer,
+    generator_from_env,
+)
 from course_rag_assistant.content import navigation_reason
 from course_rag_assistant.dense import NumpyVectorIndex, embedder_from_env
 from course_rag_assistant.evaluate import evaluate_retriever, load_labeled
@@ -101,6 +109,13 @@ def answer_metrics(retriever, questions, k, generator=None, *, progress=False):
         gold = set(label.get("gold_pages", []))
         compact = lambda text: re.sub(r"\s+", "", text).casefold()
         points = label.get("answer_points", [])
+        claims = [c for c in _sentences(result.text) if _parse_citations(c)]
+        bodies = [_CITATION_RE.sub("", c).strip() for c in claims]
+        exact_support = sum(all(any(_source_sentence(body, chunk)
+                                     for chunk in _resolve(citation, result.hits))
+                                for citation in _parse_citations(claim))
+                            for claim, body in zip(claims, bodies))
+        duplicates = len(bodies) - len({compact(body) for body in bodies})
         rows.append({
             "id": label["id"], "question": label["question"], "answer": result.text,
             "abstained": "没有足够证据" in result.text,
@@ -111,6 +126,8 @@ def answer_metrics(retriever, questions, k, generator=None, *, progress=False):
             "point_count": len(points), "citation_count": len(keys),
             "gold_page_citations": sum(key in gold for key in keys),
             "unsupported_claims": result.unsupported_claims,
+            "claim_count": len(claims), "exact_supported_claims": exact_support,
+            "duplicate_claims": duplicates,
             "generation_status": status,
             "generation_error_type": trace.error_type if trace else None,
             "raw_model_output": trace.raw_output if trace else None,
@@ -124,6 +141,9 @@ def answer_metrics(retriever, questions, k, generator=None, *, progress=False):
     citation_count = sum(r["citation_count"] for r in rows)
     return {
         "questions": len(rows),
+        "exact_source_support_rate": (sum(r["exact_supported_claims"] for r in rows)
+                                      / max(sum(r["claim_count"] for r in rows), 1)),
+        "duplicate_claims": sum(r["duplicate_claims"] for r in rows),
         "abstention_rate": sum(r["abstained"] for r in rows) / max(len(rows), 1),
         "abstention_reasons": {reason: sum(r["abstention_reason"] == reason for r in rows)
                                for reason in sorted({r["abstention_reason"] for r in rows if r["abstention_reason"]})},
@@ -237,7 +257,7 @@ def main():
                                                     if (reason := navigation_reason(chunk.text)))),
         "answerability_policy": "offline_coverage_0.5_scoped_record_values_conflicts_and_exact_api_symbols",
         "code_sha256": {str(p): digest(p) for p in [
-            Path("scripts/evaluate_quality.py"), *sorted(Path("src/course_rag_assistant").glob("*.py"))]},
+            Path("scripts/evaluate_quality.py"), *sorted(Path("src/course_rag_assistant").rglob("*.py"))]},
         "labels_sha256": digest(args.labels), "unanswerable_sha256": digest(args.unanswerable),
         "corpus_sha256": {str(p.relative_to(args.data)): digest(p) for p in sorted(args.data.rglob("*.pdf"))},
         "chunks": len(chunks), "generation": ("chat_sentence_id_selection_with_exact_verification_and_transport_fallback"

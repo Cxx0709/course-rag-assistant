@@ -1,0 +1,720 @@
+{
+  "purpose": "Agent-curated development checks on two real textbooks; source grounding and literal comparison, not independent semantic acceptance.",
+  "manifest_sha256": "463564983addbfa184333570d33aef4e4e415c0fe76b53113784fac2818b1d02",
+  "sources": [
+    {
+      "path": "data/raw/datamining-notes/d2l-zh-pytorch.pdf",
+      "sha256": "db978acf18dac28f4de1412839ca1f804302c6a29b971b024595369afa69cbea"
+    },
+    {
+      "path": "data/raw/course-comparison/MLY-zh-cn.pdf",
+      "sha256": "d016cefe31b57bac625bfddd7e367d3ec634fbdd015c5879627c9ea4c2a8fb85"
+    }
+  ],
+  "repeats": 2,
+  "checks": {
+    "stable": true,
+    "extraction_contracts": true
+  },
+  "regression_passed": true,
+  "runs": [
+    {
+      "chunks": [
+        3760,
+        148
+      ],
+      "prerequisite_roots": [
+        0,
+        0
+      ],
+      "cases": 7,
+      "passed": 7,
+      "details": [
+        {
+          "concept": "训练集",
+          "kind": "shared_concept",
+          "passed": true,
+          "checks": {
+            "found": true,
+            "reference_pages": true,
+            "exact_source_support": true,
+            "literal_highlights": true
+          },
+          "found": [
+            true,
+            true
+          ],
+          "facets": {
+            "definition": "different_excerpt",
+            "notation": "not_found",
+            "assumption": "not_found",
+            "scope": "not_found",
+            "other": "insufficient"
+          },
+          "evidence": [
+            [
+              {
+                "page": 39,
+                "section": "1.2.3 目标函数",
+                "text_sha256": "022e51d431326a76eccc2398c5645737e0257aa380cf1b425cbc7d9b31934216"
+              }
+            ],
+            [
+              {
+                "page": 71,
+                "section": "你现在有四个数据子集：",
+                "text_sha256": "dddd6890fdd39624ea9b07f4f2c0a5538c8c2028439469b5a665cbe3ad03c13d"
+              },
+              {
+                "page": 58,
+                "section": "32 绘制学习曲线",
+                "text_sha256": "666f2b013a2121dab5d7e58b4350e2154442a41a827df0a10ce9d126504c41cb"
+              },
+              {
+                "page": 14,
+                "section": "我们通常认为:",
+                "text_sha256": "cc106cfb61dc73a35a146329ba66fce9dc977da7c09096ab24d320c8a11006e2"
+              }
+            ]
+          ],
+          "review_note": "两书均介绍用于算法学习的数据；页码为 PDF 物理页。"
+        },
+        {
+          "concept": "测试集",
+          "kind": "shared_concept",
+          "passed": true,
+          "checks": {
+            "found": true,
+            "reference_pages": true,
+            "exact_source_support": true,
+            "literal_highlights": true
+          },
+          "found": [
+            true,
+            true
+          ],
+          "facets": {
+            "definition": "different_excerpt",
+            "notation": "not_found",
+            "assumption": "not_found",
+            "scope": "not_found",
+            "other": "insufficient"
+          },
+          "evidence": [
+            [
+              {
+                "page": 39,
+                "section": "1.2.3 目标函数",
+                "text_sha256": "0546147888340ac7a9c4d8092baa557f1aa406c6c24c05f398d9dd0c2d40a24f"
+              }
+            ],
+            [
+              {
+                "page": 71,
+                "section": "你现在有四个数据子集：",
+                "text_sha256": "89ea2f5a7847d28e6cfd8f636cd78c9cfe5a7b30ae4b90fc20f2edff154ff520"
+              },
+              {
+                "page": 26,
+                "section": "12 小结：建立开发集和测试集",
+                "text_sha256": "c6e51f3584ee35bd98a7c575212bb905274014be64f1c9a06dbb39bf44823529"
+              },
+              {
+                "page": 14,
+                "section": "我们通常认为:",
+                "text_sha256": "027b59d70accb52d464dbe3b0b599dbf6887b15a948a5d2571c4bc53cb82a617"
+              }
+            ]
+          ],
+          "review_note": "均涉及新数据上的性能评估；具体数据划分和选择规则需阅读上下文。"
+        },
+        {
+          "concept": "过拟合",
+          "kind": "shared_concept",
+          "passed": true,
+          "checks": {
+            "found": true,
+            "reference_pages": true,
+            "exact_source_support": true,
+            "literal_highlights": true
+          },
+          "found": [
+            true,
+            true
+          ],
+          "facets": {
+            "definition": "different_excerpt",
+            "notation": "not_found",
+            "assumption": "not_found",
+            "scope": "not_found",
+            "other": "not_found"
+          },
+          "evidence": [
+            [
+              {
+                "page": 167,
+                "section": "小结",
+                "text_sha256": "07a0709479fe5929a3e92d40637abc3d33e3c8b58a1be18dd4e206a765eb72a3"
+              },
+              {
+                "page": 158,
+                "section": "",
+                "text_sha256": "ffb2e91346182b310fef1a515d05d69958afcd2c3510b33e69634c96417ec97e"
+              },
+              {
+                "page": 39,
+                "section": "1.2.3 目标函数",
+                "text_sha256": "c77c138681897d645f54bc50a25098d64178399b1619b3a86260082d9fe4a8d7"
+              }
+            ],
+            [
+              {
+                "page": 43,
+                "section": "● 训练错误率 = 1% ● 开发错误率 = 11%",
+                "text_sha256": "ba9186113e2c69bebb3a9eaf3931b716ab6dd9ffb14f52303c23dbdedefcee13"
+              }
+            ]
+          ],
+          "review_note": "MLY 的命名句依赖前文，摘录必须保留相邻解释。"
+        },
+        {
+          "concept": "方差",
+          "kind": "ambiguous_term",
+          "passed": true,
+          "checks": {
+            "found": true,
+            "reference_pages": true,
+            "exact_source_support": true,
+            "literal_highlights": true
+          },
+          "found": [
+            true,
+            true
+          ],
+          "facets": {
+            "definition": "different_excerpt",
+            "notation": "not_found",
+            "assumption": "not_found",
+            "scope": "not_found",
+            "other": "insufficient"
+          },
+          "evidence": [
+            [
+              {
+                "page": 98,
+                "section": "(X −E[X])2\u0003",
+                "text_sha256": "72720fc66653dfd32ccf930e472d4638c381443f8d4e1291559177aee01ad87f"
+              }
+            ],
+            [
+              {
+                "page": 41,
+                "section": "20 偏差和方差：误差的两大来源",
+                "text_sha256": "2bbe86df1d62cb27701438e40b5bb5198155ab902f58d2135f5f656f36884af0"
+              },
+              {
+                "page": 45,
+                "section": "偏差 = 最佳误差率（“不可避免偏差”）+ 可避免的偏差",
+                "text_sha256": "ae8a25de21cc38857ae606fdec46f8108ecec14e029d5a3c31d251818fcaec4a"
+              },
+              {
+                "page": 44,
+                "section": "● 训练错误率 = 15% ● 开发错误率 = 30%",
+                "text_sha256": "509edf6cdb4fb3e66594e3da3623da35e8947b3566c3f39e2662a909f1eb031a"
+              }
+            ]
+          ],
+          "review_note": "同名不同语境：D2L 摘录涉及随机变量方差，MLY 在误差分析中采用操作性定义。检出两边原文不等于含义一致；需要人工消歧。"
+        },
+        {
+          "concept": "开发集",
+          "kind": "one_sided_evidence",
+          "passed": true,
+          "checks": {
+            "found": true,
+            "reference_pages": true,
+            "exact_source_support": true,
+            "literal_highlights": true
+          },
+          "found": [
+            false,
+            true
+          ],
+          "facets": {
+            "definition": "insufficient",
+            "notation": "not_found",
+            "assumption": "not_found",
+            "scope": "not_found",
+            "other": "insufficient"
+          },
+          "evidence": [
+            [],
+            [
+              {
+                "page": 71,
+                "section": "你现在有四个数据子集：",
+                "text_sha256": "1bbe8441f872c48560c40f5d4604332234b16b1e6f6d2a96f170e6d3690986d0"
+              },
+              {
+                "page": 26,
+                "section": "12 小结：建立开发集和测试集",
+                "text_sha256": "c6e51f3584ee35bd98a7c575212bb905274014be64f1c9a06dbb39bf44823529"
+              },
+              {
+                "page": 18,
+                "section": "",
+                "text_sha256": "f670f1a89448428d664491c133e0c56c12ce17280e36b2c12e0f9ff0b3167be2"
+              },
+              {
+                "page": 18,
+                "section": "",
+                "text_sha256": "ba29ace790a69e95c58d1cd75816bb3c46556888db02e1cc85986d5689bedaae"
+              }
+            ]
+          ],
+          "review_note": "未进行开发集/验证集同义词对齐；左侧未检出不表示教材没有对应概念。"
+        },
+        {
+          "concept": "量子纠缠",
+          "kind": "unrelated_concept",
+          "passed": true,
+          "checks": {
+            "found": true,
+            "reference_pages": true,
+            "exact_source_support": true,
+            "literal_highlights": true
+          },
+          "found": [
+            false,
+            false
+          ],
+          "facets": {
+            "definition": "not_found",
+            "notation": "not_found",
+            "assumption": "not_found",
+            "scope": "not_found",
+            "other": "not_found"
+          },
+          "evidence": [
+            [],
+            []
+          ],
+          "review_note": "不应为课程之外的概念生成原文对照。"
+        },
+        {
+          "concept": "正则化",
+          "kind": "shared_concept",
+          "passed": true,
+          "checks": {
+            "found": true,
+            "reference_pages": true,
+            "exact_source_support": true,
+            "literal_highlights": true
+          },
+          "found": [
+            true,
+            true
+          ],
+          "facets": {
+            "definition": "insufficient",
+            "notation": "not_found",
+            "assumption": "not_found",
+            "scope": "not_found",
+            "other": "insufficient"
+          },
+          "evidence": [
+            [
+              {
+                "page": 173,
+                "section": "小结",
+                "text_sha256": "59aeee398e4f7a50241ba33cc2a585b6054f80770584ae1e3a3d283fdb19910b"
+              },
+              {
+                "page": 158,
+                "section": "",
+                "text_sha256": "ffb2e91346182b310fef1a515d05d69958afcd2c3510b33e69634c96417ec97e"
+              }
+            ],
+            [
+              {
+                "page": 50,
+                "section": "27 减少方差的技术",
+                "text_sha256": "b60804f4baabb0cfff970c4bb46678e00d739056c225d3da7398f74987a51941"
+              }
+            ]
+          ],
+          "review_note": "MLY 的技术列表条目保留降低方差及增大偏差的完整表述；这是技术效果描述，不自动归类为定义。"
+        }
+      ]
+    },
+    {
+      "chunks": [
+        3760,
+        148
+      ],
+      "prerequisite_roots": [
+        0,
+        0
+      ],
+      "cases": 7,
+      "passed": 7,
+      "details": [
+        {
+          "concept": "训练集",
+          "kind": "shared_concept",
+          "passed": true,
+          "checks": {
+            "found": true,
+            "reference_pages": true,
+            "exact_source_support": true,
+            "literal_highlights": true
+          },
+          "found": [
+            true,
+            true
+          ],
+          "facets": {
+            "definition": "different_excerpt",
+            "notation": "not_found",
+            "assumption": "not_found",
+            "scope": "not_found",
+            "other": "insufficient"
+          },
+          "evidence": [
+            [
+              {
+                "page": 39,
+                "section": "1.2.3 目标函数",
+                "text_sha256": "022e51d431326a76eccc2398c5645737e0257aa380cf1b425cbc7d9b31934216"
+              }
+            ],
+            [
+              {
+                "page": 71,
+                "section": "你现在有四个数据子集：",
+                "text_sha256": "dddd6890fdd39624ea9b07f4f2c0a5538c8c2028439469b5a665cbe3ad03c13d"
+              },
+              {
+                "page": 58,
+                "section": "32 绘制学习曲线",
+                "text_sha256": "666f2b013a2121dab5d7e58b4350e2154442a41a827df0a10ce9d126504c41cb"
+              },
+              {
+                "page": 14,
+                "section": "我们通常认为:",
+                "text_sha256": "cc106cfb61dc73a35a146329ba66fce9dc977da7c09096ab24d320c8a11006e2"
+              }
+            ]
+          ],
+          "review_note": "两书均介绍用于算法学习的数据；页码为 PDF 物理页。"
+        },
+        {
+          "concept": "测试集",
+          "kind": "shared_concept",
+          "passed": true,
+          "checks": {
+            "found": true,
+            "reference_pages": true,
+            "exact_source_support": true,
+            "literal_highlights": true
+          },
+          "found": [
+            true,
+            true
+          ],
+          "facets": {
+            "definition": "different_excerpt",
+            "notation": "not_found",
+            "assumption": "not_found",
+            "scope": "not_found",
+            "other": "insufficient"
+          },
+          "evidence": [
+            [
+              {
+                "page": 39,
+                "section": "1.2.3 目标函数",
+                "text_sha256": "0546147888340ac7a9c4d8092baa557f1aa406c6c24c05f398d9dd0c2d40a24f"
+              }
+            ],
+            [
+              {
+                "page": 71,
+                "section": "你现在有四个数据子集：",
+                "text_sha256": "89ea2f5a7847d28e6cfd8f636cd78c9cfe5a7b30ae4b90fc20f2edff154ff520"
+              },
+              {
+                "page": 26,
+                "section": "12 小结：建立开发集和测试集",
+                "text_sha256": "c6e51f3584ee35bd98a7c575212bb905274014be64f1c9a06dbb39bf44823529"
+              },
+              {
+                "page": 14,
+                "section": "我们通常认为:",
+                "text_sha256": "027b59d70accb52d464dbe3b0b599dbf6887b15a948a5d2571c4bc53cb82a617"
+              }
+            ]
+          ],
+          "review_note": "均涉及新数据上的性能评估；具体数据划分和选择规则需阅读上下文。"
+        },
+        {
+          "concept": "过拟合",
+          "kind": "shared_concept",
+          "passed": true,
+          "checks": {
+            "found": true,
+            "reference_pages": true,
+            "exact_source_support": true,
+            "literal_highlights": true
+          },
+          "found": [
+            true,
+            true
+          ],
+          "facets": {
+            "definition": "different_excerpt",
+            "notation": "not_found",
+            "assumption": "not_found",
+            "scope": "not_found",
+            "other": "not_found"
+          },
+          "evidence": [
+            [
+              {
+                "page": 167,
+                "section": "小结",
+                "text_sha256": "07a0709479fe5929a3e92d40637abc3d33e3c8b58a1be18dd4e206a765eb72a3"
+              },
+              {
+                "page": 158,
+                "section": "",
+                "text_sha256": "ffb2e91346182b310fef1a515d05d69958afcd2c3510b33e69634c96417ec97e"
+              },
+              {
+                "page": 39,
+                "section": "1.2.3 目标函数",
+                "text_sha256": "c77c138681897d645f54bc50a25098d64178399b1619b3a86260082d9fe4a8d7"
+              }
+            ],
+            [
+              {
+                "page": 43,
+                "section": "● 训练错误率 = 1% ● 开发错误率 = 11%",
+                "text_sha256": "ba9186113e2c69bebb3a9eaf3931b716ab6dd9ffb14f52303c23dbdedefcee13"
+              }
+            ]
+          ],
+          "review_note": "MLY 的命名句依赖前文，摘录必须保留相邻解释。"
+        },
+        {
+          "concept": "方差",
+          "kind": "ambiguous_term",
+          "passed": true,
+          "checks": {
+            "found": true,
+            "reference_pages": true,
+            "exact_source_support": true,
+            "literal_highlights": true
+          },
+          "found": [
+            true,
+            true
+          ],
+          "facets": {
+            "definition": "different_excerpt",
+            "notation": "not_found",
+            "assumption": "not_found",
+            "scope": "not_found",
+            "other": "insufficient"
+          },
+          "evidence": [
+            [
+              {
+                "page": 98,
+                "section": "(X −E[X])2\u0003",
+                "text_sha256": "72720fc66653dfd32ccf930e472d4638c381443f8d4e1291559177aee01ad87f"
+              }
+            ],
+            [
+              {
+                "page": 41,
+                "section": "20 偏差和方差：误差的两大来源",
+                "text_sha256": "2bbe86df1d62cb27701438e40b5bb5198155ab902f58d2135f5f656f36884af0"
+              },
+              {
+                "page": 45,
+                "section": "偏差 = 最佳误差率（“不可避免偏差”）+ 可避免的偏差",
+                "text_sha256": "ae8a25de21cc38857ae606fdec46f8108ecec14e029d5a3c31d251818fcaec4a"
+              },
+              {
+                "page": 44,
+                "section": "● 训练错误率 = 15% ● 开发错误率 = 30%",
+                "text_sha256": "509edf6cdb4fb3e66594e3da3623da35e8947b3566c3f39e2662a909f1eb031a"
+              }
+            ]
+          ],
+          "review_note": "同名不同语境：D2L 摘录涉及随机变量方差，MLY 在误差分析中采用操作性定义。检出两边原文不等于含义一致；需要人工消歧。"
+        },
+        {
+          "concept": "开发集",
+          "kind": "one_sided_evidence",
+          "passed": true,
+          "checks": {
+            "found": true,
+            "reference_pages": true,
+            "exact_source_support": true,
+            "literal_highlights": true
+          },
+          "found": [
+            false,
+            true
+          ],
+          "facets": {
+            "definition": "insufficient",
+            "notation": "not_found",
+            "assumption": "not_found",
+            "scope": "not_found",
+            "other": "insufficient"
+          },
+          "evidence": [
+            [],
+            [
+              {
+                "page": 71,
+                "section": "你现在有四个数据子集：",
+                "text_sha256": "1bbe8441f872c48560c40f5d4604332234b16b1e6f6d2a96f170e6d3690986d0"
+              },
+              {
+                "page": 26,
+                "section": "12 小结：建立开发集和测试集",
+                "text_sha256": "c6e51f3584ee35bd98a7c575212bb905274014be64f1c9a06dbb39bf44823529"
+              },
+              {
+                "page": 18,
+                "section": "",
+                "text_sha256": "f670f1a89448428d664491c133e0c56c12ce17280e36b2c12e0f9ff0b3167be2"
+              },
+              {
+                "page": 18,
+                "section": "",
+                "text_sha256": "ba29ace790a69e95c58d1cd75816bb3c46556888db02e1cc85986d5689bedaae"
+              }
+            ]
+          ],
+          "review_note": "未进行开发集/验证集同义词对齐；左侧未检出不表示教材没有对应概念。"
+        },
+        {
+          "concept": "量子纠缠",
+          "kind": "unrelated_concept",
+          "passed": true,
+          "checks": {
+            "found": true,
+            "reference_pages": true,
+            "exact_source_support": true,
+            "literal_highlights": true
+          },
+          "found": [
+            false,
+            false
+          ],
+          "facets": {
+            "definition": "not_found",
+            "notation": "not_found",
+            "assumption": "not_found",
+            "scope": "not_found",
+            "other": "not_found"
+          },
+          "evidence": [
+            [],
+            []
+          ],
+          "review_note": "不应为课程之外的概念生成原文对照。"
+        },
+        {
+          "concept": "正则化",
+          "kind": "shared_concept",
+          "passed": true,
+          "checks": {
+            "found": true,
+            "reference_pages": true,
+            "exact_source_support": true,
+            "literal_highlights": true
+          },
+          "found": [
+            true,
+            true
+          ],
+          "facets": {
+            "definition": "insufficient",
+            "notation": "not_found",
+            "assumption": "not_found",
+            "scope": "not_found",
+            "other": "insufficient"
+          },
+          "evidence": [
+            [
+              {
+                "page": 173,
+                "section": "小结",
+                "text_sha256": "59aeee398e4f7a50241ba33cc2a585b6054f80770584ae1e3a3d283fdb19910b"
+              },
+              {
+                "page": 158,
+                "section": "",
+                "text_sha256": "ffb2e91346182b310fef1a515d05d69958afcd2c3510b33e69634c96417ec97e"
+              }
+            ],
+            [
+              {
+                "page": 50,
+                "section": "27 减少方差的技术",
+                "text_sha256": "b60804f4baabb0cfff970c4bb46678e00d739056c225d3da7398f74987a51941"
+              }
+            ]
+          ],
+          "review_note": "MLY 的技术列表条目保留降低方差及增大偏差的完整表述；这是技术效果描述，不自动归类为定义。"
+        }
+      ]
+    }
+  ],
+  "semantic_acceptance": "pending_independent_review",
+  "limitations": [
+    "案例由代理检查文本后整理，属于开发诊断，没有独立人工语义审核。",
+    "文字差异高亮不能判断语义一致或观点冲突；方差案例保留为需要消歧的例子。",
+    "两份原始 PDF 没有当前格式可识别的先修关系声明；真实课程学习路径仍需审核后的笔记。",
+    "仅验证七个开发案例；尚不支持任意隐含表述、同义词自动对齐及同名异义消歧。"
+  ],
+  "code_sha256": {
+    "D:\\AgentProject\\course-rag-assistant\\scripts\\evaluate_course_pairs.py": "2b38e46f1b2d86606c4d38591336cb69949470712e46d4237ada76c83cf219ba",
+    "scripts\\evaluate_course_features.py": "f9d9428c7425c23c408148b23af35cea5a15596636c07a18b9fb93148f402b32",
+    "src\\course_rag_assistant\\__init__.py": "64c4700ceb4abc71769b851411ee58675282d8c34f8ddee61e26e091e8335efe",
+    "src\\course_rag_assistant\\__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+    "src\\course_rag_assistant\\answer.py": "503812b3b106d0b6a21c258f31678975748906dc855b1e06ad2d152112d0153b",
+    "src\\course_rag_assistant\\cli.py": "19cb717ec1f98e5f4c668061ca81a604c3f06df91b1d30789a2226841c48d65b",
+    "src\\course_rag_assistant\\compare.py": "dd97717ac1cdb72bcd9ef7195bc27428680a5b0ff48210aba3a0d319f67bea7a",
+    "src\\course_rag_assistant\\config.py": "ba9936f424a2b7502bd66c3242642e9b98e67b9ab38141a4bb870ec2c1c4296d",
+    "src\\course_rag_assistant\\content.py": "f7c8df588e29aa4bc1fc759f877d93fe4e3cd18d4b206d2e707a67909f01d313",
+    "src\\course_rag_assistant\\dense.py": "5bc033ffb7a5d3252fcae66aaae92c437e36cbb2124c4b7763419d9e5a0199d6",
+    "src\\course_rag_assistant\\evaluate.py": "e24f04a067f373130b887e64b01ddf13e378a75b2034a877834e1a5c310b7eb7",
+    "src\\course_rag_assistant\\evidence.py": "bb0003c46a2e2cf5b528f94729a9b1d840833ee16d4aaf81195eaa2cb1ba56d9",
+    "src\\course_rag_assistant\\facts.py": "36c12337a1f7825104b76dba0b9ce3eadcd7cf765359b7066424def3b1692139",
+    "src\\course_rag_assistant\\ingest.py": "0982b0c455b6f3377f032df8a5a0a86da46943bb850348f0e987f2ffe9f0f2c9",
+    "src\\course_rag_assistant\\prerequisites.py": "497c81abb2873bd54ebb843770e778a38f238f845198f8111a834a693628255a",
+    "src\\course_rag_assistant\\quiz.py": "d1d3b479ab766c57cc88580484add1ec407f7ec5dc73c283fdd3502f2b71bc44",
+    "src\\course_rag_assistant\\rerank.py": "53ee4813ce6734ce3f23f8f0d0948b721fb8289d9b7fa166473e44258f25e0c0",
+    "src\\course_rag_assistant\\retrieval.py": "f091a00323c83ddb5e1dbb84b281939f1224a473c1568487a2d61afdb7a1f3a1",
+    "src\\course_rag_assistant\\text.py": "c16b68e192280dea5287c3347c493254efab52dd0a30e8beef953700d580651a",
+    "src\\course_rag_assistant\\web\\__init__.py": "5836e4317a8005ae145583c49a0aa1b14b56c27888239ea317a0ae4b3fc48424",
+    "src\\course_rag_assistant\\web\\__main__.py": "8c9322ce6b6bb384515ba847ae26e5c57f3b186ac267cbb96d762763c955bc08",
+    "src\\course_rag_assistant\\web\\answers.py": "bdac4368a25e0dea05d1f9c4679faf2466ec4e40f578bf89ae205414491f7a48",
+    "src\\course_rag_assistant\\web\\app.py": "7172d0534417ebef4fe95577b03fdb7b7e2095042e92dab9011114f796228bfe",
+    "src\\course_rag_assistant\\web\\compare_routes.py": "1f0347d219028c100922c75db32d6927c03d8234b94cb4619c448a64542011b6",
+    "src\\course_rag_assistant\\web\\constants.py": "56caa97bcdc0dd3b0bb6191f5a2cc2e17fd1a3d3282e87594b09bd29b41b8630",
+    "src\\course_rag_assistant\\web\\library.py": "5b535bba261295c56feb853e9ed64a4b3fe28f7e71b5914ed6946377072febfc",
+    "src\\course_rag_assistant\\web\\prerequisites.py": "e3613f903b94ef0293a6162d351f5cb0a8f143ba6eb03dcbb4a404ec4e21d685",
+    "src\\course_rag_assistant\\web\\quiz_routes.py": "a5c90574db026ba4fef1f818a7318a85b3c0f933ebdf625b61f5d6872e5f794f",
+    "src\\course_rag_assistant\\web\\routes.py": "94a60a020b73c1db7dab093e82963fe6161baef340d4e74099478961c4fc716b",
+    "src\\course_rag_assistant\\web\\schemas.py": "303b809148776b358708261a38c20f41552d69156a2794d9316e1ca5de5edbf4",
+    "src\\course_rag_assistant\\web\\security.py": "619c9e988dc911444cd4e4bdbfb840f15b342fa7b5c9d2e08c57224fbe76a1ba"
+  }
+}

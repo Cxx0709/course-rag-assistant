@@ -1,0 +1,211 @@
+{
+  "purpose": "Scoped terminology correspondence and sense selection on two pinned textbooks; agent-curated development cases, not independent semantic acceptance.",
+  "sources": [
+    {
+      "path": "data/raw/datamining-notes/d2l-zh-pytorch.pdf",
+      "sha256": "db978acf18dac28f4de1412839ca1f804302c6a29b971b024595369afa69cbea"
+    },
+    {
+      "path": "data/raw/course-comparison/MLY-zh-cn.pdf",
+      "sha256": "d016cefe31b57bac625bfddd7e367d3ec634fbdd015c5879627c9ea4c2a8fb85"
+    }
+  ],
+  "cases": [
+    {
+      "concept": "训练集",
+      "kind": "shared_concept",
+      "expected_found": [
+        true,
+        true
+      ],
+      "reference_pages": [
+        [
+          39
+        ],
+        [
+          14,
+          71
+        ]
+      ],
+      "review_note": "两书均介绍用于算法学习的数据；页码为 PDF 物理页。",
+      "expected_alignment": "literal_name"
+    },
+    {
+      "concept": "测试集",
+      "kind": "shared_concept",
+      "expected_found": [
+        true,
+        true
+      ],
+      "reference_pages": [
+        [
+          39
+        ],
+        [
+          14,
+          26,
+          71
+        ]
+      ],
+      "review_note": "均涉及新数据上的性能评估；具体数据划分和选择规则需阅读上下文。",
+      "expected_alignment": "literal_name"
+    },
+    {
+      "concept": "过拟合",
+      "kind": "shared_concept",
+      "expected_found": [
+        true,
+        true
+      ],
+      "reference_pages": [
+        [
+          39,
+          158,
+          167
+        ],
+        [
+          43
+        ]
+      ],
+      "review_note": "MLY 的命名句依赖前文，摘录必须保留相邻解释。",
+      "expected_alignment": "literal_name"
+    },
+    {
+      "concept": "量子纠缠",
+      "kind": "unrelated_concept",
+      "expected_found": [
+        false,
+        false
+      ],
+      "reference_pages": [
+        [],
+        []
+      ],
+      "review_note": "不应为课程之外的概念生成原文对照。",
+      "expected_alignment": "literal_name"
+    },
+    {
+      "concept": "正则化",
+      "kind": "shared_concept",
+      "expected_found": [
+        true,
+        true
+      ],
+      "reference_pages": [
+        [
+          158,
+          173
+        ],
+        [
+          50
+        ]
+      ],
+      "review_note": "MLY 的技术列表条目保留降低方差及增大偏差的完整表述；这是技术效果描述，不自动归类为定义。",
+      "expected_alignment": "literal_name"
+    },
+    {
+      "concept": "开发集",
+      "kind": "role_correspondence",
+      "expected_found": [
+        true,
+        true
+      ],
+      "reference_pages": [
+        [
+          160
+        ],
+        [
+          14
+        ]
+      ],
+      "expected_alignment": "role_correspondence",
+      "review_note": "依据各自的模型选择或调参用途对应，仅属限定语境的阅读对照，不是普遍同义认定。"
+    },
+    {
+      "concept": "验证集",
+      "kind": "role_correspondence",
+      "expected_found": [
+        true,
+        true
+      ],
+      "reference_pages": [
+        [
+          160
+        ],
+        [
+          14
+        ]
+      ],
+      "expected_alignment": "role_correspondence",
+      "review_note": "依据各自的模型选择或调参用途对应，仅属限定语境的阅读对照，不是普遍同义认定。"
+    },
+    {
+      "concept": "方差",
+      "kind": "disambiguation_required",
+      "expected_found": [
+        false,
+        false
+      ],
+      "reference_pages": [
+        [],
+        []
+      ],
+      "expected_alignment": "needs_disambiguation",
+      "review_note": "未选择含义时不生成跨资料摘录或差异高亮；空结果表示等待选择，不表示教材没有方差。"
+    },
+    {
+      "concept": "方差",
+      "sense": "random_variable_variance",
+      "kind": "sense_filtered",
+      "expected_found": [
+        true,
+        false
+      ],
+      "reference_pages": [
+        [
+          98
+        ],
+        []
+      ],
+      "expected_alignment": "sense_selected",
+      "review_note": "仅保留原句中可识别所选语境的片段；未知或混合语境不自动归类，未检出不等于不存在。"
+    },
+    {
+      "concept": "方差",
+      "sense": "model_error_variance",
+      "kind": "sense_filtered",
+      "expected_found": [
+        false,
+        true
+      ],
+      "reference_pages": [
+        [],
+        [
+          41
+        ]
+      ],
+      "expected_alignment": "sense_selected",
+      "review_note": "仅保留原句中可识别所选语境的片段；未知或混合语境不自动归类，未检出不等于不存在。"
+    },
+    {
+      "concept": "交叉验证集",
+      "kind": "related_term_negative",
+      "expected_found": [
+        false,
+        false
+      ],
+      "reference_pages": [
+        [],
+        []
+      ],
+      "expected_alignment": "literal_name",
+      "review_note": "不把更长的留出交叉验证集名称或相邻术语自动归并为此查询。"
+    }
+  ],
+  "limitations": [
+    "只内置开发集/验证集的用途对照及两类方差语境，不能对任意概念做语义推断。",
+    "正向用途规则和语境线索是保守文本规则，不是普遍同义证明、形式化语义验证或矛盾检测。",
+    "开发案例由代理编写；独立人工审核、扩大概念覆盖和复习顺序审核仍待完成。"
+  ],
+  "mode": "alignment"
+}

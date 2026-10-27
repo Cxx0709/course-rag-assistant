@@ -1,0 +1,136 @@
+{
+  "purpose": "Structural validation of assistant-authored draft; not textbook-declared prerequisites",
+  "manifest_sha256": "15c6dd2111efefe4e1166f47b41536cda03af50199c8bb73f84322159922b94a",
+  "note": {
+    "path": "data/course-notes/机器学习复习路径-待审核.md",
+    "sha256": "fc93761901758920357e5fcdec0e42f9f8b1ab72acf1aa1a6001a1527dbf00c0"
+  },
+  "regression_passed": true,
+  "checks": {
+    "references": true,
+    "plans": true
+  },
+  "references": [
+    {
+      "path": "../raw/datamining-notes/d2l-zh-pytorch.pdf",
+      "page": 39,
+      "valid": true
+    },
+    {
+      "path": "../raw/course-comparison/MLY-zh-cn.pdf",
+      "page": 14,
+      "valid": true
+    },
+    {
+      "path": "../raw/course-comparison/MLY-zh-cn.pdf",
+      "page": 14,
+      "valid": true
+    },
+    {
+      "path": "../raw/datamining-notes/d2l-zh-pytorch.pdf",
+      "page": 39,
+      "valid": true
+    },
+    {
+      "path": "../raw/course-comparison/MLY-zh-cn.pdf",
+      "page": 14,
+      "valid": true
+    },
+    {
+      "path": "../raw/course-comparison/MLY-zh-cn.pdf",
+      "page": 14,
+      "valid": true
+    },
+    {
+      "path": "../raw/course-comparison/MLY-zh-cn.pdf",
+      "page": 41,
+      "valid": true
+    },
+    {
+      "path": "../raw/course-comparison/MLY-zh-cn.pdf",
+      "page": 43,
+      "valid": true
+    },
+    {
+      "path": "../raw/datamining-notes/d2l-zh-pytorch.pdf",
+      "page": 167,
+      "valid": true
+    },
+    {
+      "path": "../raw/course-comparison/MLY-zh-cn.pdf",
+      "page": 43,
+      "valid": true
+    },
+    {
+      "path": "../raw/datamining-notes/d2l-zh-pytorch.pdf",
+      "page": 158,
+      "valid": true
+    },
+    {
+      "path": "../raw/course-comparison/MLY-zh-cn.pdf",
+      "page": 50,
+      "valid": true
+    }
+  ],
+  "plans": [
+    {
+      "concept": "训练误差与开发误差",
+      "checks": {
+        "ready": true,
+        "order": true,
+        "lessons_present": true,
+        "draft_grounding": true
+      },
+      "passed": true,
+      "order": [
+        "训练集",
+        "开发集",
+        "测试集"
+      ],
+      "relation_count": 3
+    },
+    {
+      "concept": "过拟合",
+      "checks": {
+        "ready": true,
+        "order": true,
+        "lessons_present": true,
+        "draft_grounding": true
+      },
+      "passed": true,
+      "order": [
+        "训练集",
+        "开发集",
+        "测试集",
+        "训练误差与开发误差"
+      ],
+      "relation_count": 4
+    },
+    {
+      "concept": "正则化",
+      "checks": {
+        "ready": true,
+        "order": true,
+        "lessons_present": true,
+        "draft_grounding": true
+      },
+      "passed": true,
+      "order": [
+        "训练集",
+        "开发集",
+        "测试集",
+        "训练误差与开发误差",
+        "过拟合"
+      ],
+      "relation_count": 5
+    }
+  ],
+  "review_status": "pending_human_review",
+  "default_library_modified": false,
+  "code_sha256": {
+    "D:\\AgentProject\\course-rag-assistant\\scripts\\evaluate_course_paths.py": "ad19551e44a9e82c2669d2b45219dea04d20db5df1e275d00a97862ffb94c96d",
+    "scripts\\evaluate_course_features.py": "f9d9428c7425c23c408148b23af35cea5a15596636c07a18b9fb93148f402b32",
+    "src\\course_rag_assistant\\ingest.py": "0982b0c455b6f3377f032df8a5a0a86da46943bb850348f0e987f2ffe9f0f2c9",
+    "src\\course_rag_assistant\\prerequisites.py": "497c81abb2873bd54ebb843770e778a38f238f845198f8111a834a693628255a"
+  }
+}

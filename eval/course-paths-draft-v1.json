@@ -1,0 +1,45 @@
+{
+  "note": {
+    "path": "data/course-notes/机器学习复习路径-待审核.md",
+    "sha256": "fc93761901758920357e5fcdec0e42f9f8b1ab72acf1aa1a6001a1527dbf00c0"
+  },
+  "sources": [
+    {
+      "path": "data/raw/datamining-notes/d2l-zh-pytorch.pdf",
+      "sha256": "db978acf18dac28f4de1412839ca1f804302c6a29b971b024595369afa69cbea"
+    },
+    {
+      "path": "data/raw/course-comparison/MLY-zh-cn.pdf",
+      "sha256": "d016cefe31b57bac625bfddd7e367d3ec634fbdd015c5879627c9ea4c2a8fb85"
+    }
+  ],
+  "plans": [
+    {
+      "concept": "训练误差与开发误差",
+      "order": [
+        "训练集",
+        "开发集",
+        "测试集"
+      ]
+    },
+    {
+      "concept": "过拟合",
+      "order": [
+        "训练集",
+        "开发集",
+        "测试集",
+        "训练误差与开发误差"
+      ]
+    },
+    {
+      "concept": "正则化",
+      "order": [
+        "训练集",
+        "开发集",
+        "测试集",
+        "训练误差与开发误差",
+        "过拟合"
+      ]
+    }
+  ]
+}

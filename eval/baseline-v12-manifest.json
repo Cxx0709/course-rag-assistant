@@ -1,0 +1,30 @@
+{
+  "frozen_date": "2026-10-26",
+  "purpose": "Fixed development regression baseline, not held-out semantic acceptance",
+  "labels": "eval/real-questions-v2.jsonl",
+  "unanswerable": "eval/real-unanswerable-v2.jsonl",
+  "data": "data/raw/datamining-notes",
+  "index": "data/index/embeddings.npy",
+  "cache": "data/index/quality-query-v2.npy",
+  "embedding_model": "bge-m3:latest",
+  "regression_floors": {
+    "recall_at_k": 0.83,
+    "coverage": 0.67,
+    "reference_pages": 0.56
+  },
+  "inputs_sha256": {
+    "eval/real-questions-v2.jsonl": "7b93f442c19834c0a63b8a1b03c315fd94cb3d1eb3c72bbf2e5d6dbbf2b5b063",
+    "eval/real-unanswerable-v2.jsonl": "c44a38da7ae733de86cc8a411c60af278302837b4670d3454e6903c5fc6bb9d6",
+    "eval/validation-v4.jsonl": "f16d49b10d0644f6d330971422815c148dd245e5c825d1912b0c8049371b4488",
+    "eval/validation-v4-manifest.json": "6b48f9f04b41df6de2155067c55fd91ce763f7c7477bb57369713cd2abeb41b6",
+    "eval/validation-v5.jsonl": "b66ad7c8529192fb018c2faedafef58dd42c4504d8db36469d77e552a863b9aa",
+    "eval/validation-v5-manifest.json": "899de3362d8967b0fff15309137ce200c97834ce88d81aec2d91f43b65c3da77",
+    "data/raw/datamining-notes/d2l-zh-pytorch.pdf": "db978acf18dac28f4de1412839ca1f804302c6a29b971b024595369afa69cbea",
+    "data/index/embeddings.npy": "a555e852fd0dbdee0d7e348646f043893067323d1a32520a45856cbba941a86c",
+    "data/index/embeddings.json": "b390554d73923bdf32b5e71feafb1d1ea7d3ba854271926fc6f97a43b9f5adff",
+    "data/index/quality-query-v2.npy": "ffe953b35f75d198f8114ab7345eea84ef17edc60c85bb64ffc0cab22c73d1cc",
+    "data/index/quality-query-v2.json": "4fc7fb64831c89cbd8fe5f055b7ee110a75f7d3d99a8f75dd2aa978859ce95f6",
+    "eval/evidence-integrity-v12.jsonl": "4aa8d3898f982848fd19b97e75f334ab3f3345b882157187276873e6a16362d3"
+  },
+  "integrity_cases": "eval/evidence-integrity-v12.jsonl"
+}

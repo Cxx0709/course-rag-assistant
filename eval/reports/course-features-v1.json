@@ -1,0 +1,937 @@
+{
+  "purpose": "Agent-authored development cases and local textbook diagnostics; not independent semantic acceptance",
+  "manifest_sha256": "cf135d1f73d9670765759d69af5f1204b7c2ab4bc308a26cf0b487e09de596d0",
+  "repeats": 2,
+  "regression_passed": true,
+  "checks": {
+    "stable": true,
+    "contracts": true,
+    "real_source_grounding": true
+  },
+  "runs": [
+    {
+      "contracts": {
+        "cases": 10,
+        "passed": 10,
+        "details": [
+          {
+            "id": "compare_same",
+            "passed": true,
+            "checks": {
+              "found": true,
+              "facets": true,
+              "source_grounding": true,
+              "literal_highlights": true
+            },
+            "observed": {
+              "found": [
+                true,
+                true
+              ],
+              "facets": {
+                "definition": "not_found",
+                "notation": "same_excerpt",
+                "assumption": "not_found",
+                "scope": "not_found",
+                "other": "not_found"
+              }
+            }
+          },
+          {
+            "id": "compare_symbols",
+            "passed": true,
+            "checks": {
+              "found": true,
+              "facets": true,
+              "source_grounding": true,
+              "literal_highlights": true
+            },
+            "observed": {
+              "found": [
+                true,
+                true
+              ],
+              "facets": {
+                "definition": "not_found",
+                "notation": "different_excerpt",
+                "assumption": "not_found",
+                "scope": "not_found",
+                "other": "not_found"
+              }
+            }
+          },
+          {
+            "id": "compare_missing",
+            "passed": true,
+            "checks": {
+              "found": true,
+              "facets": true,
+              "source_grounding": true,
+              "literal_highlights": true
+            },
+            "observed": {
+              "found": [
+                true,
+                false
+              ],
+              "facets": {
+                "definition": "insufficient",
+                "notation": "not_found",
+                "assumption": "not_found",
+                "scope": "not_found",
+                "other": "not_found"
+              }
+            }
+          },
+          {
+            "id": "compare_related_not_equal",
+            "passed": true,
+            "checks": {
+              "found": true,
+              "facets": true,
+              "source_grounding": true,
+              "literal_highlights": true
+            },
+            "observed": {
+              "found": [
+                false,
+                true
+              ],
+              "facets": {
+                "definition": "insufficient",
+                "notation": "not_found",
+                "assumption": "not_found",
+                "scope": "not_found",
+                "other": "not_found"
+              }
+            }
+          },
+          {
+            "id": "compare_pdf_linebreak",
+            "passed": true,
+            "checks": {
+              "found": true,
+              "facets": true,
+              "source_grounding": true,
+              "literal_highlights": true
+            },
+            "observed": {
+              "found": [
+                true,
+                true
+              ],
+              "facets": {
+                "definition": "not_found",
+                "notation": "not_found",
+                "assumption": "not_found",
+                "scope": "not_found",
+                "other": "same_excerpt"
+              }
+            }
+          },
+          {
+            "id": "compare_forged_citation",
+            "passed": true,
+            "checks": {
+              "found": true,
+              "facets": true,
+              "source_grounding": true,
+              "literal_highlights": true
+            },
+            "observed": {
+              "found": [
+                false,
+                false
+              ],
+              "facets": {
+                "definition": "not_found",
+                "notation": "not_found",
+                "assumption": "not_found",
+                "scope": "not_found",
+                "other": "not_found"
+              }
+            }
+          },
+          {
+            "id": "prerequisite_order",
+            "passed": true,
+            "checks": {
+              "status": true,
+              "order": true,
+              "missing": true,
+              "source_grounding": true
+            },
+            "observed": {
+              "status": "ready",
+              "order": [
+                "条件概率",
+                "条件独立"
+              ],
+              "missing": []
+            }
+          },
+          {
+            "id": "prerequisite_cycle",
+            "passed": true,
+            "checks": {
+              "status": true,
+              "order": true,
+              "missing": true,
+              "source_grounding": true
+            },
+            "observed": {
+              "status": "cycle",
+              "order": [],
+              "missing": []
+            }
+          },
+          {
+            "id": "prerequisite_missing_lesson",
+            "passed": true,
+            "checks": {
+              "status": true,
+              "order": true,
+              "missing": true,
+              "source_grounding": true
+            },
+            "observed": {
+              "status": "ready",
+              "order": [
+                "概念乙"
+              ],
+              "missing": [
+                "概念乙"
+              ]
+            }
+          },
+          {
+            "id": "prerequisite_no_inference",
+            "passed": true,
+            "checks": {
+              "status": true,
+              "order": true,
+              "missing": true,
+              "source_grounding": true
+            },
+            "observed": {
+              "status": "not_declared",
+              "order": [],
+              "missing": []
+            }
+          }
+        ]
+      },
+      "real_corpus": {
+        "status": "diagnosed",
+        "documents": 1,
+        "chunks": 3760,
+        "positive_probes": 7,
+        "positive_reference_hits": 7,
+        "reference_page_hit_rate": 1.0,
+        "negative_probes": 1,
+        "negative_rejections": 1,
+        "source_support_rate": 1.0,
+        "prerequisite_roots": 0,
+        "probe_learning_paths": 0,
+        "cross_textbook_validation": "not_run_requires_two_real_sources",
+        "semantic_comparison_validation": "not_run_requires_independent_review",
+        "details": [
+          {
+            "concept": "线性回归",
+            "expected_found": true,
+            "found": true,
+            "reference_page_hit": true,
+            "passed": true,
+            "pages": [
+              103,
+              104
+            ],
+            "excerpt_count": 4,
+            "grounded_count": 4,
+            "evidence": [
+              {
+                "page": 103,
+                "text_sha256": "a7bd89582ecbe4d5c3c709f46f7d22773c1f3c2018e773e366ccc28f5e2bcd58"
+              },
+              {
+                "page": 104,
+                "text_sha256": "4945d5aad1cf20d331dee0a39632f4c56e90758ab8b600a14ed07ea4a9d9a064"
+              },
+              {
+                "page": 103,
+                "text_sha256": "9a0d35356f067f449ebc1b0e475a3772aecc649ba12dbd3ce0591136b8758f2d"
+              },
+              {
+                "page": 103,
+                "text_sha256": "dc9b4c8dd024256db139448ce49e8edce622dd1befd7c20a6baf1d2ec1428afb"
+              }
+            ]
+          },
+          {
+            "concept": "过拟合",
+            "expected_found": true,
+            "found": true,
+            "reference_page_hit": true,
+            "passed": true,
+            "pages": [
+              167
+            ],
+            "excerpt_count": 1,
+            "grounded_count": 1,
+            "evidence": [
+              {
+                "page": 167,
+                "text_sha256": "07a0709479fe5929a3e92d40637abc3d33e3c8b58a1be18dd4e206a765eb72a3"
+              }
+            ]
+          },
+          {
+            "concept": "多层感知机",
+            "expected_found": true,
+            "found": true,
+            "reference_page_hit": true,
+            "passed": true,
+            "pages": [
+              145
+            ],
+            "excerpt_count": 4,
+            "grounded_count": 4,
+            "evidence": [
+              {
+                "page": 145,
+                "text_sha256": "a29b8c719fa85ed8a021096b12731cf41583605ca32613d8eefbefac134262b6"
+              },
+              {
+                "page": 145,
+                "text_sha256": "401eb21ed70aec2a16c054bbafd7c766a56ddb5a994e98e741786be728afc927"
+              },
+              {
+                "page": 145,
+                "text_sha256": "6fcd549a10753f1ca5aed2249b3879aa966abd7707a776d946ed10d979ef27fb"
+              },
+              {
+                "page": 145,
+                "text_sha256": "474b45af7b87ee377dd6c8eadfae21911a65010372a2460fca51012a3eac9ae3"
+              }
+            ]
+          },
+          {
+            "concept": "梯度下降",
+            "expected_found": true,
+            "found": true,
+            "reference_page_hit": true,
+            "passed": true,
+            "pages": [
+              458,
+              468
+            ],
+            "excerpt_count": 4,
+            "grounded_count": 4,
+            "evidence": [
+              {
+                "page": 468,
+                "text_sha256": "1bd342799e3c5d9796a582b3cd241ba46ac7311aa01492d2be20fc128898c1e9"
+              },
+              {
+                "page": 458,
+                "text_sha256": "5c7b89276d4f88a1b5df3b056550244b48fb5ab39ce7718a5186e461e6674080"
+              },
+              {
+                "page": 458,
+                "text_sha256": "94bfaad7708892f84cd9a57276332167e4ffdd088ba2d39de3c40c7fb957ba69"
+              },
+              {
+                "page": 458,
+                "text_sha256": "49921338c6d14ef49cf0f7aefbbc892c15fcc6fe5f4525c556b6a48390354ad7"
+              }
+            ]
+          },
+          {
+            "concept": "贝叶斯定理",
+            "expected_found": true,
+            "found": true,
+            "reference_page_hit": true,
+            "passed": true,
+            "pages": [
+              96
+            ],
+            "excerpt_count": 3,
+            "grounded_count": 3,
+            "evidence": [
+              {
+                "page": 96,
+                "text_sha256": "3fe8013582f901a941c1c0089671fefcce26052fc95a2ba2f81fac1c0373dbb3"
+              },
+              {
+                "page": 96,
+                "text_sha256": "72fbf06fe0953d1c5323dc27e257ef073d1db628a6e8ac1931aa21a08970008b"
+              },
+              {
+                "page": 96,
+                "text_sha256": "049e9dd39157ed52fdefc55ef4916e53b7ba8a27c35f7607912d22df0ef0a202"
+              }
+            ]
+          },
+          {
+            "concept": "权重衰减",
+            "expected_found": true,
+            "found": true,
+            "reference_page_hit": true,
+            "passed": true,
+            "pages": [
+              167
+            ],
+            "excerpt_count": 5,
+            "grounded_count": 5,
+            "evidence": [
+              {
+                "page": 167,
+                "text_sha256": "b9ebfd1cf8b0e5f4cd27027ef90c81f831c0940d99452cadea5cc3d7aab3c1af"
+              },
+              {
+                "page": 167,
+                "text_sha256": "b057e096a0b990afec15885ddbfe8b86130f1aa964dfa36bb7d8d375fe94ba45"
+              },
+              {
+                "page": 167,
+                "text_sha256": "12fca09e513e318fbe24ad5982011e4081bc68d9c74038889117d3bd02dfee3e"
+              },
+              {
+                "page": 167,
+                "text_sha256": "0a0a15a9b902381d36ed6d2a2dbab2822930d0fa30edf797b7ec5644c35ac36e"
+              },
+              {
+                "page": 167,
+                "text_sha256": "0e9d3d9f101d5022ed4e1f5d01716c7d4695ef8ca36ad3a822590a906e36a136"
+              }
+            ]
+          },
+          {
+            "concept": "暂退法",
+            "expected_found": true,
+            "found": true,
+            "reference_page_hit": true,
+            "passed": true,
+            "pages": [
+              174,
+              175
+            ],
+            "excerpt_count": 4,
+            "grounded_count": 4,
+            "evidence": [
+              {
+                "page": 174,
+                "text_sha256": "682c07e7d1debb1ad5a4992283b558b78f8bd5a1ac59d7dd595e7c4205f3bc4f"
+              },
+              {
+                "page": 174,
+                "text_sha256": "6502ac9d7578e723ea9500ead37962ca4da6b6df23f113712b6bc01b35982aa4"
+              },
+              {
+                "page": 174,
+                "text_sha256": "542c5580f3e4c45669a5392bc8ede7875b8bfebb3ba39772d5b3e21f66a9b595"
+              },
+              {
+                "page": 175,
+                "text_sha256": "66a6de7317f4cd7f98a5a1b55b2d8eaad0b6b3e1f0356e457b17c136050fdf9b"
+              }
+            ]
+          },
+          {
+            "concept": "条件独立",
+            "expected_found": false,
+            "found": false,
+            "reference_page_hit": false,
+            "passed": true,
+            "pages": [],
+            "excerpt_count": 0,
+            "grounded_count": 0,
+            "evidence": []
+          }
+        ]
+      }
+    },
+    {
+      "contracts": {
+        "cases": 10,
+        "passed": 10,
+        "details": [
+          {
+            "id": "compare_same",
+            "passed": true,
+            "checks": {
+              "found": true,
+              "facets": true,
+              "source_grounding": true,
+              "literal_highlights": true
+            },
+            "observed": {
+              "found": [
+                true,
+                true
+              ],
+              "facets": {
+                "definition": "not_found",
+                "notation": "same_excerpt",
+                "assumption": "not_found",
+                "scope": "not_found",
+                "other": "not_found"
+              }
+            }
+          },
+          {
+            "id": "compare_symbols",
+            "passed": true,
+            "checks": {
+              "found": true,
+              "facets": true,
+              "source_grounding": true,
+              "literal_highlights": true
+            },
+            "observed": {
+              "found": [
+                true,
+                true
+              ],
+              "facets": {
+                "definition": "not_found",
+                "notation": "different_excerpt",
+                "assumption": "not_found",
+                "scope": "not_found",
+                "other": "not_found"
+              }
+            }
+          },
+          {
+            "id": "compare_missing",
+            "passed": true,
+            "checks": {
+              "found": true,
+              "facets": true,
+              "source_grounding": true,
+              "literal_highlights": true
+            },
+            "observed": {
+              "found": [
+                true,
+                false
+              ],
+              "facets": {
+                "definition": "insufficient",
+                "notation": "not_found",
+                "assumption": "not_found",
+                "scope": "not_found",
+                "other": "not_found"
+              }
+            }
+          },
+          {
+            "id": "compare_related_not_equal",
+            "passed": true,
+            "checks": {
+              "found": true,
+              "facets": true,
+              "source_grounding": true,
+              "literal_highlights": true
+            },
+            "observed": {
+              "found": [
+                false,
+                true
+              ],
+              "facets": {
+                "definition": "insufficient",
+                "notation": "not_found",
+                "assumption": "not_found",
+                "scope": "not_found",
+                "other": "not_found"
+              }
+            }
+          },
+          {
+            "id": "compare_pdf_linebreak",
+            "passed": true,
+            "checks": {
+              "found": true,
+              "facets": true,
+              "source_grounding": true,
+              "literal_highlights": true
+            },
+            "observed": {
+              "found": [
+                true,
+                true
+              ],
+              "facets": {
+                "definition": "not_found",
+                "notation": "not_found",
+                "assumption": "not_found",
+                "scope": "not_found",
+                "other": "same_excerpt"
+              }
+            }
+          },
+          {
+            "id": "compare_forged_citation",
+            "passed": true,
+            "checks": {
+              "found": true,
+              "facets": true,
+              "source_grounding": true,
+              "literal_highlights": true
+            },
+            "observed": {
+              "found": [
+                false,
+                false
+              ],
+              "facets": {
+                "definition": "not_found",
+                "notation": "not_found",
+                "assumption": "not_found",
+                "scope": "not_found",
+                "other": "not_found"
+              }
+            }
+          },
+          {
+            "id": "prerequisite_order",
+            "passed": true,
+            "checks": {
+              "status": true,
+              "order": true,
+              "missing": true,
+              "source_grounding": true
+            },
+            "observed": {
+              "status": "ready",
+              "order": [
+                "条件概率",
+                "条件独立"
+              ],
+              "missing": []
+            }
+          },
+          {
+            "id": "prerequisite_cycle",
+            "passed": true,
+            "checks": {
+              "status": true,
+              "order": true,
+              "missing": true,
+              "source_grounding": true
+            },
+            "observed": {
+              "status": "cycle",
+              "order": [],
+              "missing": []
+            }
+          },
+          {
+            "id": "prerequisite_missing_lesson",
+            "passed": true,
+            "checks": {
+              "status": true,
+              "order": true,
+              "missing": true,
+              "source_grounding": true
+            },
+            "observed": {
+              "status": "ready",
+              "order": [
+                "概念乙"
+              ],
+              "missing": [
+                "概念乙"
+              ]
+            }
+          },
+          {
+            "id": "prerequisite_no_inference",
+            "passed": true,
+            "checks": {
+              "status": true,
+              "order": true,
+              "missing": true,
+              "source_grounding": true
+            },
+            "observed": {
+              "status": "not_declared",
+              "order": [],
+              "missing": []
+            }
+          }
+        ]
+      },
+      "real_corpus": {
+        "status": "diagnosed",
+        "documents": 1,
+        "chunks": 3760,
+        "positive_probes": 7,
+        "positive_reference_hits": 7,
+        "reference_page_hit_rate": 1.0,
+        "negative_probes": 1,
+        "negative_rejections": 1,
+        "source_support_rate": 1.0,
+        "prerequisite_roots": 0,
+        "probe_learning_paths": 0,
+        "cross_textbook_validation": "not_run_requires_two_real_sources",
+        "semantic_comparison_validation": "not_run_requires_independent_review",
+        "details": [
+          {
+            "concept": "线性回归",
+            "expected_found": true,
+            "found": true,
+            "reference_page_hit": true,
+            "passed": true,
+            "pages": [
+              103,
+              104
+            ],
+            "excerpt_count": 4,
+            "grounded_count": 4,
+            "evidence": [
+              {
+                "page": 103,
+                "text_sha256": "a7bd89582ecbe4d5c3c709f46f7d22773c1f3c2018e773e366ccc28f5e2bcd58"
+              },
+              {
+                "page": 104,
+                "text_sha256": "4945d5aad1cf20d331dee0a39632f4c56e90758ab8b600a14ed07ea4a9d9a064"
+              },
+              {
+                "page": 103,
+                "text_sha256": "9a0d35356f067f449ebc1b0e475a3772aecc649ba12dbd3ce0591136b8758f2d"
+              },
+              {
+                "page": 103,
+                "text_sha256": "dc9b4c8dd024256db139448ce49e8edce622dd1befd7c20a6baf1d2ec1428afb"
+              }
+            ]
+          },
+          {
+            "concept": "过拟合",
+            "expected_found": true,
+            "found": true,
+            "reference_page_hit": true,
+            "passed": true,
+            "pages": [
+              167
+            ],
+            "excerpt_count": 1,
+            "grounded_count": 1,
+            "evidence": [
+              {
+                "page": 167,
+                "text_sha256": "07a0709479fe5929a3e92d40637abc3d33e3c8b58a1be18dd4e206a765eb72a3"
+              }
+            ]
+          },
+          {
+            "concept": "多层感知机",
+            "expected_found": true,
+            "found": true,
+            "reference_page_hit": true,
+            "passed": true,
+            "pages": [
+              145
+            ],
+            "excerpt_count": 4,
+            "grounded_count": 4,
+            "evidence": [
+              {
+                "page": 145,
+                "text_sha256": "a29b8c719fa85ed8a021096b12731cf41583605ca32613d8eefbefac134262b6"
+              },
+              {
+                "page": 145,
+                "text_sha256": "401eb21ed70aec2a16c054bbafd7c766a56ddb5a994e98e741786be728afc927"
+              },
+              {
+                "page": 145,
+                "text_sha256": "6fcd549a10753f1ca5aed2249b3879aa966abd7707a776d946ed10d979ef27fb"
+              },
+              {
+                "page": 145,
+                "text_sha256": "474b45af7b87ee377dd6c8eadfae21911a65010372a2460fca51012a3eac9ae3"
+              }
+            ]
+          },
+          {
+            "concept": "梯度下降",
+            "expected_found": true,
+            "found": true,
+            "reference_page_hit": true,
+            "passed": true,
+            "pages": [
+              458,
+              468
+            ],
+            "excerpt_count": 4,
+            "grounded_count": 4,
+            "evidence": [
+              {
+                "page": 468,
+                "text_sha256": "1bd342799e3c5d9796a582b3cd241ba46ac7311aa01492d2be20fc128898c1e9"
+              },
+              {
+                "page": 458,
+                "text_sha256": "5c7b89276d4f88a1b5df3b056550244b48fb5ab39ce7718a5186e461e6674080"
+              },
+              {
+                "page": 458,
+                "text_sha256": "94bfaad7708892f84cd9a57276332167e4ffdd088ba2d39de3c40c7fb957ba69"
+              },
+              {
+                "page": 458,
+                "text_sha256": "49921338c6d14ef49cf0f7aefbbc892c15fcc6fe5f4525c556b6a48390354ad7"
+              }
+            ]
+          },
+          {
+            "concept": "贝叶斯定理",
+            "expected_found": true,
+            "found": true,
+            "reference_page_hit": true,
+            "passed": true,
+            "pages": [
+              96
+            ],
+            "excerpt_count": 3,
+            "grounded_count": 3,
+            "evidence": [
+              {
+                "page": 96,
+                "text_sha256": "3fe8013582f901a941c1c0089671fefcce26052fc95a2ba2f81fac1c0373dbb3"
+              },
+              {
+                "page": 96,
+                "text_sha256": "72fbf06fe0953d1c5323dc27e257ef073d1db628a6e8ac1931aa21a08970008b"
+              },
+              {
+                "page": 96,
+                "text_sha256": "049e9dd39157ed52fdefc55ef4916e53b7ba8a27c35f7607912d22df0ef0a202"
+              }
+            ]
+          },
+          {
+            "concept": "权重衰减",
+            "expected_found": true,
+            "found": true,
+            "reference_page_hit": true,
+            "passed": true,
+            "pages": [
+              167
+            ],
+            "excerpt_count": 5,
+            "grounded_count": 5,
+            "evidence": [
+              {
+                "page": 167,
+                "text_sha256": "b9ebfd1cf8b0e5f4cd27027ef90c81f831c0940d99452cadea5cc3d7aab3c1af"
+              },
+              {
+                "page": 167,
+                "text_sha256": "b057e096a0b990afec15885ddbfe8b86130f1aa964dfa36bb7d8d375fe94ba45"
+              },
+              {
+                "page": 167,
+                "text_sha256": "12fca09e513e318fbe24ad5982011e4081bc68d9c74038889117d3bd02dfee3e"
+              },
+              {
+                "page": 167,
+                "text_sha256": "0a0a15a9b902381d36ed6d2a2dbab2822930d0fa30edf797b7ec5644c35ac36e"
+              },
+              {
+                "page": 167,
+                "text_sha256": "0e9d3d9f101d5022ed4e1f5d01716c7d4695ef8ca36ad3a822590a906e36a136"
+              }
+            ]
+          },
+          {
+            "concept": "暂退法",
+            "expected_found": true,
+            "found": true,
+            "reference_page_hit": true,
+            "passed": true,
+            "pages": [
+              174,
+              175
+            ],
+            "excerpt_count": 4,
+            "grounded_count": 4,
+            "evidence": [
+              {
+                "page": 174,
+                "text_sha256": "682c07e7d1debb1ad5a4992283b558b78f8bd5a1ac59d7dd595e7c4205f3bc4f"
+              },
+              {
+                "page": 174,
+                "text_sha256": "6502ac9d7578e723ea9500ead37962ca4da6b6df23f113712b6bc01b35982aa4"
+              },
+              {
+                "page": 174,
+                "text_sha256": "542c5580f3e4c45669a5392bc8ede7875b8bfebb3ba39772d5b3e21f66a9b595"
+              },
+              {
+                "page": 175,
+                "text_sha256": "66a6de7317f4cd7f98a5a1b55b2d8eaad0b6b3e1f0356e457b17c136050fdf9b"
+              }
+            ]
+          },
+          {
+            "concept": "条件独立",
+            "expected_found": false,
+            "found": false,
+            "reference_page_hit": false,
+            "passed": true,
+            "pages": [],
+            "excerpt_count": 0,
+            "grounded_count": 0,
+            "evidence": []
+          }
+        ]
+      }
+    }
+  ],
+  "real_course_acceptance": {
+    "status": "incomplete",
+    "blockers": [
+      "No independent semantic comparison review has been completed.",
+      "Only one real textbook is available; cross-textbook quality remains unvalidated.",
+      "Real course materials have no recognized prerequisite declarations for the probes."
+    ]
+  },
+  "code_sha256": {
+    "D:\\AgentProject\\course-rag-assistant\\scripts\\evaluate_course_features.py": "f9d9428c7425c23c408148b23af35cea5a15596636c07a18b9fb93148f402b32",
+    "src\\course_rag_assistant\\__init__.py": "64c4700ceb4abc71769b851411ee58675282d8c34f8ddee61e26e091e8335efe",
+    "src\\course_rag_assistant\\__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+    "src\\course_rag_assistant\\answer.py": "503812b3b106d0b6a21c258f31678975748906dc855b1e06ad2d152112d0153b",
+    "src\\course_rag_assistant\\cli.py": "19cb717ec1f98e5f4c668061ca81a604c3f06df91b1d30789a2226841c48d65b",
+    "src\\course_rag_assistant\\compare.py": "18133f0319e5ac7cb0be3b09f83a2efa28721f5bb13141eedd3af92b3904a6fc",
+    "src\\course_rag_assistant\\config.py": "ba9936f424a2b7502bd66c3242642e9b98e67b9ab38141a4bb870ec2c1c4296d",
+    "src\\course_rag_assistant\\content.py": "f7c8df588e29aa4bc1fc759f877d93fe4e3cd18d4b206d2e707a67909f01d313",
+    "src\\course_rag_assistant\\dense.py": "5bc033ffb7a5d3252fcae66aaae92c437e36cbb2124c4b7763419d9e5a0199d6",
+    "src\\course_rag_assistant\\evaluate.py": "e24f04a067f373130b887e64b01ddf13e378a75b2034a877834e1a5c310b7eb7",
+    "src\\course_rag_assistant\\evidence.py": "bb0003c46a2e2cf5b528f94729a9b1d840833ee16d4aaf81195eaa2cb1ba56d9",
+    "src\\course_rag_assistant\\facts.py": "36c12337a1f7825104b76dba0b9ce3eadcd7cf765359b7066424def3b1692139",
+    "src\\course_rag_assistant\\ingest.py": "664cea5300c8a847c4655c1c8ebf82cec855d3220731afafe91e2251115d7574",
+    "src\\course_rag_assistant\\prerequisites.py": "497c81abb2873bd54ebb843770e778a38f238f845198f8111a834a693628255a",
+    "src\\course_rag_assistant\\quiz.py": "d1d3b479ab766c57cc88580484add1ec407f7ec5dc73c283fdd3502f2b71bc44",
+    "src\\course_rag_assistant\\rerank.py": "53ee4813ce6734ce3f23f8f0d0948b721fb8289d9b7fa166473e44258f25e0c0",
+    "src\\course_rag_assistant\\retrieval.py": "f091a00323c83ddb5e1dbb84b281939f1224a473c1568487a2d61afdb7a1f3a1",
+    "src\\course_rag_assistant\\text.py": "c16b68e192280dea5287c3347c493254efab52dd0a30e8beef953700d580651a",
+    "src\\course_rag_assistant\\web\\__init__.py": "5836e4317a8005ae145583c49a0aa1b14b56c27888239ea317a0ae4b3fc48424",
+    "src\\course_rag_assistant\\web\\__main__.py": "8c9322ce6b6bb384515ba847ae26e5c57f3b186ac267cbb96d762763c955bc08",
+    "src\\course_rag_assistant\\web\\answers.py": "bdac4368a25e0dea05d1f9c4679faf2466ec4e40f578bf89ae205414491f7a48",
+    "src\\course_rag_assistant\\web\\app.py": "7172d0534417ebef4fe95577b03fdb7b7e2095042e92dab9011114f796228bfe",
+    "src\\course_rag_assistant\\web\\compare_routes.py": "1f0347d219028c100922c75db32d6927c03d8234b94cb4619c448a64542011b6",
+    "src\\course_rag_assistant\\web\\constants.py": "1ce1dd42205f4fe2c4c24eaba40b78dfda51a6d6e93943bdb69252840753dd9c",
+    "src\\course_rag_assistant\\web\\library.py": "f07adca150d83a9d84777c1340f6c5e5232a5d76f93f63b53c216a0034212662",
+    "src\\course_rag_assistant\\web\\prerequisites.py": "e3613f903b94ef0293a6162d351f5cb0a8f143ba6eb03dcbb4a404ec4e21d685",
+    "src\\course_rag_assistant\\web\\quiz_routes.py": "a5c90574db026ba4fef1f818a7318a85b3c0f933ebdf625b61f5d6872e5f794f",
+    "src\\course_rag_assistant\\web\\routes.py": "953da4ec0acc8f79c4541a1d8dcd254ae3dbce002568a4a6929fae78001782ad",
+    "src\\course_rag_assistant\\web\\schemas.py": "303b809148776b358708261a38c20f41552d69156a2794d9316e1ca5de5edbf4",
+    "src\\course_rag_assistant\\web\\security.py": "619c9e988dc911444cd4e4bdbfb840f15b342fa7b5c9d2e08c57224fbe76a1ba"
+  }
+}

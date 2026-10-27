@@ -113,7 +113,7 @@ def test_invalid_uploads_leave_no_saved_documents(client, name, content, status)
 
 
 def test_upload_limit_is_enforced_on_received_body(client, monkeypatch):
-    monkeypatch.setattr("course_rag_assistant.web.MAX_UPLOAD", 4)
+    monkeypatch.setattr("course_rag_assistant.web.routes.MAX_UPLOAD", 4)
     assert client.post("/api/documents?filename=large.md", content=b"12345").status_code == 413
 
 
@@ -155,6 +155,23 @@ def test_demo_is_idempotent_and_static_page_available(client):
     assert client.get("/").status_code == 200
     assert client.get("/assets/app.js").status_code == 200
     assert client.get("/assets/style.css").status_code == 200
+    assert client.get("/assets/js/app.js").status_code == 200
+    assert client.get("/assets/css/style.css").status_code == 200
+    assert client.get("/assets/sample/example.md").status_code == 200
+    assert '/assets/js/app.js' in client.get("/").text
+    assert client.get("/assets/app.js").content == client.get("/assets/js/app.js").content
+    assert client.get("/assets/style.css").content == client.get("/assets/css/style.css").content
+
+
+def test_app_storage_can_be_injected_or_configured(tmp_path):
+    from course_rag_assistant.config import Settings
+
+    config = Settings(web_data=tmp_path / "configured")
+    app = create_app(settings=config, generator_factory=lambda: None)
+    assert app.state.library.root == config.web_data.resolve()
+    explicit = tmp_path / "explicit"
+    app = create_app(explicit, settings=config, generator_factory=lambda: None)
+    assert app.state.library.root == explicit.resolve()
 
 
 def test_unconfigured_model_does_not_silently_claim_model_answer(client):

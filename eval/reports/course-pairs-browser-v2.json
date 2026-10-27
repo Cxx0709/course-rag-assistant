@@ -1,0 +1,68 @@
+{
+  "purpose": "Local Chrome smoke check against persisted real PDF library; no model or semantic acceptance",
+  "cases": [
+    {
+      "concept": "训练集",
+      "status": "ready",
+      "found": [
+        true,
+        true
+      ]
+    },
+    {
+      "concept": "测试集",
+      "status": "ready",
+      "found": [
+        true,
+        true
+      ]
+    },
+    {
+      "concept": "过拟合",
+      "status": "ready",
+      "found": [
+        true,
+        true
+      ]
+    },
+    {
+      "concept": "方差",
+      "status": "ready",
+      "found": [
+        true,
+        true
+      ]
+    },
+    {
+      "concept": "开发集",
+      "status": "partial",
+      "found": [
+        false,
+        true
+      ]
+    },
+    {
+      "concept": "量子纠缠",
+      "status": "not_found",
+      "found": [
+        false,
+        false
+      ]
+    },
+    {
+      "concept": "正则化",
+      "status": "ready",
+      "found": [
+        true,
+        true
+      ]
+    }
+  ],
+  "sourceLinks": true,
+  "overfittingAntecedent": true,
+  "sourceContext": true,
+  "uploadLimitMB": 50,
+  "mobileOverflow": false,
+  "scopeReset": true,
+  "browserErrors": []
+}

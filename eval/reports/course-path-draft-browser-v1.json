@@ -1,0 +1,15 @@
+{
+  "purpose": "Draft note in isolated temporary library; no default-library installation or human review",
+  "order": [
+    "训练集",
+    "开发集",
+    "测试集",
+    "训练误差与开发误差",
+    "过拟合"
+  ],
+  "visibleDraftFilename": true,
+  "relationSources": true,
+  "lessonSources": true,
+  "mobileOverflow": false,
+  "browserErrors": []
+}

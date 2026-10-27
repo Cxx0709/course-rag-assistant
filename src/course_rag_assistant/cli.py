@@ -6,6 +6,7 @@ import json
 from pathlib import Path
 
 from .answer import answer, format_citation, generator_from_env
+from .config import get_settings
 from .evaluate import run_ablation, run_abstention, run_eval
 from .ingest import ingest_dir
 from .retrieval import HybridRetriever, build_bm25_index
@@ -16,7 +17,7 @@ def _retriever(root: Path, index_path: Path | None = None, *, chat_rerank: bool 
     from .dense import NumpyVectorIndex, embedder_from_env
     from .rerank import ChatReranker, reranker_from_env
 
-    dense_path = (index_path.parent if index_path else Path("data/index")) / "embeddings.npy"
+    dense_path = (index_path.parent if index_path else get_settings().index_dir) / "embeddings.npy"
     backend = embedder_from_env()
     if dense_path.exists() and backend is not None:
         retriever.dense_index = NumpyVectorIndex.load(dense_path)
@@ -31,6 +32,7 @@ def _retriever(root: Path, index_path: Path | None = None, *, chat_rerank: bool 
 
 
 def build_parser() -> argparse.ArgumentParser:
+    config = get_settings()
     parser = argparse.ArgumentParser(prog="course-rag", description="Course-focused retrieval and cited answering")
     sub = parser.add_subparsers(dest="command", required=True)
 
@@ -40,20 +42,20 @@ def build_parser() -> argparse.ArgumentParser:
 
     search = sub.add_parser("search", help="Search course materials")
     search.add_argument("query")
-    search.add_argument("--data", type=Path, default=Path("data/samples"))
-    search.add_argument("--index", type=Path, default=Path("data/index/bm25.json"))
+    search.add_argument("--data", type=Path, default=config.data_dir / "samples")
+    search.add_argument("--index", type=Path, default=config.index_dir / "bm25.json")
     search.add_argument("-k", "--top-k", type=int, default=8)
     search.add_argument("--chat-rerank", action="store_true", help="Select passages with the configured chat model")
 
     ask = sub.add_parser("answer", help="Answer with provenance citations")
     ask.add_argument("question")
-    ask.add_argument("--data", type=Path, default=Path("data/samples"))
+    ask.add_argument("--data", type=Path, default=config.data_dir / "samples")
     ask.add_argument("-k", "--top-k", type=int, default=8)
     ask.add_argument("--chat-rerank", action="store_true", help="Select passages with the configured chat model")
 
     evaluate = sub.add_parser("evaluate", help="Run retrieval or abstention evaluation")
     evaluate.add_argument("labels", type=Path)
-    evaluate.add_argument("--data", type=Path, default=Path("data/samples"))
+    evaluate.add_argument("--data", type=Path, default=config.data_dir / "samples")
     evaluate.add_argument("-k", type=int, default=8)
     evaluate.add_argument("--ablation", action="store_true")
     evaluate.add_argument("--unanswerable", action="store_true")

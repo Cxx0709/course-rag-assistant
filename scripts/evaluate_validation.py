@@ -33,7 +33,7 @@ def main():
                         'abstained': refused, 'answer': result.text, 'reason': result.abstention_reason})
     report = {'cases_sha256': digest, 'cases': len(results), 'passed': sum(r['passed'] for r in results),
               'code_sha256': {str(p): hashlib.sha256(p.read_bytes()).hexdigest()
-                              for p in sorted(Path('src/course_rag_assistant').glob('*.py'))},
+                              for p in sorted(Path('src/course_rag_assistant').rglob('*.py'))},
               'details': results}
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(report, ensure_ascii=False, indent=2)+'\n', encoding='utf-8')

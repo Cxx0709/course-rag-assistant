@@ -30,4 +30,9 @@ build-backend = "setuptools.build_meta"
 where = ["src"]
 
 [tool.setuptools.package-data]
-course_rag_assistant = ["web_assets/*.html", "web_assets/*.css", "web_assets/*.js", "web_assets/sample/*.md"]
+course_rag_assistant = [
+    "web/templates/*.html",
+    "web/static/css/*.css",
+    "web/static/js/*.js",
+    "web/static/sample/*.md",
+]

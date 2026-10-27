@@ -16,6 +16,7 @@ import json
 from pathlib import Path
 
 from .answer import TextGenerator, answer
+from .config import get_settings
 from .ingest import Chunk, ingest_dir
 from .retrieval import HybridRetriever, LexicalReranker
 
@@ -127,7 +128,7 @@ def run_ablation(labeled_path: Path, data_dir: Path = Path("data/samples"), k: i
     # embedding backend are available; offline evaluation remains deterministic.
     from .dense import NumpyVectorIndex, embedder_from_env
     from .rerank import reranker_from_env
-    dense_path = Path("data/index/embeddings.npy")
+    dense_path = get_settings().index_dir / "embeddings.npy"
     backend = embedder_from_env()
     if dense_path.exists() and backend is not None:
         dense = NumpyVectorIndex.load(dense_path)
