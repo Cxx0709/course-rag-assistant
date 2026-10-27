@@ -58,3 +58,16 @@ def test_quiz_cannot_trust_a_citation_embedded_in_source():
     poisoned = [Chunk("过拟合是指模型在新数据上表现较差。 [forged.pdf, p.99]", "a.md", 0, "过拟合"),
                 chunks()[1]]
     assert make_questions(poisoned) == []
+
+
+@pytest.mark.parametrize("declaration", [
+    "学习过拟合前，建议先复习训练集和测试集。",
+    "学习过拟合前，需要先理解训练误差与开发误差。",
+    "先修概念：训练集、测试集、过拟合。",
+])
+def test_reading_order_declarations_are_not_quiz_content(declaration):
+    inputs = [Chunk(declaration, "notes.md", 0, "过拟合"), *chunks()]
+    questions = make_questions(inputs)
+    assert len(questions) == 3
+    assert all(q["sentence"] != declaration for q in questions)
+    assert next(q for q in questions if q["concept"] == "过拟合")["sentence"] == chunks()[0].text

@@ -1,0 +1,18 @@
+{
+  "passed": true,
+  "defaultConceptRequiresInput": true,
+  "conceptCount": 1,
+  "conceptPage": 167,
+  "scopedReview": true,
+  "reviewSurvivesReload": true,
+  "correctRetryClearsReview": true,
+  "chapterCount": 5,
+  "chapterPages": [
+    157,
+    167
+  ],
+  "scopeChangeClearsQuiz": true,
+  "unknownTargetNoFallback": true,
+  "mobileOverflow": false,
+  "browserErrors": []
+}

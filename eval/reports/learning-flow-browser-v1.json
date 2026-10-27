@@ -1,0 +1,21 @@
+{
+  "purpose": "Simulated learning flow with real PDFs and an unreviewed note in an isolated library; not measured human learning",
+  "comparison": true,
+  "definitionAnswer": true,
+  "sourceDialog": true,
+  "quizFromSelectedNote": true,
+  "noPrerequisiteQuestions": true,
+  "firstScore": "4/5",
+  "reviewOrder": [
+    "训练集",
+    "开发集",
+    "测试集",
+    "训练误差与开发误差"
+  ],
+  "sourceExpansion": true,
+  "reviewSurvivesReload": true,
+  "retryScore": "5/5",
+  "correctRetryClearsReview": true,
+  "mobileOverflow": false,
+  "browserErrors": []
+}

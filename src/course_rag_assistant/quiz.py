@@ -14,11 +14,13 @@ from pathlib import Path
 from uuid import uuid4
 
 from .answer import CitedAnswer, _source_units, format_citation, verify_citations
+from .compare import _named_statement, _topic_heading
 from .ingest import Chunk
+from .prerequisites import is_prerequisite_statement
 from .retrieval import Hit
 
 
-def make_questions(chunks: list[Chunk], count: int = 5) -> list[dict]:
+def make_questions(chunks: list[Chunk], count: int = 5, *, target_concept: str | None = None) -> list[dict]:
     candidates = []
     seen = set()
     for chunk in chunks:
@@ -26,10 +28,19 @@ def make_questions(chunks: list[Chunk], count: int = 5) -> list[dict]:
         # contribute simple, explicitly phrased Chinese definitions.
         concepts = chunk.concepts or [chunk.section.rsplit(" / ", 1)[-1]]
         for sentence in _source_units(chunk):
-            definitions = re.findall(r"^([\u4e00-\u9fffA-Za-z][\u4e00-\u9fffA-Za-z0-9]{1,19}?)(?:是指|指的是|是一种|是用来)", sentence)
-            for concept in [*concepts, *definitions]:
+            # A declared reading order is metadata for the review path, not a
+            # lesson assessing knowledge of the concept itself.
+            if is_prerequisite_statement(sentence):
+                continue
+            definitions = re.findall(r"^[•●\s]*([\u4e00-\u9fffA-Za-z][\u4e00-\u9fffA-Za-z0-9]{1,19}?)(?:是指|指的是|是一种|是用来)", sentence)
+            target = [target_concept] if target_concept and (
+                _named_statement(target_concept, sentence) or _topic_heading(target_concept, chunk.section)
+                or target_concept in chunk.concepts) else []
+            for concept in [*target, *concepts, *definitions]:
                 concept = re.sub(r"^\d+(?:\.\d+)*[.、\s]*", "", concept).strip()
-                if not 2 <= len(concept) <= 30 or concept not in sentence:
+                if concept in {"小结", "本章小结", "练习", "目录", "参考文献", "致谢", "前言", "论坛"}:
+                    continue
+                if not 2 <= len(concept) <= 40 or concept not in sentence:
                     continue
                 if not 12 <= len(sentence) <= 400 or re.match(r"^(?:它|这|其|该|上述|因此|其中)", sentence):
                     continue
@@ -45,15 +56,25 @@ def make_questions(chunks: list[Chunk], count: int = 5) -> list[dict]:
                 candidates.append({"concept": concept, "sentence": sentence, "citation": citation,
                                    "doc": chunk.doc, "page": chunk.page, "section": chunk.section})
                 break
-    concepts = sorted({c["concept"] for c in candidates})
+    if target_concept:
+        direct = r"^[•●\s]*" + re.escape(target_concept) + r"(?:是指|指的是|是|用于|表示)"
+        candidates.sort(key=lambda c: not bool(re.search(direct, c["sentence"])))
     questions = []
     used_concepts = set()
     for candidate in candidates:
         concept, sentence = candidate["concept"], candidate["sentence"]
+        if target_concept and concept != target_concept:
+            continue
         if concept in used_concepts:
             continue
         # Distractors that already appear in the sentence give away or confuse
         # the task. The prompt explicitly asks for the original source wording.
+        # Prefer concepts from nearby source passages rather than arbitrary
+        # alphabetic terms across an entire textbook. All remain in scope.
+        nearby = sorted(candidates, key=lambda c: (
+            c["doc"] != candidate["doc"], abs(c["page"] - candidate["page"]),
+            c["section"] != candidate["section"], c["concept"]))
+        concepts = dict.fromkeys(c["concept"] for c in nearby)
         distractors = [c for c in concepts if c != concept and c not in sentence
                        and c not in concept and concept not in c][:3]
         if not distractors:
@@ -81,15 +102,17 @@ class QuizStore:
     def connect(self):
         return sqlite3.connect(self.path, timeout=10)
 
-    def create(self, chunks: list[Chunk], document_ids: list[str], count: int) -> dict:
-        questions = make_questions(chunks, count)
+    def create(self, chunks: list[Chunk], document_ids: list[str], count: int, *, target_concept=None, scope=None) -> dict:
+        questions = make_questions(chunks, count, target_concept=target_concept)
         if not questions:
-            raise ValueError("所选资料没有足够的完整概念句或可区分的选项。请添加带章节标题的课程笔记。")
+            raise ValueError("当前范围没有足够的完整概念句或可区分的选项。请调整概念或章节，或补充课程笔记；不会从范围外凑题。")
         quiz_id = uuid4().hex
-        payload = {"document_ids": sorted(set(document_ids)), "questions": questions}
+        payload = {"document_ids": sorted(set(document_ids)), "questions": questions, "scope": scope}
         with closing(self.connect()) as db, db:
             db.execute("INSERT INTO quizzes VALUES (?, ?)", (quiz_id, json.dumps(payload, ensure_ascii=False)))
-        return {"quiz_id": quiz_id, "kind": "source_cloze", "questions": [
+        return {"quiz_id": quiz_id, "kind": "source_cloze", "scope": scope, "requested_count": count,
+                "note": f"当前范围生成 {len(questions)} / {count} 道原文识记题。同一概念不重复出题；题数不足时不扩大范围。",
+                "questions": [
             {k: q[k] for k in ("id", "prompt", "options")} for q in questions]}
 
     def load(self, quiz_id: str) -> dict:
@@ -120,7 +143,7 @@ class QuizStore:
             q["choice"] = saved[q["id"]]
             q["correct"] = q["choice"] == q["correct_index"]
         return {"quiz_id": quiz_id, "score": sum(q["correct"] for q in results),
-                "total": len(results), "results": results}
+                "total": len(results), "results": results, "scope": quiz.get("scope")}
 
     def review(self, document_ids: list[str]) -> list[dict]:
         selected = set(document_ids)

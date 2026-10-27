@@ -94,6 +94,24 @@
           <h2 id="quiz-title">练一练 · 回到原文</h2>
           <p>从已选资料生成概念填空选择题。提交后查看原文解释，答错的概念会加入复习清单。</p>
           <p class="answer-footnote">这是原文识记练习；复习清单提示值得回顾的章节，不代表完整的知识掌握评估。首次提交后记录锁定，可重新出题练习。</p>
+          <div class="quiz-scope-controls">
+            <label for="quiz-mode">练习范围</label>
+            <select id="quiz-mode">
+              <option value="concept">按目标概念</option>
+              <option value="section">按已识别章节</option>
+              <option value="all">全部已选资料</option>
+            </select>
+            <div id="quiz-concept-control">
+              <label for="quiz-concept">目标概念</label>
+              <input id="quiz-concept" type="text" minlength="2" maxlength="40" placeholder="例如：过拟合" aria-describedby="quiz-scope-help">
+            </div>
+            <div id="quiz-section-control" hidden>
+              <label for="quiz-section">选择章节</label>
+              <select id="quiz-section" aria-describedby="quiz-scope-help"><option value="">请选择章节</option></select>
+            </div>
+            <p id="quiz-scope-help" class="answer-footnote">按概念通常生成 1 题，不用其他主题凑题；范围名称可能提示答案，适合原文回顾。</p>
+          </div>
+          <p id="quiz-scope" class="answer-footnote" aria-live="polite"></p>
           <div class="question-actions">
             <button id="quiz-create" class="primary" type="button" disabled>生成练习</button>
             <button id="review-load" class="text-button" type="button" disabled>查看错题复习清单</button>

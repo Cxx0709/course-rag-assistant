@@ -11,6 +11,8 @@ class AskRequest(BaseModel):
 class QuizRequest(BaseModel):
     document_ids: list[str] = Field(min_length=1, max_length=50)
     count: int = Field(default=5, ge=1, le=10)
+    target_concept: str | None = Field(default=None, min_length=2, max_length=40)
+    section_id: str | None = Field(default=None, min_length=1, max_length=64)
 
 
 class QuizGradeRequest(BaseModel):

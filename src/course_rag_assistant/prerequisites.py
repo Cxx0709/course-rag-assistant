@@ -17,6 +17,11 @@ def concept_name(value: str) -> str:
     return re.sub(r"^\d+(?:\.\d+)*[.、\s]*", "", value).strip().strip("《》「」“”")
 
 
+def is_prerequisite_statement(text: str) -> bool:
+    """Recognize supported reading-order declarations, not concept explanations."""
+    return bool(re.search(r"先修概念[：:]|学习[^。！？\n]+?前[，,](?:建议先复习|需要先理解)", text))
+
+
 def source(chunk: Chunk, text: str | None = None) -> dict:
     return {"doc": chunk.doc, "page": chunk.page, "section": chunk.section,
             "text": chunk.text if text is None else text}

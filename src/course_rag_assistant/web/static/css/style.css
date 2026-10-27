@@ -37,4 +37,8 @@
 .comparison-senses { display: flex; flex-wrap: wrap; gap: 10px; margin: 16px 0; }
 .comparison-senses button { padding: 10px 14px; border: 1px solid var(--line); border-radius: 8px; background: var(--white); color: var(--ink); white-space: normal; }
 .comparison-senses button[aria-pressed="true"] { border-color: #286854; background: #edf5f0; }
+.quiz-scope-controls { margin: 18px 0; display: grid; gap: 10px; }
+.quiz-scope-controls label { display: block; margin-bottom: 5px; }
+.quiz-scope-controls input, .quiz-scope-controls select { box-sizing: border-box; width: 100%; min-width: 0; padding: 10px 12px; border: 1px solid var(--line); border-radius: 8px; color: var(--ink); background: var(--white); }
+#quiz-scope { overflow-wrap: anywhere; }
 @media(max-width:700px) { .comparison-grid { grid-template-columns: 1fr; } .compare-controls { flex-direction: column; } }

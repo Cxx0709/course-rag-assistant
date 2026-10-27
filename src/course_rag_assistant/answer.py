@@ -24,6 +24,7 @@ from .config import Settings, get_settings
 from .content import navigation_reason
 from .evidence import select_evidence
 from .ingest import Chunk
+from .prerequisites import is_prerequisite_statement
 from .retrieval import Hit
 
 
@@ -150,13 +151,14 @@ def answer(question: str, hits: list[Hit], generator: TextGenerator | None = Non
         }.get(decision.reason, "")
         return CitedAnswer("资料中没有足够证据回答这个问题。" + detail, [], [], decision.reason)
 
-    context = [hit for hit in usable if _sentence_options([hit])][:3]
+    exclude_prerequisites = bool(re.search(r"什么是|何为|定义|是(?:什么|指什么)", question))
+    context = [hit for hit in usable if _sentence_options([hit], exclude_prerequisites=exclude_prerequisites)][:3]
     if not context:
         return CitedAnswer("资料中没有足够证据回答这个问题。相关 PDF 片段缺少完整句子，请查看原文。",
                            [], [], "incomplete_source_sentences")
     if generator is not None:
         try:
-            selection = generator.generate(build_prompt(question, context))
+            selection = generator.generate(build_prompt(question, context, exclude_prerequisites=exclude_prerequisites))
         except (httpx.HTTPError, OSError, RuntimeError, TimeoutError, ValueError):
             # Local model servers can be unavailable, overloaded, or exceed the
             # request timeout. Keep the deterministic cited answer usable.
@@ -164,12 +166,13 @@ def answer(question: str, hits: list[Hit], generator: TextGenerator | None = Non
         else:
             # Invalid model selections must not trigger a successful-looking
             # extractive fallback. Only transport/generator errors fall back.
-            return render_selection(selection, context)
+            return render_selection(selection, context, exclude_prerequisites=exclude_prerequisites)
 
     # Use the same ordering, deduplication and verification for every mode.
     offline_context = context[:1]
-    ids = list(range(1, len(_sentence_options(offline_context)) + 1))
-    return render_selection(json.dumps({"sentence_ids": ids}), offline_context, max_sentences=None)
+    ids = list(range(1, len(_sentence_options(offline_context, exclude_prerequisites=exclude_prerequisites)) + 1))
+    return render_selection(json.dumps({"sentence_ids": ids}), offline_context, max_sentences=None,
+                            exclude_prerequisites=exclude_prerequisites)
 
 
 def verify_citations(ans: CitedAnswer) -> CitedAnswer:
@@ -214,11 +217,11 @@ def format_citation(hit: Hit) -> str:
     return f"[{chunk.doc}, section={section}]"
 
 
-def build_prompt(question: str, hits: Iterable[Hit]) -> str:
+def build_prompt(question: str, hits: Iterable[Hit], *, exclude_prerequisites=False) -> str:
     """Ask for IDs, keeping source text and citation rendering under program control."""
     hits = list(hits)
     candidates = [{"id": index, "text": sentence, "source": format_citation(hit)}
-                  for index, (sentence, hit) in enumerate(_sentence_options(hits), start=1)]
+                  for index, (sentence, hit) in enumerate(_sentence_options(hits, exclude_prerequisites=exclude_prerequisites), start=1)]
     instructions = (
         "你是原文句子选择器。用最少的原文句子完整回答问题，保留必要的条件和上下文。"
         "编号数组的顺序就是最终回答顺序，不必按编号大小或资料顺序排列。"
@@ -245,8 +248,9 @@ def build_prompt(question: str, hits: Iterable[Hit]) -> str:
     )
 
 
-def _sentence_options(hits: Iterable[Hit]) -> list[tuple[str, Hit]]:
-    return [(sentence, hit) for hit in hits for sentence in _source_units(hit.chunk)]
+def _sentence_options(hits: Iterable[Hit], *, exclude_prerequisites=False) -> list[tuple[str, Hit]]:
+    return [(sentence, hit) for hit in hits for sentence in _source_units(hit.chunk)
+            if not exclude_prerequisites or not is_prerequisite_statement(sentence)]
 
 
 def _source_units(chunk: Chunk) -> list[str]:
@@ -308,9 +312,10 @@ def _unique_json_object(pairs):
     return result
 
 
-def render_selection(raw: str, context: list[Hit], *, max_sentences: int | None = 6) -> CitedAnswer:
+def render_selection(raw: str, context: list[Hit], *, max_sentences: int | None = 6,
+                     exclude_prerequisites=False) -> CitedAnswer:
     """Resolve a strict selection against this request's candidates only."""
-    candidates = _sentence_options(context)
+    candidates = _sentence_options(context, exclude_prerequisites=exclude_prerequisites)
     try:
         # A surrounding JSON code fence is presentation, not generated content.
         text = raw.strip()

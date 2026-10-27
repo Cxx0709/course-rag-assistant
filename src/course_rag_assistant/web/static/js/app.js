@@ -1,6 +1,6 @@
 "use strict";
 const $ = id => document.getElementById(id);
-const state = { token: "", documents: [], selected: new Set(), configured: false, busy: false, sources: [], maxUploadBytes: 50 * 1024 * 1024 };
+const state = { token: "", documents: [], selected: new Set(), configured: false, busy: false, sources: [], maxUploadBytes: 50 * 1024 * 1024, sectionRequest: 0, sectionsLoading: false };
 
 function message(text = "", error = false) {
   $("notice").hidden = true; $("error").hidden = true;
@@ -8,7 +8,7 @@ function message(text = "", error = false) {
 }
 function busy(value, label = "") {
   state.busy = value;
-  for (const id of ["upload-button", "demo-button", "file-input", "select-all", "question", "compare-concept"]) $(id).disabled = value;
+  for (const id of ["upload-button", "demo-button", "file-input", "select-all", "question", "compare-concept", "quiz-mode", "quiz-concept", "quiz-section"]) $(id).disabled = value;
   $("use-model").disabled = value || !state.configured;
   document.querySelectorAll(".document input, [data-question], .comparison-senses button").forEach(node => { node.disabled = value; });
   $("ask-label").textContent = label || "开始提问";
@@ -18,8 +18,10 @@ function updateScope() {
   const count = state.selected.size;
   $("selection-count").textContent = state.documents.length ? `已选 ${count} / ${state.documents.length} 份` : "尚未添加资料";
   $("ask-button").disabled = state.busy || !count || !$("question").value.trim();
-  $("quiz-create").disabled = state.busy || !count;
-  $("review-load").disabled = state.busy || !count;
+  const quizReady = $("quiz-mode").value === "all" || ($("quiz-mode").value === "concept" ? $("quiz-concept").value.trim().length >= 2 : Boolean($("quiz-section").value) && !state.sectionsLoading);
+  $("quiz-create").disabled = state.busy || !count || !quizReady;
+  $("review-load").disabled = state.busy || !count || !quizReady;
+  $("quiz-section").disabled = state.busy || state.sectionsLoading;
   $("quiz-submit").disabled = state.busy;
   $("compare-button").disabled = state.busy || count !== 2 || $("compare-concept").value.trim().length < 2;
   $("compare-help").textContent = count === 2 ? "仅对比已选的两份资料；请填写资料中的概念名称。" : `已选 ${count} 份，请恰好选中两份资料进行对比。`;
@@ -29,6 +31,8 @@ function updateScope() {
 }
 function renderDocuments() {
   $("compare-result").hidden = true;
+  resetPractice();
+  refreshQuizSections();
   $("document-count").textContent = state.documents.length;
   $("empty-library").hidden = Boolean(state.documents.length);
   $("select-all").hidden = !state.documents.length;
@@ -176,6 +180,56 @@ async function init() {
   finally { busy(false); }
 }
 let currentQuiz = null;
+function resetPractice() {
+  currentQuiz = null; $("quiz-form").hidden = true;
+  for (const id of ["quiz-questions", "quiz-result", "review-list", "quiz-scope"]) $(id).replaceChildren();
+}
+function quizPayload() {
+  const payload = {document_ids: [...state.selected], count: 5};
+  if ($("quiz-mode").value === "concept") payload.target_concept = $("quiz-concept").value.trim();
+  if ($("quiz-mode").value === "section") payload.section_id = $("quiz-section").value;
+  return payload;
+}
+function practiceLabel(scope) {
+  const section = scope?.section;
+  const label = section ? `${section.document_name} · ${section.title}${section.page_from ? ` · 第 ${section.page_from}–${section.page_to} 页` : ""}` : (scope?.documents || []).map(d => d.name).join("、");
+  return `本次范围：${scope?.target_concept ? `概念「${scope.target_concept}」 · ` : ""}${label}`;
+}
+async function refreshQuizSections() {
+  const request = ++state.sectionRequest;
+  state.sectionsLoading = false;
+  const select = $("quiz-section"); select.replaceChildren(new Option("请选择章节", ""));
+  if ($("quiz-mode").value !== "section" || !state.selected.size) { updateScope(); return; }
+  state.sectionsLoading = true; updateScope();
+  $("quiz-scope-help").textContent = "正在读取所选资料的章节…";
+  try {
+    const data = await api("/api/quiz/sections", {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify({document_ids: [...state.selected]})});
+    if (request !== state.sectionRequest) return;
+    const groups = new Map();
+    for (const section of data.sections) {
+      if (!groups.has(section.document_id)) {
+        const group = document.createElement("optgroup"); group.label = section.document_name; groups.set(section.document_id, group); select.append(group);
+      }
+      const label = `${section.title}${section.page_from ? ` · 第 ${section.page_from}–${section.page_to} 页` : ""}`;
+      groups.get(section.document_id).append(new Option(label, section.id));
+    }
+    $("quiz-scope-help").textContent = data.sections.length ? data.note : "未识别到可选章节。可按目标概念练习，或补充有标题的课程笔记。";
+  } catch (error) {
+    if (request === state.sectionRequest) $("quiz-scope-help").textContent = error.message;
+  } finally {
+    if (request === state.sectionRequest) { state.sectionsLoading = false; updateScope(); }
+  }
+}
+$("quiz-mode").addEventListener("change", () => {
+  resetPractice();
+  const mode = $("quiz-mode").value;
+  $("quiz-concept-control").hidden = mode !== "concept";
+  $("quiz-section-control").hidden = mode !== "section";
+  $("quiz-scope-help").textContent = mode === "concept" ? "按概念通常生成 1 题，不用其他主题凑题；范围名称可能提示答案，适合原文回顾。" : "从全部已选资料出题，可能包含前言等非目标内容；可选择概念或章节聚焦。";
+  refreshQuizSections();
+});
+$("quiz-concept").addEventListener("input", () => { resetPractice(); updateScope(); });
+$("quiz-section").addEventListener("change", () => { resetPractice(); updateScope(); });
 function renderLearningPlans(container, plans) {
   container.replaceChildren(); container.hidden = !plans.length;
   if (!plans.length) return;
@@ -233,10 +287,12 @@ function sourceExplanation(row) {
 }
 $("quiz-create").addEventListener("click", async () => {
   if (state.busy || !state.selected.size) return;
+  resetPractice();
   busy(true); message();
   try {
-    const quiz = await api("/api/quiz", {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify({document_ids: [...state.selected], count: 5})});
+    const quiz = await api("/api/quiz", {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify(quizPayload())});
     currentQuiz = quiz; $("quiz-questions").replaceChildren(); $("quiz-result").replaceChildren();
+    $("quiz-scope").textContent = practiceLabel(quiz.scope);
     for (const q of quiz.questions) {
       const group = document.createElement("fieldset"); const legend = document.createElement("legend"); legend.textContent = q.prompt; group.append(legend);
       q.options.forEach((option, index) => {
@@ -246,7 +302,7 @@ $("quiz-create").addEventListener("click", async () => {
       }); $("quiz-questions").append(group);
     }
     $("quiz-form").hidden = false; $("quiz-submit").hidden = false;
-    message(`已生成 ${quiz.questions.length} 道练习。按资料原文选择空缺概念。`);
+    message(quiz.note || `已生成 ${quiz.questions.length} 道练习。按资料原文选择空缺概念。`);
   } catch (error) { message(error.message, true); } finally { busy(false); }
 });
 $("quiz-form").addEventListener("submit", async event => {
@@ -274,8 +330,9 @@ $("review-load").addEventListener("click", async () => {
   if (state.busy || !state.selected.size) return;
   busy(true); message();
   try {
-    const result = await api("/api/review", {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify({document_ids: [...state.selected]})});
-    const heading = document.createElement("h3"); heading.textContent = result.gaps.length ? "待复习的概念" : "当前所选资料暂无待复习的错题";
+    const result = await api("/api/review", {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify(quizPayload())});
+    $("quiz-scope").textContent = practiceLabel(result.scope);
+    const heading = document.createElement("h3"); heading.textContent = result.gaps.length ? "待复习的概念" : "当前练习范围暂无待复习的错题";
     $("review-list").replaceChildren(heading);
     for (const gap of result.gaps) {
       const text = document.createElement("p"); text.textContent = `${gap.concept} · 累计 ${gap.attempts} 次作答，${gap.mistakes} 次答错`;

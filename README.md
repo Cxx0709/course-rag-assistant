@@ -52,6 +52,23 @@ course materials (PDF / PPTX / MD, page numbers preserved)
 
 ## Status
 
+The [targeted practice update](docs/targeted-practice-v1.md) adds concept and chapter
+scopes, scoped wrong-answer review, and explicit insufficient-content feedback.
+The UI defaults to a named concept; it never pads a scoped quiz with other topics.
+Real-PDF checks cover the overfitting definition and D2L section 4.4 (PDF pages
+157–167), plus scope persistence and browser/mobile behavior. Run
+`python -m scripts.evaluate_targeted_practice` to reproduce the isolated API check.
+Chapter extraction and the teaching value of source clozes still need human review.
+
+The [real learning-flow acceptance](docs/learning-flow-v1.md) exercises questions,
+citations, practice, wrong-answer review, restart recovery and a correct retry
+using the real textbooks plus a separately selected, unreviewed course note.
+It fixes prerequisite declarations being used as definition answers or quiz
+content. At that stage, all 310 tests and the frozen answer baseline passed.
+Targeted practice is now available; human semantic and teaching-order review remain
+pending in the [review checklist](eval/reviews/learning-acceptance-v1.md).
+Run `python -m scripts.evaluate_learning_flow` to reproduce the isolated API flow.
+
 The [terminology alignment record](docs/course-alignment-v1.md) adds scoped
 development/validation-set correspondence backed by model-selection evidence
 from each selected source. Variance requires a choice of meaning before comparison;

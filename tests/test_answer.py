@@ -17,6 +17,31 @@ def test_answer_cites_supporting_page():
     assert result.unsupported_claims == []
 
 
+@pytest.mark.parametrize("mixed", [True, False])
+@pytest.mark.parametrize("use_model", [True, False])
+def test_definition_answers_do_not_substitute_prerequisite_declarations(mixed, use_model):
+    declaration = "学习过拟合前，建议先复习训练集和测试集。"
+    definition = "过拟合是指训练误差远小于验证误差。"
+    texts = [declaration + definition] if mixed else [declaration, definition]
+    hits = [Hit(Chunk(t, "notes.md", 0, "过拟合"), 2 - i, "bm25") for i, t in enumerate(texts)]
+
+    class Generator:
+        def generate(self, prompt):
+            assert declaration not in prompt and definition in prompt
+            return '{"sentence_ids":[1]}'
+
+    result = answer("什么是过拟合？", hits, Generator() if use_model else None)
+    assert definition in result.text and declaration not in result.text
+    assert not result.unsupported_claims and not result.abstention_reason
+
+
+def test_prerequisite_questions_can_still_answer_from_declarations():
+    text = "学习过拟合前，建议先复习训练集和测试集。"
+    hits = [Hit(Chunk(text, "notes.md", 0, "过拟合"), 1, "bm25")]
+    assert text in answer("学习过拟合前需要先复习什么？", hits).text
+    assert answer("什么是过拟合？", hits).abstention_reason
+
+
 def test_verifier_removes_claim_without_overlap():
     chunk = Chunk("贝叶斯定理用于计算后验概率。", "notes.pdf", 12, "Bayes")
     result = verify_citations(
