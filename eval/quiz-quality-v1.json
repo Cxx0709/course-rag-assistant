@@ -1,0 +1,17 @@
+{
+  "purpose": "Development regression for observed weak source-cloze selections; not independent teaching-quality acceptance",
+  "chapter_questions": [
+    {"concept": "训练误差", "page": 158, "contains": "模型在训练数据集上计算得到的误差"},
+    {"concept": "泛化误差", "page": 158, "contains": "模型误差的期望"},
+    {"concept": "欠拟合", "page": 167, "contains": "模型无法继续减少训练误差"},
+    {"concept": "过拟合", "page": 167, "contains": "训练误差远小于验证误差"},
+    {"concept": "数据集大小", "page": 162, "contains": "对于固定的任务和数据分布"}
+  ],
+  "excluded_previews": [
+    "为了进一步讨论这一现象，我们需要了解训练误差和泛化误差。",
+    "模型复杂性由什么构成是一个复杂的问题。",
+    "为了说明一些关于过拟合和模型复杂性的经典直觉，我们给出一个多项式的例子。"
+  ],
+  "target_options": ["过拟合", "欠拟合", "泛化误差", "数据集大小"],
+  "excluded_options": ["初始化模型参数", "使用权重衰减", "小结", "论坛"]
+}

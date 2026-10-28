@@ -21,6 +21,7 @@ def hit(text, doc="book.pdf", page=1):
     "深度学习的流程如下：", "深度学习的区别主要在于",
     "深度学习（deep learning。", "learning）用于深度学习。",
     "l(i)(w, b) = 1", "2", "\x10",
+    "多。",
 ])
 def test_pdf_fragments_are_not_candidates_or_verified_claims(fragment):
     candidate = hit(fragment)
@@ -77,6 +78,13 @@ def test_complete_items_conditions_intervals_and_code_remain_selectable(text):
 def test_separate_pdf_pages_are_never_joined_to_invent_a_sentence():
     candidates = [hit("模型只在输入满足", page=1), hit("时更新参数。", page=2)]
     assert "模型只在输入满足时更新参数。" not in answer("模型", candidates).text
+
+
+def test_stacked_fraction_continuation_is_not_a_complete_sentence():
+    candidate = hit("多。当我们逐渐增加数据量，正面比例明显偏离1\n2的可能性将会降低，我们的训练误差将与泛化误差相匹配。\n2的平方等于4。")
+    assert [text for text, _ in _sentence_options([candidate])] == ["2的平方等于4。"]
+    bad = "2的可能性将会降低，我们的训练误差将与泛化误差相匹配。"
+    assert verify_citations(CitedAnswer(bad + " [book.pdf, p.1]", [candidate], [])).abstention_reason
 
 
 @pytest.mark.parametrize("doc", ["notes.md", "slides.pptx"])

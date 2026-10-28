@@ -21,6 +21,7 @@ from typing import Protocol
 import httpx
 
 from .config import Settings, get_settings
+from .answer_selection import definition_sentence_ids
 from .content import navigation_reason
 from .evidence import select_evidence
 from .ingest import Chunk
@@ -168,6 +169,16 @@ def answer(question: str, hits: list[Hit], generator: TextGenerator | None = Non
             # extractive fallback. Only transport/generator errors fall back.
             return render_selection(selection, context, exclude_prerequisites=exclude_prerequisites)
 
+    # Prefer complete literal definitions across the retrieved evidence, rather
+    # than letting a short example or page fragment win by retrieval rank.
+    # Model selection keeps its existing contract; this also covers a failed
+    # model's offline fallback. Every selected sentence still gets verified.
+    options = _sentence_options(usable, exclude_prerequisites=exclude_prerequisites)
+    definition_ids = definition_sentence_ids(question, [text for text, _ in options])
+    if definition_ids:
+        return render_selection(json.dumps({"sentence_ids": definition_ids}), usable,
+                                exclude_prerequisites=exclude_prerequisites)
+
     # Use the same ordering, deduplication and verification for every mode.
     offline_context = context[:1]
     ids = list(range(1, len(_sentence_options(offline_context, exclude_prerequisites=exclude_prerequisites)) + 1))
@@ -254,8 +265,18 @@ def _sentence_options(hits: Iterable[Hit], *, exclude_prerequisites=False) -> li
 
 
 def _source_units(chunk: Chunk) -> list[str]:
+    # Stacked PDF fractions can split prose into "...1\n2的可能性...".
+    # Reject the orphaned denominator continuation, without guessing the math
+    # or excluding an intact statement such as "2的平方等于4。".
+    fraction_tails = set()
+    if chunk.doc.lower().endswith(".pdf"):
+        for tail in re.findall(r"\d[ \t]*\r?\n[ \t]*(\d+的[^\r\n]*)", chunk.text):
+            units = _sentences(tail)
+            if units:
+                fraction_tails.add(units[0])
     return [sentence for sentence in _sentences(chunk.text)
             if navigation_reason(sentence) is None
+            and sentence not in fraction_tails
             and (not chunk.doc.lower().endswith(".pdf") or _complete_pdf_unit(sentence))]
 
 
@@ -279,6 +300,8 @@ def _complete_pdf_unit(text: str) -> bool:
     # Citation-like source text is still retained in the candidate and checked
     # by the citation verifier; it must not change the punctuation check here.
     text = _CITATION_RE.sub("", text).strip()
+    if re.fullmatch(r"[\u4e00-\u9fff][。！？]", text):
+        return False
     if any(ord(char) < 32 and char not in "\n\t\r" for char in text):
         return False
     if any(text.count(left) != text.count(right) for left, right in [("“", "”"), ("‘", "’")]):

@@ -17,28 +17,34 @@ from .answer import CitedAnswer, _source_units, format_citation, verify_citation
 from .compare import _named_statement, _topic_heading
 from .ingest import Chunk
 from .prerequisites import is_prerequisite_statement
+from .quiz_content import chapter_number, cloze_prompt, definition_concept, statement_rank, teaching_statement, usable_concept
 from .retrieval import Hit
 
 
 def make_questions(chunks: list[Chunk], count: int = 5, *, target_concept: str | None = None) -> list[dict]:
     candidates = []
     seen = set()
+    chapters = {}
     for chunk in chunks:
+        number = chapter_number(chunk.section)
+        if number is not None:
+            chapters[chunk.doc] = number
         # Prefer explicit tags or the innermost heading. Headingless PDFs can
         # contribute simple, explicitly phrased Chinese definitions.
         concepts = chunk.concepts or [chunk.section.rsplit(" / ", 1)[-1]]
         for sentence in _source_units(chunk):
             # A declared reading order is metadata for the review path, not a
             # lesson assessing knowledge of the concept itself.
-            if is_prerequisite_statement(sentence):
+            if is_prerequisite_statement(sentence) or not teaching_statement(sentence):
                 continue
-            definitions = re.findall(r"^[•●\s]*([\u4e00-\u9fffA-Za-z][\u4e00-\u9fffA-Za-z0-9]{1,19}?)(?:是指|指的是|是一种|是用来)", sentence)
-            target = [target_concept] if target_concept and (
+            defined = definition_concept(sentence)
+            definitions = [defined] if defined else []
+            target = [target_concept] if target_concept and (not defined or defined == target_concept) and (
                 _named_statement(target_concept, sentence) or _topic_heading(target_concept, chunk.section)
                 or target_concept in chunk.concepts) else []
-            for concept in [*target, *concepts, *definitions]:
+            for concept in [*target, *definitions, *concepts]:
                 concept = re.sub(r"^\d+(?:\.\d+)*[.、\s]*", "", concept).strip()
-                if concept in {"小结", "本章小结", "练习", "目录", "参考文献", "致谢", "前言", "论坛"}:
+                if not usable_concept(concept, defined=concept == defined):
                     continue
                 if not 2 <= len(concept) <= 40 or concept not in sentence:
                     continue
@@ -54,11 +60,12 @@ def make_questions(chunks: list[Chunk], count: int = 5, *, target_concept: str |
                     continue
                 seen.add(key)
                 candidates.append({"concept": concept, "sentence": sentence, "citation": citation,
-                                   "doc": chunk.doc, "page": chunk.page, "section": chunk.section})
+                                   "doc": chunk.doc, "page": chunk.page, "section": chunk.section,
+                                   "_chapter": chapters.get(chunk.doc)})
                 break
-    if target_concept:
-        direct = r"^[•●\s]*" + re.escape(target_concept) + r"(?:是指|指的是|是|用于|表示)"
-        candidates.sort(key=lambda c: not bool(re.search(direct, c["sentence"])))
+    # Prefer substantive statements in every mode, not merely the first
+    # sentence mentioning a heading. Stable sorting retains source order ties.
+    candidates.sort(key=lambda c: statement_rank(c["concept"], c["sentence"]))
     questions = []
     used_concepts = set()
     for candidate in candidates:
@@ -69,10 +76,13 @@ def make_questions(chunks: list[Chunk], count: int = 5, *, target_concept: str |
             continue
         # Distractors that already appear in the sentence give away or confuse
         # the task. The prompt explicitly asks for the original source wording.
-        # Prefer concepts from nearby source passages rather than arbitrary
-        # alphabetic terms across an entire textbook. All remain in scope.
+        # Prefer the same recognized numbered section, then defined concepts
+        # in nearby 20-page bands. This ranks candidates; scope remains strict.
         nearby = sorted(candidates, key=lambda c: (
-            c["doc"] != candidate["doc"], abs(c["page"] - candidate["page"]),
+            c["doc"] != candidate["doc"],
+            candidate["_chapter"] is not None and c["_chapter"] != candidate["_chapter"],
+            abs(c["page"] - candidate["page"]) // 20,
+            statement_rank(c["concept"], c["sentence"]), abs(c["page"] - candidate["page"]),
             c["section"] != candidate["section"], c["concept"]))
         concepts = dict.fromkeys(c["concept"] for c in nearby)
         distractors = [c for c in concepts if c != concept and c not in sentence
@@ -81,8 +91,8 @@ def make_questions(chunks: list[Chunk], count: int = 5, *, target_concept: str |
             continue
         options = sorted([concept, *distractors],
                          key=lambda c: hashlib.sha256((sentence + c).encode()).hexdigest())
-        questions.append({**candidate, "id": str(len(questions) + 1),
-                          "prompt": "按资料原文补全空缺：" + sentence.replace(concept, "____"),
+        questions.append({**{k: v for k, v in candidate.items() if k != "_chapter"}, "id": str(len(questions) + 1),
+                          "prompt": cloze_prompt(concept, sentence),
                           "options": options, "correct_index": options.index(concept)})
         used_concepts.add(concept)
         if len(questions) >= count:

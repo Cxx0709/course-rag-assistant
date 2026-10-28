@@ -1,0 +1,278 @@
+{
+  "purpose": "Offline software acceptance with real textbooks and an unreviewed assistant-authored note",
+  "manifest_sha256": "f3c9c3202e84465f63118cf9d24357ce4de58244b17e60a4a6023fd599db34b4",
+  "run": {
+    "checks": {
+      "comparisons": true,
+      "answer_available": true,
+      "answer_defines_target": true,
+      "answer_not_reading_order": true,
+      "answer_source_support": true,
+      "answer_learning_path": true,
+      "source_links": true,
+      "public_quiz_hides_answer_key": true,
+      "practice_has_target": true,
+      "no_prerequisite_quiz": true,
+      "practice_grounded_in_draft": true,
+      "one_wrong_response": true,
+      "grade_is_immutable": true,
+      "review_targets_wrong_concept": true,
+      "review_order": true,
+      "review_lessons_present": true,
+      "review_scope_isolation": true,
+      "review_survives_restart": true,
+      "new_quiz_correct_retry": true,
+      "correct_retry_clears_review": true
+    },
+    "passed": true,
+    "comparisons": [
+      {
+        "concept": "训练集",
+        "sense": null,
+        "status": "ready",
+        "alignment": "literal_name",
+        "found": [
+          true,
+          true
+        ],
+        "source_support": true,
+        "reference_pages": true,
+        "passed": true
+      },
+      {
+        "concept": "测试集",
+        "sense": null,
+        "status": "ready",
+        "alignment": "literal_name",
+        "found": [
+          true,
+          true
+        ],
+        "source_support": true,
+        "reference_pages": true,
+        "passed": true
+      },
+      {
+        "concept": "过拟合",
+        "sense": null,
+        "status": "ready",
+        "alignment": "literal_name",
+        "found": [
+          true,
+          true
+        ],
+        "source_support": true,
+        "reference_pages": true,
+        "passed": true
+      },
+      {
+        "concept": "量子纠缠",
+        "sense": null,
+        "status": "not_found",
+        "alignment": "literal_name",
+        "found": [
+          false,
+          false
+        ],
+        "source_support": true,
+        "reference_pages": true,
+        "passed": true
+      },
+      {
+        "concept": "正则化",
+        "sense": null,
+        "status": "ready",
+        "alignment": "literal_name",
+        "found": [
+          true,
+          true
+        ],
+        "source_support": true,
+        "reference_pages": true,
+        "passed": true
+      },
+      {
+        "concept": "开发集",
+        "sense": null,
+        "status": "ready",
+        "alignment": "role_correspondence",
+        "found": [
+          true,
+          true
+        ],
+        "source_support": true,
+        "reference_pages": true,
+        "passed": true
+      },
+      {
+        "concept": "验证集",
+        "sense": null,
+        "status": "ready",
+        "alignment": "role_correspondence",
+        "found": [
+          true,
+          true
+        ],
+        "source_support": true,
+        "reference_pages": true,
+        "passed": true
+      },
+      {
+        "concept": "方差",
+        "sense": null,
+        "status": "needs_disambiguation",
+        "alignment": "needs_disambiguation",
+        "found": [
+          false,
+          false
+        ],
+        "source_support": true,
+        "reference_pages": true,
+        "passed": true
+      },
+      {
+        "concept": "方差",
+        "sense": "random_variable_variance",
+        "status": "partial",
+        "alignment": "sense_selected",
+        "found": [
+          true,
+          false
+        ],
+        "source_support": true,
+        "reference_pages": true,
+        "passed": true
+      },
+      {
+        "concept": "方差",
+        "sense": "model_error_variance",
+        "status": "partial",
+        "alignment": "sense_selected",
+        "found": [
+          false,
+          true
+        ],
+        "source_support": true,
+        "reference_pages": true,
+        "passed": true
+      },
+      {
+        "concept": "交叉验证集",
+        "sense": null,
+        "status": "not_found",
+        "alignment": "literal_name",
+        "found": [
+          false,
+          false
+        ],
+        "source_support": true,
+        "reference_pages": true,
+        "passed": true
+      }
+    ],
+    "answer": {
+      "claims": 3,
+      "sources": [
+        {
+          "name": "机器学习复习路径-待审核.md",
+          "page": 0
+        }
+      ]
+    },
+    "practice_concepts": [
+      "训练集",
+      "测试集",
+      "开发集",
+      "过拟合",
+      "正则化"
+    ],
+    "practice_evidence": [
+      {
+        "concept": "训练集",
+        "sentence_sha256": "161b5045625fb2af408b46727bec4ff4da1480b5b5cde2c2d199b5ccaeb410d2"
+      },
+      {
+        "concept": "测试集",
+        "sentence_sha256": "ade4e8ecc5d138107f8452a07196aba39d6dee44ee18c7760c0d233a971fb648"
+      },
+      {
+        "concept": "开发集",
+        "sentence_sha256": "17cfb8bdae994e4a44267ff2291045cf3bc7df5f717d78fb2ae1b696662343c0"
+      },
+      {
+        "concept": "过拟合",
+        "sentence_sha256": "1ae4f0e370ad9485559f591c0f056c4a6f0cf97159a767bbd7459541bb152c53"
+      },
+      {
+        "concept": "正则化",
+        "sentence_sha256": "946d8ae9262dccec9548076c7187dbb45d280dd2cc5a39a4222a49c3b9195840"
+      }
+    ],
+    "first_score": [
+      4,
+      5
+    ],
+    "retry_score": [
+      5,
+      5
+    ],
+    "pdf_only_practice_concepts": [
+      "偏置",
+      "小批量随机梯度下降算法",
+      "训练误差",
+      "泛化误差",
+      "欠拟合"
+    ],
+    "review_order": [
+      "训练集",
+      "开发集",
+      "测试集",
+      "训练误差与开发误差"
+    ]
+  },
+  "regression_passed": true,
+  "human_semantic_review": "pending",
+  "teaching_order_review": "pending",
+  "default_library_modified": false,
+  "limitations": [
+    "模拟正确重答不表示真人理解或掌握知识。",
+    "复习路径来自待审核草稿，不是教材明确规定的先修关系。",
+    "整本 PDF 默认出题仍可能选择前言等非目标学习内容；本次聚焦练习使用单独勾选的课程笔记。"
+  ],
+  "code_sha256": {
+    "D:\\AgentProject\\course-rag-assistant\\scripts\\evaluate_learning_flow.py": "ae529aafbf1480170527587fc5ca005a9e3e488e5ec10d3d76cd14cbb0003937",
+    "src\\course_rag_assistant\\__init__.py": "64c4700ceb4abc71769b851411ee58675282d8c34f8ddee61e26e091e8335efe",
+    "src\\course_rag_assistant\\__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+    "src\\course_rag_assistant\\alignment.py": "ff054565f2017546bc9f734236d05c6f2dd2aabd894c08191fa32c39d93a740c",
+    "src\\course_rag_assistant\\answer.py": "f139ebd4919a815c2ff12ef671833eedc6dd4d49855bf3236c35c24140717097",
+    "src\\course_rag_assistant\\answer_selection.py": "bb68ec307d2a144cd38702e648549f91a8107b13e38d496e5abbaae00232c79b",
+    "src\\course_rag_assistant\\cli.py": "19cb717ec1f98e5f4c668061ca81a604c3f06df91b1d30789a2226841c48d65b",
+    "src\\course_rag_assistant\\compare.py": "0582c9bc73277c124ce2acd393124ffc8400e15ca2ebf8a82cb23fdf8e6e5091",
+    "src\\course_rag_assistant\\config.py": "ba9936f424a2b7502bd66c3242642e9b98e67b9ab38141a4bb870ec2c1c4296d",
+    "src\\course_rag_assistant\\content.py": "f7c8df588e29aa4bc1fc759f877d93fe4e3cd18d4b206d2e707a67909f01d313",
+    "src\\course_rag_assistant\\dense.py": "5bc033ffb7a5d3252fcae66aaae92c437e36cbb2124c4b7763419d9e5a0199d6",
+    "src\\course_rag_assistant\\evaluate.py": "e24f04a067f373130b887e64b01ddf13e378a75b2034a877834e1a5c310b7eb7",
+    "src\\course_rag_assistant\\evidence.py": "bb0003c46a2e2cf5b528f94729a9b1d840833ee16d4aaf81195eaa2cb1ba56d9",
+    "src\\course_rag_assistant\\facts.py": "36c12337a1f7825104b76dba0b9ce3eadcd7cf765359b7066424def3b1692139",
+    "src\\course_rag_assistant\\ingest.py": "0982b0c455b6f3377f032df8a5a0a86da46943bb850348f0e987f2ffe9f0f2c9",
+    "src\\course_rag_assistant\\prerequisites.py": "09efebda19376e91faab57e3ab0ef5874f219e87899964ca6b344af55fd8e190",
+    "src\\course_rag_assistant\\quiz.py": "c46cc7da680da1cea2fce896a5fee2cc564f3025a86f6ee38a25ed5dbda41a13",
+    "src\\course_rag_assistant\\quiz_content.py": "956131e71be9ecf9ea0e02a0f5346afcd3ecaf21457ce838f219a6d3342ade2f",
+    "src\\course_rag_assistant\\quiz_scope.py": "0037b042a14a8ffd5f3d72a9afdd193861c18d0561208023cc7b57df598f83a5",
+    "src\\course_rag_assistant\\rerank.py": "53ee4813ce6734ce3f23f8f0d0948b721fb8289d9b7fa166473e44258f25e0c0",
+    "src\\course_rag_assistant\\retrieval.py": "f091a00323c83ddb5e1dbb84b281939f1224a473c1568487a2d61afdb7a1f3a1",
+    "src\\course_rag_assistant\\text.py": "c16b68e192280dea5287c3347c493254efab52dd0a30e8beef953700d580651a",
+    "src\\course_rag_assistant\\web\\__init__.py": "5836e4317a8005ae145583c49a0aa1b14b56c27888239ea317a0ae4b3fc48424",
+    "src\\course_rag_assistant\\web\\__main__.py": "8c9322ce6b6bb384515ba847ae26e5c57f3b186ac267cbb96d762763c955bc08",
+    "src\\course_rag_assistant\\web\\answers.py": "bdac4368a25e0dea05d1f9c4679faf2466ec4e40f578bf89ae205414491f7a48",
+    "src\\course_rag_assistant\\web\\app.py": "7172d0534417ebef4fe95577b03fdb7b7e2095042e92dab9011114f796228bfe",
+    "src\\course_rag_assistant\\web\\compare_routes.py": "ba64b6e6f93afa1fe31da591f3a087b87063a04aec6fbbfc254900dc7fd49082",
+    "src\\course_rag_assistant\\web\\constants.py": "56caa97bcdc0dd3b0bb6191f5a2cc2e17fd1a3d3282e87594b09bd29b41b8630",
+    "src\\course_rag_assistant\\web\\library.py": "5b535bba261295c56feb853e9ed64a4b3fe28f7e71b5914ed6946377072febfc",
+    "src\\course_rag_assistant\\web\\prerequisites.py": "e3613f903b94ef0293a6162d351f5cb0a8f143ba6eb03dcbb4a404ec4e21d685",
+    "src\\course_rag_assistant\\web\\quiz_routes.py": "b725b91f83318a550d0b2fa5d8bb461c84fe9c457109fbf4e061ca93361431fd",
+    "src\\course_rag_assistant\\web\\routes.py": "94a60a020b73c1db7dab093e82963fe6161baef340d4e74099478961c4fc716b",
+    "src\\course_rag_assistant\\web\\schemas.py": "464801ba97b81fccb5fcac29edf3b552f10036d44bc0cdca6a0ed8db0fce52de",
+    "src\\course_rag_assistant\\web\\security.py": "619c9e988dc911444cd4e4bdbfb840f15b342fa7b5c9d2e08c57224fbe76a1ba"
+  }
+}

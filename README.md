@@ -52,6 +52,18 @@ course materials (PDF / PPTX / MD, page numbers preserved)
 
 ## Status
 
+The [assistant learning-session review](eval/reviews/learning-session-v1.md)
+found and fixed indirect offline definition answers, PDF fraction fragments and
+English aliases revealing cloze answers. All 347 tests, 24 scoped-practice checks,
+the learning flow, frozen baseline and Chrome walkthrough pass. Two question
+quality limitations remain documented; this is not human learning-effectiveness validation.
+
+The [quiz quality update](docs/quiz-quality-v1.md) replaces observed topic previews
+with definition questions, recognizes definitions with parenthesized English
+terms, and favors concepts from the same numbered section over procedural labels.
+All 334 tests, 22 real-PDF checks, the existing learning flow and browser checks pass.
+These are development regressions; teaching quality still awaits human review.
+
 The [targeted practice update](docs/targeted-practice-v1.md) adds concept and chapter
 scopes, scoped wrong-answer review, and explicit insufficient-content feedback.
 The UI defaults to a named concept; it never pads a scoped quiz with other topics.

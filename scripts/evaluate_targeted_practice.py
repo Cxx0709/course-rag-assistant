@@ -25,6 +25,8 @@ def grounded(question, chunks):
 
 def evaluate(root, folder):
     sources = json.loads((root / "eval/learning-flow-v1.json").read_text(encoding="utf-8"))["sources"]
+    quality_raw = (root / "eval/quiz-quality-v1.json").read_bytes()
+    quality = json.loads(quality_raw)
     library = Library(folder)
     documents = []
     for source in sources:
@@ -67,6 +69,19 @@ def evaluate(root, folder):
         checks["chapter_five_questions"] = len(chapter_questions) == 5
         checks["chapter_source_support"] = all(157 <= q["page"] <= 167 and grounded(q, chapter_chunks) for q in chapter_questions)
         checks["chapter_options_in_scope"] = all(any(option in c.text for c in chapter_chunks) for q in chapter_questions for option in q["options"])
+        checks["chapter_knowledge_statements"] = len(chapter_questions) == len(quality["chapter_questions"]) and all(
+            q["concept"] == expected["concept"] and q["page"] == expected["page"]
+            and expected["contains"] in q["sentence"]
+            for q, expected in zip(chapter_questions, quality["chapter_questions"]))
+        checks["no_observed_previews"] = all(q["sentence"] not in quality["excluded_previews"] for q in chapter_questions)
+        checks["target_related_options"] = set(questions[0]["options"]) == set(quality["target_options"])
+        checks["no_procedural_options"] = all(not set(q["options"]) & set(quality["excluded_options"]) for q in [*questions, *chapter_questions])
+        checks["no_bilingual_answer_hint"] = all(
+            alias not in q["prompt"] for q in chapter_questions
+            for alias in ("training error", "generalization error"))
+        checks["bilingual_source_preserved"] = all(
+            alias in chapter_questions[i]["sentence"]
+            for i, alias in enumerate(("training error", "generalization error")))
         checks["unknown_target_no_fallback"] = client.post("/api/quiz", json={**base, "target_concept": "不存在的课程概念"}).status_code == 422
         checks["foreign_chapter_rejected"] = client.post("/api/quiz", json={"document_ids": [documents[1].id], "section_id": chapter["id"]}).status_code == 422
     with TestClient(create_app(folder), base_url="http://127.0.0.1") as client:
@@ -76,7 +91,8 @@ def evaluate(root, folder):
         keys = store.load(retry["quiz_id"])["questions"]
         result = client.post(f"/api/quiz/{retry['quiz_id']}/grade", json={"choices": {q["id"]: q["correct_index"] for q in keys}}).json()
         checks["correct_retry_clears_review"] = result["score"] == 1 and not client.post("/api/review", json=chapter_scope).json()["gaps"]
-    return {"sources": sources, "checks": checks, "passed": all(checks.values()),
+    return {"sources": sources, "quality_manifest_sha256": hashlib.sha256(quality_raw).hexdigest(),
+            "checks": checks, "passed": all(checks.values()),
             "chapter": chapter, "concept_questions": questions, "chapter_questions": chapter_questions,
             "limitations": ["Literal source recognition, not mastery assessment; target name can reveal the answer.",
                             "Chapter boundaries depend on extracted numbered headings; source quality still requires human review."]}
@@ -84,7 +100,7 @@ def evaluate(root, folder):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--output", default="eval/reports/targeted-practice-v1.json")
+    parser.add_argument("--output", default="eval/reports/targeted-practice-v2.json")
     args = parser.parse_args()
     root = Path(__file__).resolve().parents[1]
     (root / ".tmp").mkdir(exist_ok=True)

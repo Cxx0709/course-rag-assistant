@@ -1,0 +1,159 @@
+{
+  "sources": [
+    {
+      "path": "data/raw/datamining-notes/d2l-zh-pytorch.pdf",
+      "sha256": "db978acf18dac28f4de1412839ca1f804302c6a29b971b024595369afa69cbea"
+    },
+    {
+      "path": "data/raw/course-comparison/MLY-zh-cn.pdf",
+      "sha256": "d016cefe31b57bac625bfddd7e367d3ec634fbdd015c5879627c9ea4c2a8fb85"
+    }
+  ],
+  "quality_manifest_sha256": "a8a8208b0171f9ccba461f6ce3fbcff4c5a42a5a82e5d89f676b6b3146e28e6d",
+  "checks": {
+    "chapter_pages": true,
+    "only_target_no_padding": true,
+    "direct_definition": true,
+    "no_navigation_options": true,
+    "concept_source_support": true,
+    "public_key_hidden": true,
+    "scope_saved_with_grade": true,
+    "page_links": true,
+    "target_review": true,
+    "other_target_review_empty": true,
+    "chapter_review_includes_target": true,
+    "chapter_five_questions": true,
+    "chapter_source_support": true,
+    "chapter_options_in_scope": true,
+    "chapter_knowledge_statements": true,
+    "no_observed_previews": true,
+    "target_related_options": true,
+    "no_procedural_options": true,
+    "no_bilingual_answer_hint": true,
+    "bilingual_source_preserved": true,
+    "unknown_target_no_fallback": true,
+    "foreign_chapter_rejected": true,
+    "review_survives_restart": true,
+    "correct_retry_clears_review": true
+  },
+  "passed": true,
+  "chapter": {
+    "id": "391bdf9a74b7c821638e7780",
+    "document_id": "8b0aa95ca79e480295b8ea6a8006e2fc",
+    "document_name": "d2l-zh-pytorch.pdf",
+    "title": "4.4 模型选择、欠拟合和过拟合",
+    "page_from": 157,
+    "page_to": 167,
+    "chunks": 34
+  },
+  "concept_questions": [
+    {
+      "concept": "过拟合",
+      "sentence": "过拟合是指训练误差远小于验证误差。",
+      "citation": "[d2l-zh-pytorch__8b0aa95ca79e480295b8ea6a8006e2fc.pdf, p.167]",
+      "doc": "d2l-zh-pytorch__8b0aa95ca79e480295b8ea6a8006e2fc.pdf",
+      "page": 167,
+      "section": "小结",
+      "id": "1",
+      "prompt": "按资料原文补全空缺：____是指训练误差远小于验证误差。",
+      "options": [
+        "欠拟合",
+        "数据集大小",
+        "泛化误差",
+        "过拟合"
+      ],
+      "correct_index": 3
+    }
+  ],
+  "chapter_questions": [
+    {
+      "concept": "训练误差",
+      "sentence": "训练误差（training error）是指，模型在训练数据集上计算得到的误差。",
+      "citation": "[d2l-zh-pytorch__8b0aa95ca79e480295b8ea6a8006e2fc.pdf, p.158]",
+      "doc": "d2l-zh-pytorch__8b0aa95ca79e480295b8ea6a8006e2fc.pdf",
+      "page": 158,
+      "section": "4.4.1 训练误差和泛化误差",
+      "id": "1",
+      "prompt": "按资料原文补全空缺：____是指，模型在训练数据集上计算得到的误差。",
+      "options": [
+        "泛化误差",
+        "训练误差",
+        "欠拟合",
+        "过拟合"
+      ],
+      "correct_index": 1
+    },
+    {
+      "concept": "泛化误差",
+      "sentence": "泛化误差（generalization error）是指，模型应用在同样从原始样本的分布中抽取的无限多数据样本时，模型误差的期望。",
+      "citation": "[d2l-zh-pytorch__8b0aa95ca79e480295b8ea6a8006e2fc.pdf, p.158]",
+      "doc": "d2l-zh-pytorch__8b0aa95ca79e480295b8ea6a8006e2fc.pdf",
+      "page": 158,
+      "section": "4.4.1 训练误差和泛化误差",
+      "id": "2",
+      "prompt": "按资料原文补全空缺：____是指，模型应用在同样从原始样本的分布中抽取的无限多数据样本时，模型误差的期望。",
+      "options": [
+        "泛化误差",
+        "训练误差",
+        "过拟合",
+        "欠拟合"
+      ],
+      "correct_index": 0
+    },
+    {
+      "concept": "欠拟合",
+      "sentence": "• 欠拟合是指模型无法继续减少训练误差。",
+      "citation": "[d2l-zh-pytorch__8b0aa95ca79e480295b8ea6a8006e2fc.pdf, p.167]",
+      "doc": "d2l-zh-pytorch__8b0aa95ca79e480295b8ea6a8006e2fc.pdf",
+      "page": 167,
+      "section": "小结",
+      "id": "3",
+      "prompt": "按资料原文补全空缺：• ____是指模型无法继续减少训练误差。",
+      "options": [
+        "数据集大小",
+        "欠拟合",
+        "过拟合",
+        "泛化误差"
+      ],
+      "correct_index": 1
+    },
+    {
+      "concept": "过拟合",
+      "sentence": "过拟合是指训练误差远小于验证误差。",
+      "citation": "[d2l-zh-pytorch__8b0aa95ca79e480295b8ea6a8006e2fc.pdf, p.167]",
+      "doc": "d2l-zh-pytorch__8b0aa95ca79e480295b8ea6a8006e2fc.pdf",
+      "page": 167,
+      "section": "小结",
+      "id": "4",
+      "prompt": "按资料原文补全空缺：____是指训练误差远小于验证误差。",
+      "options": [
+        "欠拟合",
+        "数据集大小",
+        "泛化误差",
+        "过拟合"
+      ],
+      "correct_index": 3
+    },
+    {
+      "concept": "数据集大小",
+      "sentence": "对于固定的任务和数据分布，模型复杂性和数据集大小之间通常存在关系。",
+      "citation": "[d2l-zh-pytorch__8b0aa95ca79e480295b8ea6a8006e2fc.pdf, p.162]",
+      "doc": "d2l-zh-pytorch__8b0aa95ca79e480295b8ea6a8006e2fc.pdf",
+      "page": 162,
+      "section": "数据集大小",
+      "id": "5",
+      "prompt": "按资料原文补全空缺：对于固定的任务和数据分布，模型复杂性和____之间通常存在关系。",
+      "options": [
+        "泛化误差",
+        "欠拟合",
+        "训练误差",
+        "数据集大小"
+      ],
+      "correct_index": 3
+    }
+  ],
+  "limitations": [
+    "Literal source recognition, not mastery assessment; target name can reveal the answer.",
+    "Chapter boundaries depend on extracted numbered headings; source quality still requires human review."
+  ]
+}
