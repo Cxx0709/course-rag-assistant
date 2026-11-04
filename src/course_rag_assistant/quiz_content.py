@@ -9,6 +9,37 @@ _DEFINITION = re.compile(
     + _ALIAS + r"\s*(?:是指|指的是|是一种|是用来)"
 )
 _LABELS = {"小结", "本章小结", "练习", "目录", "参考文献", "致谢", "前言", "论坛"}
+_NAMING = re.compile(
+    r"(?:这种|这一)(?:现象|情况|过程|方法)(?:被)?(?:称为|叫做)"
+    r"([\u4e00-\u9fffA-Za-z][\u4e00-\u9fffA-Za-z0-9]{1,39}?)" + _ALIAS + r"[。！]$"
+)
+
+
+def contextual_name(sentence: str) -> str | None:
+    match = _NAMING.search(sentence)
+    return match[1] if match else None
+
+
+def contextual_definitions(sentences: list[str], source: str) -> list[tuple[str, str]]:
+    """Keep a naming sentence with up to three contiguous source sentences.
+
+    No page/chunk stitching or removal of intervening headings is allowed.
+    This bounded window is a reading aid, not automatic pronoun resolution.
+    """
+    passages = []
+    compact_source = re.sub(r"\s+", "", source)
+    for index, sentence in enumerate(sentences):
+        match = _NAMING.fullmatch(sentence)
+        if not match or index == 0:
+            continue
+        context = sentences[max(0, index - 3):index + 1]
+        text = "".join(context)
+        if (len(text) > 400 or re.sub(r"\s+", "", text) not in compact_source
+                or re.match(r"^(?:它|这|其|该|上述|因此|其中|此外|然而|另一方面|然后|最后)", context[0])
+                or not all(teaching_statement(s) for s in context)):
+            continue
+        passages.append((match[1], text))
+    return passages
 
 
 def definition_concept(sentence: str) -> str | None:
@@ -19,12 +50,14 @@ def definition_concept(sentence: str) -> str | None:
 
 def cloze_prompt(concept: str, sentence: str) -> str:
     """Hide a defined term's Latin alias; leave source evidence untouched."""
-    definition = _DEFINITION.match(sentence)
+    role = re.match(r"^[•●\s]*(" + re.escape(concept) + r")" + _ALIAS
+                    + r"\s*(?:是|用于|表示|控制|提供|决定|衡量|沿着|通过|能够|可以)", sentence)
+    definition = _DEFINITION.match(sentence) or role or _NAMING.search(sentence)
     if definition and definition[1] == concept and definition["alias"]:
         alias = definition["alias"]
         # Parenthesized conditions are not aliases. Preserve them even if the
         # permissive definition recognizer accepted their syntax.
-        if not re.match(r"(?:if|when|for|with|without|given|under|not)\b", alias, re.I):
+        if not re.match(r"(?:if|when|for|with|without|given|under|not)\b", alias, re.IGNORECASE):
             sentence = re.sub(re.escape(concept) + r"\s*[（(]" + re.escape(alias) + r"[）)]",
                               lambda _: concept, sentence)
     return "按资料原文补全空缺：" + sentence.replace(concept, "____")
@@ -44,7 +77,19 @@ def teaching_statement(sentence: str) -> bool:
         return False
     if re.match(r"^[•●\s]*(?:请|试着|尝试)(?:阅读|思考|回答|讨论|完成|证明|计算)", sentence):
         return False
-    return True
+    if re.match(r"^(?:现在|下面|接下来)?(?:引用|回顾|应用|考虑)(?:上述|前述|前面|以上)", sentence):
+        return False
+    if (re.match(r"^(?:然而|不过|但是|因此)?(?:这种|这一|上述|该)(?:方法|过程|情况|模型|结论)", sentence)
+            and not _NAMING.fullmatch(sentence)):
+        return False
+    # Generic association alone supplies no direction, mechanism or condition
+    # that distinguishes the missing concept from plausible alternatives.
+    if re.search(r"(?:和|与|之间).{0,40}(?:存在|具有|有)(?:着)?"
+                 r"(?:(?:一定|某种|密切|直接)的?)?(?:关系|关联|联系)[。！]$", sentence):
+        return False
+    # A loss plateau alone is not enough context to identify a learning state.
+    return not (_DEFINITION.match(sentence) and re.search(
+        r"(?:是指|指的是)(?:模型)?(?:无法|不能)继续(?:减少|降低)(?:训练)?(?:误差|损失)[。！]$", sentence))
 
 
 def usable_concept(concept: str, *, defined: bool = False) -> bool:

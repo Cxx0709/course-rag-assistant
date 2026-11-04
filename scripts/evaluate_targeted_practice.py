@@ -25,7 +25,7 @@ def grounded(question, chunks):
 
 def evaluate(root, folder):
     sources = json.loads((root / "eval/learning-flow-v1.json").read_text(encoding="utf-8"))["sources"]
-    quality_raw = (root / "eval/quiz-quality-v1.json").read_bytes()
+    quality_raw = (root / "eval/quiz-quality-v2.json").read_bytes()
     quality = json.loads(quality_raw)
     library = Library(folder)
     documents = []
@@ -66,19 +66,23 @@ def evaluate(root, folder):
         chapter_quiz = post("/api/quiz", chapter_scope)
         chapter_questions = store.load(chapter_quiz["quiz_id"])["questions"]
         chapter_chunks, _ = practice_scope(documents, section_id=chapter["id"])
-        checks["chapter_five_questions"] = len(chapter_questions) == 5
+        checks["chapter_expected_count_no_padding"] = len(chapter_questions) == len(quality["chapter_questions"]) < base["count"]
         checks["chapter_source_support"] = all(157 <= q["page"] <= 167 and grounded(q, chapter_chunks) for q in chapter_questions)
         checks["chapter_options_in_scope"] = all(any(option in c.text for c in chapter_chunks) for q in chapter_questions for option in q["options"])
         checks["chapter_knowledge_statements"] = len(chapter_questions) == len(quality["chapter_questions"]) and all(
             q["concept"] == expected["concept"] and q["page"] == expected["page"]
             and expected["contains"] in q["sentence"]
+            and all(fragment in q["sentence"] for fragment in expected.get("required_fragments", []))
             for q, expected in zip(chapter_questions, quality["chapter_questions"]))
         checks["no_observed_previews"] = all(q["sentence"] not in quality["excluded_previews"] for q in chapter_questions)
         checks["target_related_options"] = set(questions[0]["options"]) == set(quality["target_options"])
         checks["no_procedural_options"] = all(not set(q["options"]) & set(quality["excluded_options"]) for q in [*questions, *chapter_questions])
         checks["no_bilingual_answer_hint"] = all(
             alias not in q["prompt"] for q in chapter_questions
-            for alias in ("training error", "generalization error"))
+            for alias in ("training error", "generalization error", "underfitting"))
+        checks["paired_alternatives"] = all(set(q["options"]) == (
+            {"训练误差", "泛化误差"} if q["concept"].endswith("误差") else {"欠拟合", "过拟合"})
+            for q in chapter_questions)
         checks["bilingual_source_preserved"] = all(
             alias in chapter_questions[i]["sentence"]
             for i, alias in enumerate(("training error", "generalization error")))
@@ -100,7 +104,7 @@ def evaluate(root, folder):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--output", default="eval/reports/targeted-practice-v2.json")
+    parser.add_argument("--output", default="eval/reports/targeted-practice-v4.json")
     args = parser.parse_args()
     root = Path(__file__).resolve().parents[1]
     (root / ".tmp").mkdir(exist_ok=True)

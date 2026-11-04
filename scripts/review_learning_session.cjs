@@ -88,11 +88,15 @@ let server, browser, logs = '';
     await page.locator('#review-load').click();
     return (await response).json();
   }
-  const quiz=await generate(); assert.equal(quiz.questions.length,5);
+  const quiz=await generate(); assert.equal(quiz.questions.length,4);
   report.section=section; report.quiz=quiz;
   if(phase==='after') {
-    assert(!quiz.questions.some(q=>/training error|generalization error/.test(q.prompt)));
-    assert(quiz.questions[4].prompt.includes('对于固定的任务和数据分布'));
+    assert(!quiz.questions.some(q=>/training error|generalization error|underfitting/.test(q.prompt)));
+    assert(quiz.questions[2].prompt.includes('训练误差和验证误差都很严重'));
+    assert(quiz.questions[2].prompt.includes('表达能力不足'));
+    assert(!quiz.questions.some(q=>q.prompt.includes('通常存在关系')));
+    assert(quiz.questions.every(q=>q.options.length===2));
+    assert(quiz.note.includes('4 / 5') && quiz.note.includes('不扩大范围'));
   }
   await page.locator('#quiz-form').screenshot({path:`.tmp/learning-agent-review/${phase}-desktop.png`});
   await page.setViewportSize({width:390,height:844});
@@ -100,8 +104,9 @@ let server, browser, logs = '';
   assert(!report.mobileOverflow);
   await page.locator('#quiz-form').screenshot({path:`.tmp/learning-agent-review/${phase}-mobile.png`});
   await page.setViewportSize({width:1440,height:1100});
-  report.chapterGrade=await submit(quiz,['训练误差','泛化误差','欠拟合','过拟合','数据集大小']);
-  assert.equal(report.chapterGrade.score,5);
+  report.chapterGrade=await submit(quiz,['训练误差','泛化误差','欠拟合','过拟合']);
+  assert.equal(report.chapterGrade.score,4);
+  assert.equal(report.chapterGrade.results[2].page,161);
   report.reviewAfterCorrect=await review(); assert.equal(report.reviewAfterCorrect.gaps.length,0);
   await page.locator('#quiz-mode').selectOption('concept');
   await page.locator('#quiz-concept').fill('过拟合');
@@ -119,11 +124,27 @@ let server, browser, logs = '';
   report.reviewAfterReload=await review(); assert.equal(report.reviewAfterReload.gaps.length,1);
   report.simulatedRetry=await submit(await generate(),['过拟合']);
   report.reviewAfterRetry=await review(); assert.equal(report.reviewAfterRetry.gaps.length,0);
+  const transferResponse=page.waitForResponse(r=>r.url().endsWith('/api/quiz/sections'));
+  await page.locator('#quiz-mode').selectOption('section');
+  const transferSections=(await (await transferResponse).json()).sections;
+  await page.locator('#quiz-section').selectOption(transferSections.find(s=>s.title==='3.1 线性回归').id);
+  const linear=await generate();
+  assert.equal(linear.questions.length,3);
+  assert(!linear.questions.some(q=>q.prompt.includes('loss function')));
+  await page.locator('#quiz-section').selectOption(transferSections.find(s=>s.title==='6.1 从全连接层到卷积').id);
+  const insufficientResponse=page.waitForResponse(r=>r.url().endsWith('/api/quiz'));
+  await page.locator('#quiz-create').click();
+  const insufficient=await insufficientResponse;
+  assert.equal(insufficient.status(),422);
+  await page.locator('#error').waitFor({state:'visible'});
+  assert(await page.locator('#quiz-form').isHidden());
+  report.transferObservations={linearQuestions:linear.questions.length,convolutionStatus:422,
+    convolutionMessage:(await insufficient.json()).detail,staleQuizHidden:true};
   assert.deepEqual(errors,[]); report.passed=true;
   await fs.writeFile(`.tmp/learning-agent-review/${phase}.json`,JSON.stringify(report,null,2)+'\n');
   if(phase==='after') {
-    await fs.copyFile('.tmp/learning-agent-review/after-desktop.png','docs/learning-session-review.png');
-    await fs.writeFile('eval/reports/learning-session-browser-v1.json',JSON.stringify(report,null,2)+'\n');
+    await fs.copyFile('.tmp/learning-agent-review/after-desktop.png','docs/quiz-context-workspace.png');
+    await fs.writeFile('eval/reports/learning-session-browser-v2.json',JSON.stringify(report,null,2)+'\n');
   }
   console.log(JSON.stringify({phase,passed:true,chapterScore:report.chapterGrade.score,mobileOverflow:report.mobileOverflow,answers:report.answers.map(a=>({question:a.question,claims:a.answer.claims,sources:a.answer.sources.map(s=>({name:s.name,page:s.page}))})),browserErrors:errors},null,2));
 })().catch(e=>{console.error(e);process.exitCode=1;}).finally(async()=>{await browser?.close();server?.kill();});

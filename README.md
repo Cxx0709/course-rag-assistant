@@ -52,6 +52,14 @@ course materials (PDF / PPTX / MD, page numbers preserved)
 
 ## Status
 
+The [quiz context update](docs/quiz-context-v2.md) replaces the underfitting
+summary with contiguous source context, removes generic relation-only prompts,
+and favors related alternatives. D2L 4.4 now yields four questions without padding.
+All 365 tests, 25 scoped checks and the browser flow pass. Two preselected chapters
+exposed additional defects: after fixes, linear regression yields three questions
+and convolution explicitly reports insufficient content. The first observations
+are preserved; general teaching quality has not passed acceptance.
+
 The [assistant learning-session review](eval/reviews/learning-session-v1.md)
 found and fixed indirect offline definition answers, PDF fraction fragments and
 English aliases revealing cloze answers. All 347 tests, 24 scoped-practice checks,

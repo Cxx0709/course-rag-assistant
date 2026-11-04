@@ -1,0 +1,13 @@
+{
+  "purpose": "Two chapters selected before inspecting their generated quizzes; assistant review, not independent human validation",
+  "source": {
+    "path": "data/raw/datamining-notes/d2l-zh-pytorch.pdf",
+    "sha256": "db978acf18dac28f4de1412839ca1f804302c6a29b971b024595369afa69cbea"
+  },
+  "chapters": [
+    {"title": "3.1 线性回归", "recognized_pages": [103, 105]},
+    {"title": "6.1 从全连接层到卷积", "recognized_pages": [236, 240]}
+  ],
+  "requested_count": 5,
+  "review_criteria": ["complete source context", "preserved conditions and negation", "no generic relation-only prompt", "no bilingual answer hint", "plausible alternatives", "scope and citations", "explicit insufficient content"]
+}

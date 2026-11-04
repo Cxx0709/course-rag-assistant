@@ -1,0 +1,163 @@
+{
+  "purpose": "Two chapters selected before inspecting their generated quizzes; assistant review, not independent human validation",
+  "source": {
+    "path": "data/raw/datamining-notes/d2l-zh-pytorch.pdf",
+    "sha256": "db978acf18dac28f4de1412839ca1f804302c6a29b971b024595369afa69cbea"
+  },
+  "manifest_sha256": "6be614cc99efa5a61ae141f209560fcd68602232243922b4440a1286367570b7",
+  "default_library_modified": false,
+  "code_sha256": {
+    "src\\course_rag_assistant\\quiz.py": "22b47cb6d275400e594089f7d728e3cbe0c5024c3bb7b8fedb19a7739b4bcd43",
+    "src\\course_rag_assistant\\quiz_content.py": "7c6a513420edc3cf151e2aceb90ad8531a3437963831e99b0c295dba582c3b7e"
+  },
+  "chapters": [
+    {
+      "title": "3.1 线性回归",
+      "recognized_pages": [
+        103,
+        105
+      ],
+      "status_code": 201,
+      "generated_count": 3,
+      "note": "当前范围生成 3 / 5 道原文识记题。同一概念不重复出题；题数不足时不扩大范围。",
+      "questions": [
+        {
+          "concept": "偏置",
+          "sentence": "偏置是指当所有特征都取值为0时，预测值应该为多少。",
+          "citation": "[d2l-zh-pytorch__f1ce3bcac7bb447ba0a98474b5e2840e.pdf, p.104]",
+          "doc": "d2l-zh-pytorch__f1ce3bcac7bb447ba0a98474b5e2840e.pdf",
+          "page": 104,
+          "section": "线性模型",
+          "id": "1",
+          "prompt": "按资料原文补全空缺：____是指当所有特征都取值为0时，预测值应该为多少。",
+          "options": [
+            "线性模型",
+            "偏置",
+            "损失函数"
+          ],
+          "correct_index": 1
+        },
+        {
+          "concept": "损失函数",
+          "sentence": "损失函数（loss function）能够量化目标的实际值与预测值之间的差距。",
+          "citation": "[d2l-zh-pytorch__f1ce3bcac7bb447ba0a98474b5e2840e.pdf, p.105]",
+          "doc": "d2l-zh-pytorch__f1ce3bcac7bb447ba0a98474b5e2840e.pdf",
+          "page": 105,
+          "section": "损失函数",
+          "id": "2",
+          "prompt": "按资料原文补全空缺：____（loss function）能够量化目标的实际值与预测值之间的差距。",
+          "options": [
+            "损失函数",
+            "线性模型",
+            "偏置"
+          ],
+          "correct_index": 0
+        },
+        {
+          "concept": "线性模型",
+          "sentence": "输出的预测值由输入特征通过线性模型的仿射变换决定，仿射变换由所选权重和偏置确定。",
+          "citation": "[d2l-zh-pytorch__f1ce3bcac7bb447ba0a98474b5e2840e.pdf, p.104]",
+          "doc": "d2l-zh-pytorch__f1ce3bcac7bb447ba0a98474b5e2840e.pdf",
+          "page": 104,
+          "section": "线性模型",
+          "id": "3",
+          "prompt": "按资料原文补全空缺：输出的预测值由输入特征通过____的仿射变换决定，仿射变换由所选权重和偏置确定。",
+          "options": [
+            "线性模型",
+            "损失函数"
+          ],
+          "correct_index": 0
+        }
+      ],
+      "checks": {
+        "recognized_pages": true,
+        "explicit_result": true,
+        "bounded_count": true,
+        "contiguous_verified_source": true,
+        "options_in_scope": true,
+        "correct_option_hidden_in_prompt": true,
+        "public_key_hidden": true,
+        "shortfall_explained": true
+      },
+      "passed": true
+    },
+    {
+      "title": "6.1 从全连接层到卷积",
+      "recognized_pages": [
+        236,
+        240
+      ],
+      "status_code": 201,
+      "generated_count": 3,
+      "note": "当前范围生成 3 / 5 道原文识记题。同一概念不重复出题；题数不足时不扩大范围。",
+      "questions": [
+        {
+          "concept": "平移不变性",
+          "sentence": "现在引用上述的第一个原则：平移不变性。",
+          "citation": "[d2l-zh-pytorch__f1ce3bcac7bb447ba0a98474b5e2840e.pdf, p.238]",
+          "doc": "d2l-zh-pytorch__f1ce3bcac7bb447ba0a98474b5e2840e.pdf",
+          "page": 238,
+          "section": "平移不变性",
+          "id": "1",
+          "prompt": "按资料原文补全空缺：现在引用上述的第一个原则：____。",
+          "options": [
+            "平移不变性",
+            "局部性",
+            "通道"
+          ],
+          "correct_index": 0
+        },
+        {
+          "concept": "局部性",
+          "sentence": "现在引用上述的第二个原则：局部性。",
+          "citation": "[d2l-zh-pytorch__f1ce3bcac7bb447ba0a98474b5e2840e.pdf, p.238]",
+          "doc": "d2l-zh-pytorch__f1ce3bcac7bb447ba0a98474b5e2840e.pdf",
+          "page": 238,
+          "section": "局部性",
+          "id": "2",
+          "prompt": "按资料原文补全空缺：现在引用上述的第二个原则：____。",
+          "options": [
+            "局部性",
+            "平移不变性",
+            "通道"
+          ],
+          "correct_index": 0
+        },
+        {
+          "concept": "通道",
+          "sentence": "然而这种方法有一个问题：我们忽略了图像一般包含三个通道/三种原色（红色、绿色和蓝色）。",
+          "citation": "[d2l-zh-pytorch__f1ce3bcac7bb447ba0a98474b5e2840e.pdf, p.239]",
+          "doc": "d2l-zh-pytorch__f1ce3bcac7bb447ba0a98474b5e2840e.pdf",
+          "page": 239,
+          "section": "通道",
+          "id": "3",
+          "prompt": "按资料原文补全空缺：然而这种方法有一个问题：我们忽略了图像一般包含三个____/三种原色（红色、绿色和蓝色）。",
+          "options": [
+            "平移不变性",
+            "通道",
+            "局部性"
+          ],
+          "correct_index": 1
+        }
+      ],
+      "checks": {
+        "recognized_pages": true,
+        "explicit_result": true,
+        "bounded_count": true,
+        "contiguous_verified_source": true,
+        "options_in_scope": true,
+        "correct_option_hidden_in_prompt": true,
+        "public_key_hidden": true,
+        "shortfall_explained": true
+      },
+      "passed": true
+    }
+  ],
+  "human_teaching_review": "pending",
+  "passed": true,
+  "limitations": [
+    "Structural checks do not establish question value or semantic uniqueness.",
+    "No minimum quiz yield is assumed; empty output is reported explicitly.",
+    "Chapter scope depends on extracted headings and requires source review."
+  ]
+}

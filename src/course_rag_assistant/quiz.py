@@ -13,11 +13,26 @@ from contextlib import closing
 from pathlib import Path
 from uuid import uuid4
 
-from .answer import CitedAnswer, _source_units, format_citation, verify_citations
+from .answer import (
+    CitedAnswer,
+    _sentences,
+    _source_units,
+    format_citation,
+    verify_citations,
+)
 from .compare import _named_statement, _topic_heading
 from .ingest import Chunk
 from .prerequisites import is_prerequisite_statement
-from .quiz_content import chapter_number, cloze_prompt, definition_concept, statement_rank, teaching_statement, usable_concept
+from .quiz_content import (
+    chapter_number,
+    cloze_prompt,
+    contextual_definitions,
+    contextual_name,
+    definition_concept,
+    statement_rank,
+    teaching_statement,
+    usable_concept,
+)
 from .retrieval import Hit
 
 
@@ -32,12 +47,17 @@ def make_questions(chunks: list[Chunk], count: int = 5, *, target_concept: str |
         # Prefer explicit tags or the innermost heading. Headingless PDFs can
         # contribute simple, explicitly phrased Chinese definitions.
         concepts = chunk.concepts or [chunk.section.rsplit(" / ", 1)[-1]]
-        for sentence in _source_units(chunk):
+        units = _source_units(chunk)
+        passages = [(sentence, None) for sentence in units]
+        passages.extend((text, concept) for concept, text in contextual_definitions(units, chunk.text))
+        for sentence, contextual_concept in passages:
+            if contextual_concept is None and contextual_name(sentence):
+                continue
             # A declared reading order is metadata for the review path, not a
             # lesson assessing knowledge of the concept itself.
-            if is_prerequisite_statement(sentence) or not teaching_statement(sentence):
+            if any(is_prerequisite_statement(s) or not teaching_statement(s) for s in _sentences(sentence)):
                 continue
-            defined = definition_concept(sentence)
+            defined = contextual_concept or definition_concept(sentence)
             definitions = [defined] if defined else []
             target = [target_concept] if target_concept and (not defined or defined == target_concept) and (
                 _named_statement(target_concept, sentence) or _topic_heading(target_concept, chunk.section)
@@ -52,7 +72,8 @@ def make_questions(chunks: list[Chunk], count: int = 5, *, target_concept: str |
                     continue
                 hit = Hit(chunk, 1, "quiz")
                 citation = format_citation(hit)
-                verified = verify_citations(CitedAnswer(f"{sentence} {citation}", [hit], []))
+                verified = verify_citations(CitedAnswer(
+                    "\n".join(f"{s} {citation}" for s in _sentences(sentence)), [hit], []))
                 if verified.abstention_reason or verified.unsupported_claims:
                     continue
                 key = re.sub(r"\s+", "", sentence)
@@ -61,11 +82,14 @@ def make_questions(chunks: list[Chunk], count: int = 5, *, target_concept: str |
                 seen.add(key)
                 candidates.append({"concept": concept, "sentence": sentence, "citation": citation,
                                    "doc": chunk.doc, "page": chunk.page, "section": chunk.section,
-                                   "_chapter": chapters.get(chunk.doc)})
+                                   "_chapter": chapters.get(chunk.doc), "_contextual": bool(contextual_concept)})
                 break
     # Prefer substantive statements in every mode, not merely the first
     # sentence mentioning a heading. Stable sorting retains source order ties.
-    candidates.sort(key=lambda c: statement_rank(c["concept"], c["sentence"]))
+    def rank(candidate):
+        return 0 if candidate["_contextual"] else statement_rank(candidate["concept"], candidate["sentence"])
+
+    candidates.sort(key=rank)
     questions = []
     used_concepts = set()
     for candidate in candidates:
@@ -82,16 +106,21 @@ def make_questions(chunks: list[Chunk], count: int = 5, *, target_concept: str |
             c["doc"] != candidate["doc"],
             candidate["_chapter"] is not None and c["_chapter"] != candidate["_chapter"],
             abs(c["page"] - candidate["page"]) // 20,
-            statement_rank(c["concept"], c["sentence"]), abs(c["page"] - candidate["page"]),
+            rank(c), abs(c["page"] - candidate["page"]),
             c["section"] != candidate["section"], c["concept"]))
         concepts = dict.fromkeys(c["concept"] for c in nearby)
         distractors = [c for c in concepts if c != concept and c not in sentence
-                       and c not in concept and concept not in c][:3]
+                       and c not in concept and concept not in c]
+        # A shared multi-character Chinese suffix is a limited type hint
+        # (e.g. two errors or two fitting states), never semantic equivalence.
+        peers = [c for c in distractors if re.search(r"[\u4e00-\u9fff]{2}$", concept)
+                 and c.endswith(concept[-2:])]
+        distractors = (peers or distractors)[:3]
         if not distractors:
             continue
         options = sorted([concept, *distractors],
                          key=lambda c: hashlib.sha256((sentence + c).encode()).hexdigest())
-        questions.append({**{k: v for k, v in candidate.items() if k != "_chapter"}, "id": str(len(questions) + 1),
+        questions.append({**{k: v for k, v in candidate.items() if not k.startswith("_")}, "id": str(len(questions) + 1),
                           "prompt": cloze_prompt(concept, sentence),
                           "options": options, "correct_index": options.index(concept)})
         used_concepts.add(concept)

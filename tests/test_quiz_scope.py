@@ -3,7 +3,11 @@ from fastapi.testclient import TestClient
 
 from course_rag_assistant.ingest import Chunk
 from course_rag_assistant.quiz import QuizStore, make_questions
-from course_rag_assistant.quiz_scope import practice_scope, review_matches, section_ranges
+from course_rag_assistant.quiz_scope import (
+    practice_scope,
+    review_matches,
+    section_ranges,
+)
 from course_rag_assistant.web import create_app
 from course_rag_assistant.web.library import Document, Library
 
@@ -54,7 +58,7 @@ def test_target_requires_exact_concept_and_prefers_definition():
     chunks = [Chunk("条件独立是指给定条件后两个事件相互独立。", "a.pdf", 1, "条件独立"),
               Chunk("过拟合在许多机器学习任务中都会出现。", "a.pdf", 2, "过拟合"),
               Chunk("• 过拟合是指训练误差远小于验证误差。", "a.pdf", 3, "小结"),
-              Chunk("欠拟合是指模型无法继续减少训练误差。", "a.pdf", 3, "小结"),
+              Chunk("欠拟合是指模型表达能力不足，训练误差与验证误差都较高。", "a.pdf", 3, "小结"),
               Chunk("本节小结概括了本章的主要学习内容。", "a.pdf", 3, "小结")]
     assert make_questions(chunks, target_concept="独立") == []
     questions = make_questions(chunks, target_concept="过拟合")
@@ -68,7 +72,7 @@ def test_target_requires_exact_concept_and_prefers_definition():
 
 def test_review_chapter_checks_exact_passage_not_just_page():
     chunk = Chunk("过拟合是指训练误差远小于验证误差。", "a.pdf", 3, "小结")
-    row = dict(doc=chunk.doc, page=chunk.page, section=chunk.section, sentence=chunk.text, concept="过拟合")
+    row = {"doc": chunk.doc, "page": chunk.page, "section": chunk.section, "sentence": chunk.text, "concept": "过拟合"}
     scope = {"section": {"id": "x"}, "target_concept": "过拟合"}
     assert review_matches(row, [chunk], scope)
     assert not review_matches({**row, "concept": "欠拟合"}, [chunk], scope)
@@ -89,7 +93,7 @@ NOTE = """# 前言
 ## 过拟合
 过拟合是指模型在训练集表现良好，但在新数据上表现较差。
 ## 欠拟合
-欠拟合是指模型无法继续减少训练误差。
+欠拟合是指模型表达能力不足，训练误差与验证误差都较高。
 ## 学习率
 学习率控制每次参数更新的步长。
 # 其他

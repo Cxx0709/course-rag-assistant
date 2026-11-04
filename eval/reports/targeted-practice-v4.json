@@ -1,0 +1,133 @@
+{
+  "sources": [
+    {
+      "path": "data/raw/datamining-notes/d2l-zh-pytorch.pdf",
+      "sha256": "db978acf18dac28f4de1412839ca1f804302c6a29b971b024595369afa69cbea"
+    },
+    {
+      "path": "data/raw/course-comparison/MLY-zh-cn.pdf",
+      "sha256": "d016cefe31b57bac625bfddd7e367d3ec634fbdd015c5879627c9ea4c2a8fb85"
+    }
+  ],
+  "quality_manifest_sha256": "d287c07a29fdc91cae2efe569ccb76f4ab8cd7cb9023307c4d6e65ed62181a5f",
+  "checks": {
+    "chapter_pages": true,
+    "only_target_no_padding": true,
+    "direct_definition": true,
+    "no_navigation_options": true,
+    "concept_source_support": true,
+    "public_key_hidden": true,
+    "scope_saved_with_grade": true,
+    "page_links": true,
+    "target_review": true,
+    "other_target_review_empty": true,
+    "chapter_review_includes_target": true,
+    "chapter_expected_count_no_padding": true,
+    "chapter_source_support": true,
+    "chapter_options_in_scope": true,
+    "chapter_knowledge_statements": true,
+    "no_observed_previews": true,
+    "target_related_options": true,
+    "no_procedural_options": true,
+    "no_bilingual_answer_hint": true,
+    "paired_alternatives": true,
+    "bilingual_source_preserved": true,
+    "unknown_target_no_fallback": true,
+    "foreign_chapter_rejected": true,
+    "review_survives_restart": true,
+    "correct_retry_clears_review": true
+  },
+  "passed": true,
+  "chapter": {
+    "id": "7377186542fcc89905af90be",
+    "document_id": "3f5b643376f2452a9c9388f9416c7dfd",
+    "document_name": "d2l-zh-pytorch.pdf",
+    "title": "4.4 模型选择、欠拟合和过拟合",
+    "page_from": 157,
+    "page_to": 167,
+    "chunks": 34
+  },
+  "concept_questions": [
+    {
+      "concept": "过拟合",
+      "sentence": "过拟合是指训练误差远小于验证误差。",
+      "citation": "[d2l-zh-pytorch__3f5b643376f2452a9c9388f9416c7dfd.pdf, p.167]",
+      "doc": "d2l-zh-pytorch__3f5b643376f2452a9c9388f9416c7dfd.pdf",
+      "page": 167,
+      "section": "小结",
+      "id": "1",
+      "prompt": "按资料原文补全空缺：____是指训练误差远小于验证误差。",
+      "options": [
+        "欠拟合",
+        "过拟合"
+      ],
+      "correct_index": 1
+    }
+  ],
+  "chapter_questions": [
+    {
+      "concept": "训练误差",
+      "sentence": "训练误差（training error）是指，模型在训练数据集上计算得到的误差。",
+      "citation": "[d2l-zh-pytorch__3f5b643376f2452a9c9388f9416c7dfd.pdf, p.158]",
+      "doc": "d2l-zh-pytorch__3f5b643376f2452a9c9388f9416c7dfd.pdf",
+      "page": 158,
+      "section": "4.4.1 训练误差和泛化误差",
+      "id": "1",
+      "prompt": "按资料原文补全空缺：____是指，模型在训练数据集上计算得到的误差。",
+      "options": [
+        "泛化误差",
+        "训练误差"
+      ],
+      "correct_index": 1
+    },
+    {
+      "concept": "泛化误差",
+      "sentence": "泛化误差（generalization error）是指，模型应用在同样从原始样本的分布中抽取的无限多数据样本时，模型误差的期望。",
+      "citation": "[d2l-zh-pytorch__3f5b643376f2452a9c9388f9416c7dfd.pdf, p.158]",
+      "doc": "d2l-zh-pytorch__3f5b643376f2452a9c9388f9416c7dfd.pdf",
+      "page": 158,
+      "section": "4.4.1 训练误差和泛化误差",
+      "id": "2",
+      "prompt": "按资料原文补全空缺：____是指，模型应用在同样从原始样本的分布中抽取的无限多数据样本时，模型误差的期望。",
+      "options": [
+        "泛化误差",
+        "训练误差"
+      ],
+      "correct_index": 0
+    },
+    {
+      "concept": "欠拟合",
+      "sentence": "首先，我们要注意这样的情况：训练误差和验证误差都很严重，但它们之间仅有一点差距。如果模型不能降低训练误差，这可能意味着模型过于简单（即表达能力不足），无法捕获试图学习的模式。此外，由于我们的训练和验证误差之间的泛化误差很小，我们有理由相信可以用一个更复杂的模型降低训练误差。这种现象被称为欠拟合（underfitting）。",
+      "citation": "[d2l-zh-pytorch__3f5b643376f2452a9c9388f9416c7dfd.pdf, p.161]",
+      "doc": "d2l-zh-pytorch__3f5b643376f2452a9c9388f9416c7dfd.pdf",
+      "page": 161,
+      "section": "K折交叉验证",
+      "id": "3",
+      "prompt": "按资料原文补全空缺：首先，我们要注意这样的情况：训练误差和验证误差都很严重，但它们之间仅有一点差距。如果模型不能降低训练误差，这可能意味着模型过于简单（即表达能力不足），无法捕获试图学习的模式。此外，由于我们的训练和验证误差之间的泛化误差很小，我们有理由相信可以用一个更复杂的模型降低训练误差。这种现象被称为____。",
+      "options": [
+        "过拟合",
+        "欠拟合"
+      ],
+      "correct_index": 1
+    },
+    {
+      "concept": "过拟合",
+      "sentence": "过拟合是指训练误差远小于验证误差。",
+      "citation": "[d2l-zh-pytorch__3f5b643376f2452a9c9388f9416c7dfd.pdf, p.167]",
+      "doc": "d2l-zh-pytorch__3f5b643376f2452a9c9388f9416c7dfd.pdf",
+      "page": 167,
+      "section": "小结",
+      "id": "4",
+      "prompt": "按资料原文补全空缺：____是指训练误差远小于验证误差。",
+      "options": [
+        "欠拟合",
+        "过拟合"
+      ],
+      "correct_index": 1
+    }
+  ],
+  "limitations": [
+    "Literal source recognition, not mastery assessment; target name can reveal the answer.",
+    "Chapter boundaries depend on extracted numbered headings; source quality still requires human review."
+  ]
+}

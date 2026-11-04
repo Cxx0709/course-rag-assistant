@@ -1,0 +1,18 @@
+{
+  "purpose": "Development checks for contextual naming, informative prompts and related alternatives; replaces v1 expectations without changing v1 history",
+  "chapter_questions": [
+    {"concept": "训练误差", "page": 158, "contains": "模型在训练数据集上计算得到的误差"},
+    {"concept": "泛化误差", "page": 158, "contains": "模型误差的期望"},
+    {"concept": "欠拟合", "page": 161, "contains": "这种现象被称为欠拟合", "required_fragments": ["训练误差和验证误差都很严重", "仅有一点差距", "这可能意味着模型过于简单", "表达能力不足"]},
+    {"concept": "过拟合", "page": 167, "contains": "训练误差远小于验证误差"}
+  ],
+  "excluded_previews": [
+    "为了进一步讨论这一现象，我们需要了解训练误差和泛化误差。",
+    "模型复杂性由什么构成是一个复杂的问题。",
+    "为了说明一些关于过拟合和模型复杂性的经典直觉，我们给出一个多项式的例子。",
+    "对于固定的任务和数据分布，模型复杂性和数据集大小之间通常存在关系。",
+    "• 欠拟合是指模型无法继续减少训练误差。"
+  ],
+  "target_options": ["过拟合", "欠拟合"],
+  "excluded_options": ["初始化模型参数", "使用权重衰减", "小结", "论坛"]
+}

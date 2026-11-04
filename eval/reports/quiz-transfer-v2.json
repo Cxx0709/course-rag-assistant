@@ -1,0 +1,121 @@
+{
+  "purpose": "Two chapters selected before inspecting their generated quizzes; assistant review, not independent human validation",
+  "source": {
+    "path": "data/raw/datamining-notes/d2l-zh-pytorch.pdf",
+    "sha256": "db978acf18dac28f4de1412839ca1f804302c6a29b971b024595369afa69cbea"
+  },
+  "evaluation_phase": "development_regression_after_first_observation",
+  "manifest_sha256": "6be614cc99efa5a61ae141f209560fcd68602232243922b4440a1286367570b7",
+  "default_library_modified": false,
+  "code_sha256": {
+    "src\\course_rag_assistant\\quiz.py": "cefe885e21bf6aa0a1651d806f0851f6bf0262736541c09386ece46672e82096",
+    "src\\course_rag_assistant\\quiz_content.py": "97f064b67250cfb88e9a136d48c9538a9a4b61500d85ef6e5c599f65af1a5a29"
+  },
+  "chapters": [
+    {
+      "title": "3.1 线性回归",
+      "recognized_pages": [
+        103,
+        105
+      ],
+      "status_code": 201,
+      "generated_count": 3,
+      "note": "当前范围生成 3 / 5 道原文识记题。同一概念不重复出题；题数不足时不扩大范围。",
+      "questions": [
+        {
+          "concept": "偏置",
+          "sentence": "偏置是指当所有特征都取值为0时，预测值应该为多少。",
+          "citation": "[d2l-zh-pytorch__d3aadf22a54f4f208d56205e96a7fed6.pdf, p.104]",
+          "doc": "d2l-zh-pytorch__d3aadf22a54f4f208d56205e96a7fed6.pdf",
+          "page": 104,
+          "section": "线性模型",
+          "id": "1",
+          "prompt": "按资料原文补全空缺：____是指当所有特征都取值为0时，预测值应该为多少。",
+          "options": [
+            "线性模型",
+            "偏置",
+            "损失函数"
+          ],
+          "correct_index": 1
+        },
+        {
+          "concept": "损失函数",
+          "sentence": "损失函数（loss function）能够量化目标的实际值与预测值之间的差距。",
+          "citation": "[d2l-zh-pytorch__d3aadf22a54f4f208d56205e96a7fed6.pdf, p.105]",
+          "doc": "d2l-zh-pytorch__d3aadf22a54f4f208d56205e96a7fed6.pdf",
+          "page": 105,
+          "section": "损失函数",
+          "id": "2",
+          "prompt": "按资料原文补全空缺：____能够量化目标的实际值与预测值之间的差距。",
+          "options": [
+            "损失函数",
+            "线性模型",
+            "偏置"
+          ],
+          "correct_index": 0
+        },
+        {
+          "concept": "线性模型",
+          "sentence": "输出的预测值由输入特征通过线性模型的仿射变换决定，仿射变换由所选权重和偏置确定。",
+          "citation": "[d2l-zh-pytorch__d3aadf22a54f4f208d56205e96a7fed6.pdf, p.104]",
+          "doc": "d2l-zh-pytorch__d3aadf22a54f4f208d56205e96a7fed6.pdf",
+          "page": 104,
+          "section": "线性模型",
+          "id": "3",
+          "prompt": "按资料原文补全空缺：输出的预测值由输入特征通过____的仿射变换决定，仿射变换由所选权重和偏置确定。",
+          "options": [
+            "线性模型",
+            "损失函数"
+          ],
+          "correct_index": 0
+        }
+      ],
+      "checks": {
+        "recognized_pages": true,
+        "explicit_result": true,
+        "bounded_count": true,
+        "contiguous_verified_source": true,
+        "options_in_scope": true,
+        "correct_option_hidden_in_prompt": true,
+        "public_key_hidden": true,
+        "shortfall_explained": true,
+        "observed_alias_hint_removed": true,
+        "observed_dangling_prompts_removed": true
+      },
+      "passed": true
+    },
+    {
+      "title": "6.1 从全连接层到卷积",
+      "recognized_pages": [
+        236,
+        240
+      ],
+      "status_code": 422,
+      "generated_count": 0,
+      "note": "当前范围没有足够的完整概念句或可区分的选项。请调整概念或章节，或补充课程笔记；不会从范围外凑题。",
+      "questions": [],
+      "checks": {
+        "recognized_pages": true,
+        "explicit_result": true,
+        "bounded_count": true,
+        "contiguous_verified_source": true,
+        "options_in_scope": true,
+        "correct_option_hidden_in_prompt": true,
+        "public_key_hidden": true,
+        "shortfall_explained": true,
+        "observed_alias_hint_removed": true,
+        "observed_dangling_prompts_removed": true
+      },
+      "passed": true
+    }
+  ],
+  "human_teaching_review": "pending",
+  "passed": true,
+  "all_chapters_produce_practice": false,
+  "teaching_acceptance": "not_established",
+  "limitations": [
+    "Structural checks do not establish question value or semantic uniqueness.",
+    "No minimum quiz yield is assumed; empty output is reported explicitly.",
+    "Chapter scope depends on extracted headings and requires source review."
+  ]
+}
