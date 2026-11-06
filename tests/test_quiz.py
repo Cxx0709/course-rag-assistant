@@ -6,14 +6,13 @@ from course_rag_assistant.quiz import QuizStore, make_questions
 
 def chunks():
     return [Chunk("过拟合是指模型在训练集表现良好，但在新数据上表现较差。", "notes.md", 0, "过拟合"),
-            Chunk("梯度下降沿着损失函数减小的方向更新模型参数。", "notes.md", 0, "梯度下降"),
-            Chunk("学习率控制每次参数更新的步长。", "notes.md", 0, "学习率")]
+            Chunk("欠拟合是指模型表达能力不足，训练误差与验证误差都较高。", "notes.md", 0, "欠拟合")]
 
 
 def test_quiz_is_deterministic_grounded_and_deduplicated():
     questions = make_questions(chunks() * 2)
     assert questions == make_questions(chunks())
-    assert len(questions) == 3
+    assert len(questions) == 2
     for q in questions:
         assert q["options"][q["correct_index"]] == q["concept"]
         assert q["sentence"] in {c.text for c in chunks()}
@@ -68,6 +67,6 @@ def test_quiz_cannot_trust_a_citation_embedded_in_source():
 def test_reading_order_declarations_are_not_quiz_content(declaration):
     inputs = [Chunk(declaration, "notes.md", 0, "过拟合"), *chunks()]
     questions = make_questions(inputs)
-    assert len(questions) == 3
+    assert len(questions) == 2
     assert all(q["sentence"] != declaration for q in questions)
     assert next(q for q in questions if q["concept"] == "过拟合")["sentence"] == chunks()[0].text

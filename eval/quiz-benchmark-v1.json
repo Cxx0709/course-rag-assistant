@@ -1,0 +1,982 @@
+{
+  "schema_version": 1,
+  "name": "quiz-benchmark-v1",
+  "created_on": "2026-11-06",
+  "purpose": "Fixed retrospective diagnostic benchmark; annotations are assistant-authored, not teacher validation or an unseen holdout.",
+  "sources": {
+    "d2l": {
+      "path": "data/raw/datamining-notes/d2l-zh-pytorch.pdf",
+      "sha256": "db978acf18dac28f4de1412839ca1f804302c6a29b971b024595369afa69cbea"
+    }
+  },
+  "annotation_policy": {
+    "author": "assistant",
+    "independent_review": false,
+    "sampling": "Purposive known failures, known successes and authored boundary cases; not representative.",
+    "weighting": "One case per unit of evaluation; an enumeration is not counted as several independent cases.",
+    "target": "Source recognition and pipeline diagnostics, not teaching effectiveness."
+  },
+  "cases": [
+    {
+      "id": "boundary-01",
+      "dimension": "boundary",
+      "cohort": "textbook",
+      "chunks": [
+        {
+          "text": "训练误差（training error）是指，模型在训练数据集上计算得到的误差。",
+          "page": 158,
+          "section": "4.4.1 训练误差和泛化误差",
+          "doc": "d2l-zh-pytorch.pdf",
+          "source": "d2l"
+        },
+        {
+          "text": "泛化误差（generalization error）是指，模型应用在同样从原始样本的分布中抽取的无限多数据样本时，模型误差的期望。",
+          "page": 158,
+          "section": "4.4.1 训练误差和泛化误差",
+          "doc": "d2l-zh-pytorch.pdf",
+          "source": "d2l"
+        }
+      ],
+      "expected": {
+        "concepts": [
+          "训练误差",
+          "泛化误差"
+        ]
+      },
+      "rationale": "完整定义中的两个不同误差名称。"
+    },
+    {
+      "id": "boundary-02",
+      "dimension": "boundary",
+      "cohort": "textbook",
+      "chunks": [
+        {
+          "text": "由于ht从未被观测到，这类模型也被称为隐变量自回归模型（latent autoregressive models）。",
+          "page": 309,
+          "section": "自回归模型",
+          "doc": "d2l-zh-pytorch.pdf",
+          "source": "d2l"
+        }
+      ],
+      "expected": {
+        "concepts": [
+          "隐变量自回归模型"
+        ]
+      },
+      "rationale": "不能将有隐变量限定的概念截成标题里的自回归模型。"
+    },
+    {
+      "id": "boundary-03",
+      "dimension": "boundary",
+      "cohort": "textbook",
+      "chunks": [
+        {
+          "text": "通常，涉及一个、两个和三个变量的概率公式分别被称为一元语法（unigram）、二元语法（bigram）和三元语法（trigram）模型。",
+          "page": 323,
+          "section": "式：",
+          "doc": "d2l-zh-pytorch.pdf",
+          "source": "d2l"
+        }
+      ],
+      "expected": {
+        "concepts": [
+          "一元语法",
+          "二元语法",
+          "三元语法"
+        ]
+      },
+      "rationale": "共同类别模型保留在题干，三个被命名术语均须提取。"
+    },
+    {
+      "id": "boundary-04",
+      "dimension": "boundary",
+      "cohort": "textbook",
+      "chunks": [
+        {
+          "text": "长短期记忆网络引入了记忆元（memory cell），或简称为单元（cell）。",
+          "page": 360,
+          "section": "9.2.1 门控记忆元",
+          "doc": "d2l-zh-pytorch.pdf",
+          "source": "d2l"
+        }
+      ],
+      "expected": {
+        "concepts": [
+          "记忆元"
+        ]
+      },
+      "rationale": "以先出现的完整名称记忆元为规范名，单元为同义简称。"
+    },
+    {
+      "id": "boundary-05",
+      "dimension": "boundary",
+      "cohort": "textbook",
+      "chunks": [
+        {
+          "text": "正如我们所看到的，最流行的词看起来很无聊，这些词通常被称为停用词（stop words），因此可以被过滤掉。",
+          "page": 323,
+          "section": "from d2l import torch as d2l",
+          "doc": "d2l-zh-pytorch.pdf",
+          "source": "d2l"
+        }
+      ],
+      "expected": {
+        "concepts": [
+          "停用词"
+        ]
+      },
+      "rationale": "名称存在与上下文是否独立是不同问题。"
+    },
+    {
+      "id": "boundary-06",
+      "dimension": "boundary",
+      "cohort": "textbook",
+      "chunks": [
+        {
+          "text": "为了更好地理解门控循环单元模型，我们从零开始实现它。",
+          "page": 356,
+          "section": "9.1.2 从零开始实现",
+          "doc": "d2l-zh-pytorch.pdf",
+          "source": "d2l"
+        }
+      ],
+      "expected": {
+        "concepts": []
+      },
+      "rationale": "操作安排不是知识概念定义。"
+    },
+    {
+      "id": "boundary-07",
+      "dimension": "boundary",
+      "cohort": "textbook",
+      "chunks": [
+        {
+          "text": "处理序列数据需要统计工具和新的深度神经网络架构。",
+          "page": 308,
+          "section": "8.1.1 统计工具",
+          "doc": "d2l-zh-pytorch.pdf",
+          "source": "d2l"
+        }
+      ],
+      "expected": {
+        "concepts": []
+      },
+      "rationale": "泛泛需要统计工具，没有定义某个具体概念。"
+    },
+    {
+      "id": "boundary-08",
+      "dimension": "boundary",
+      "cohort": "constructed",
+      "chunks": [
+        {
+          "text": "所谓缓存命中，是指请求的数据已经存在于缓存中。",
+          "page": 0,
+          "section": "课程",
+          "doc": "authored.md",
+          "source": null
+        }
+      ],
+      "expected": {
+        "concepts": [
+          "缓存命中"
+        ]
+      },
+      "rationale": "名称边界不应包含所谓这样的引导词。"
+    },
+    {
+      "id": "identity-01",
+      "dimension": "identity",
+      "cohort": "constructed",
+      "chunks": [
+        {
+          "text": "验证误差（validation error），又称开发误差（development error），是指模型在验证数据上的误差。",
+          "page": 0,
+          "section": "课程",
+          "doc": "authored.md",
+          "source": null
+        }
+      ],
+      "expected": {
+        "links": [
+          [
+            "验证误差",
+            "开发误差",
+            true
+          ]
+        ],
+        "aliases": {
+          "验证误差": [
+            "validation error",
+            "development error"
+          ]
+        }
+      },
+      "rationale": "明确同义声明和两个英文名称。"
+    },
+    {
+      "id": "identity-02",
+      "dimension": "identity",
+      "cohort": "constructed",
+      "chunks": [
+        {
+          "text": "验证误差是指模型在验证数据上的误差，又称开发误差。",
+          "page": 0,
+          "section": "课程",
+          "doc": "authored.md",
+          "source": null
+        }
+      ],
+      "expected": {
+        "links": [
+          [
+            "验证误差",
+            "开发误差",
+            true
+          ]
+        ],
+        "aliases": {}
+      },
+      "rationale": "同义声明出现在定义之后，含义仍明确。"
+    },
+    {
+      "id": "identity-03",
+      "dimension": "identity",
+      "cohort": "constructed",
+      "chunks": [
+        {
+          "text": "缓存淘汰可选择先进先出策略或最近最少使用策略。",
+          "page": 0,
+          "section": "课程",
+          "doc": "authored.md",
+          "source": null
+        }
+      ],
+      "expected": {
+        "links": [
+          [
+            "先进先出策略",
+            "最近最少使用策略",
+            false
+          ]
+        ],
+        "aliases": {}
+      },
+      "rationale": "可选策略不同，或不等于同义。"
+    },
+    {
+      "id": "identity-04",
+      "dimension": "identity",
+      "cohort": "textbook",
+      "chunks": [
+        {
+          "text": "在机器学习的术语中，该数据集称为训练数据集（training data set）或训练集（training set）。",
+          "page": 104,
+          "section": "3.1.1 线性回归的基本元素",
+          "doc": "d2l-zh-pytorch.pdf",
+          "source": "d2l"
+        }
+      ],
+      "expected": {
+        "links": [
+          [
+            "训练数据集",
+            "训练集",
+            true
+          ]
+        ],
+        "aliases": {
+          "训练数据集": [
+            "training data set",
+            "training set"
+          ]
+        }
+      },
+      "rationale": "同一个被命名数据集在此句中的两个名称。"
+    },
+    {
+      "id": "identity-05",
+      "dimension": "identity",
+      "cohort": "textbook",
+      "chunks": [
+        {
+          "text": "我们把试图预测的目标（比如预测房屋价格）称为标签（label）或目标（target）。",
+          "page": 104,
+          "section": "3.1.1 线性回归的基本元素",
+          "doc": "d2l-zh-pytorch.pdf",
+          "source": "d2l"
+        }
+      ],
+      "expected": {
+        "links": [
+          [
+            "标签",
+            "目标",
+            true
+          ]
+        ],
+        "aliases": {
+          "标签": [
+            "label",
+            "target"
+          ]
+        }
+      },
+      "rationale": "此句指向同一个被预测的对象。"
+    },
+    {
+      "id": "identity-06",
+      "dimension": "identity",
+      "cohort": "textbook",
+      "chunks": [
+        {
+          "text": "长短期记忆网络引入了记忆元（memory cell），或简称为单元（cell）。",
+          "page": 360,
+          "section": "9.2.1 门控记忆元",
+          "doc": "d2l-zh-pytorch.pdf",
+          "source": "d2l"
+        }
+      ],
+      "expected": {
+        "links": [
+          [
+            "记忆元",
+            "单元",
+            true
+          ]
+        ],
+        "aliases": {
+          "记忆元": [
+            "memory cell",
+            "cell"
+          ]
+        }
+      },
+      "rationale": "原文明示简称，不能拆成两个独立身份。"
+    },
+    {
+      "id": "identity-07",
+      "dimension": "identity",
+      "cohort": "textbook",
+      "chunks": [
+        {
+          "text": "训练误差（training error）是指，模型在训练数据集上计算得到的误差。",
+          "page": 158,
+          "section": "4.4.1 训练误差和泛化误差",
+          "doc": "d2l-zh-pytorch.pdf",
+          "source": "d2l"
+        }
+      ],
+      "expected": {
+        "links": [],
+        "aliases": {
+          "训练误差": [
+            "training error"
+          ]
+        }
+      },
+      "rationale": "完整名称旁的英文别名。"
+    },
+    {
+      "id": "identity-08",
+      "dimension": "identity",
+      "cohort": "constructed",
+      "chunks": [
+        {
+          "text": "验证误差在特定划分方式下也称为测试误差，其他情况下二者不同。",
+          "page": 0,
+          "section": "课程",
+          "doc": "authored.md",
+          "source": null
+        }
+      ],
+      "expected": {
+        "links": [
+          [
+            "验证误差",
+            "测试误差",
+            false
+          ]
+        ],
+        "aliases": {}
+      },
+      "rationale": "条件性用法不能传播为无条件同义。"
+    },
+    {
+      "id": "context-01",
+      "dimension": "context",
+      "cohort": "constructed",
+      "chunks": [
+        {
+          "text": "过拟合是指模型在训练数据上表现良好，但在新数据上表现较差。",
+          "page": 0,
+          "section": "课程",
+          "doc": "authored.md",
+          "source": null
+        }
+      ],
+      "expected": {
+        "concept": "过拟合",
+        "accept": true,
+        "required": [
+          "训练数据",
+          "新数据"
+        ],
+        "forbidden": []
+      },
+      "rationale": "训练与新数据对比均保留。"
+    },
+    {
+      "id": "context-02",
+      "dimension": "context",
+      "cohort": "textbook",
+      "chunks": [
+        {
+          "text": "其中一个门用来从单元中输出条目，我们将其称为输出门（output gate）。",
+          "page": 360,
+          "section": "9.2.1 门控记忆元",
+          "doc": "d2l-zh-pytorch.pdf",
+          "source": "d2l"
+        }
+      ],
+      "expected": {
+        "concept": "输出门",
+        "accept": false,
+        "required": [],
+        "forbidden": []
+      },
+      "rationale": "其中一个及单元缺少前文对象说明。"
+    },
+    {
+      "id": "context-03",
+      "dimension": "context",
+      "cohort": "textbook",
+      "chunks": [
+        {
+          "text": "另外一个门用来决定何时将数据读入单元，我们将其称为输入门（input gate）。",
+          "page": 360,
+          "section": "9.2.1 门控记忆元",
+          "doc": "d2l-zh-pytorch.pdf",
+          "source": "d2l"
+        }
+      ],
+      "expected": {
+        "concept": "输入门",
+        "accept": false,
+        "required": [],
+        "forbidden": []
+      },
+      "rationale": "另外一个及单元缺少前文对象说明。"
+    },
+    {
+      "id": "context-04",
+      "dimension": "context",
+      "cohort": "textbook",
+      "chunks": [
+        {
+          "text": "长短期记忆网络引入了记忆元（memory cell），或简称为单元（cell）。有些文献认为记忆元是隐状态的一种特殊类型，它们与隐状态具有相同的形状，其设计目的是用于记录附加的信息。为了控制记忆元，我们需要许多门。其中一个门用来从单元中输出条目，我们将其称为输出门（output gate）。另外一个门用来决定何时将数据读入单元，我们将其称为输入门（input gate）。",
+          "page": 360,
+          "section": "9.2.1 门控记忆元",
+          "doc": "d2l-zh-pytorch.pdf",
+          "source": "d2l"
+        }
+      ],
+      "expected": {
+        "concept": "输出门",
+        "accept": true,
+        "required": [
+          "长短期记忆网络",
+          "记忆元",
+          "从单元中输出条目"
+        ],
+        "forbidden": [
+          "output gate",
+          "input gate"
+        ]
+      },
+      "rationale": "完整相邻段落支持独立说明输出方向。"
+    },
+    {
+      "id": "context-05",
+      "dimension": "context",
+      "cohort": "textbook",
+      "chunks": [
+        {
+          "text": "接下来，让我们将重置门Rt 与(8.4.5) 中的常规隐状态更新机制集成，得到在时间步t的候选隐状态（candidate hidden state）˜Ht ∈Rn×h。",
+          "page": 355,
+          "section": "候选隐状态",
+          "doc": "d2l-zh-pytorch.pdf",
+          "source": "d2l"
+        }
+      ],
+      "expected": {
+        "concept": "候选隐状态",
+        "accept": false,
+        "required": [],
+        "forbidden": []
+      },
+      "rationale": "未展示的公式与符号阻止独立作答。"
+    },
+    {
+      "id": "context-06",
+      "dimension": "context",
+      "cohort": "textbook",
+      "chunks": [
+        {
+          "text": "正如我们所看到的，最流行的词看起来很无聊，这些词通常被称为停用词（stop words），因此可以被过滤掉。",
+          "page": 323,
+          "section": "from d2l import torch as d2l",
+          "doc": "d2l-zh-pytorch.pdf",
+          "source": "d2l"
+        }
+      ],
+      "expected": {
+        "concept": "停用词",
+        "accept": false,
+        "required": [],
+        "forbidden": []
+      },
+      "rationale": "正如我们所看到的和这些词仍指向未展示的词频观察。"
+    },
+    {
+      "id": "context-07",
+      "dimension": "context",
+      "cohort": "constructed",
+      "chunks": [
+        {
+          "text": "候选隐状态用于计算图9.1.1中所示的输出。",
+          "page": 0,
+          "section": "候选隐状态",
+          "doc": "authored.md",
+          "source": null
+        }
+      ],
+      "expected": {
+        "concept": "候选隐状态",
+        "accept": false,
+        "required": [],
+        "forbidden": []
+      },
+      "rationale": "不能假设题目展示了图。"
+    },
+    {
+      "id": "context-08",
+      "dimension": "context",
+      "cohort": "textbook",
+      "chunks": [
+        {
+          "text": "严格来说，卷积层是个错误的叫法，因为它所表达的运算其实是互相关运算（cross‐correlation），而不是卷积运算。",
+          "page": 241,
+          "section": "6.2.1 互相关运算",
+          "doc": "d2l-zh-pytorch.pdf",
+          "source": "d2l"
+        }
+      ],
+      "expected": {
+        "concept": "互相关运算",
+        "accept": true,
+        "required": [
+          "严格来说",
+          "卷积层",
+          "其实是"
+        ],
+        "forbidden": [
+          "cross‐correlation",
+          "而不是卷积运算"
+        ]
+      },
+      "rationale": "原文明确区分两种运算，题干保留引导条件。"
+    },
+    {
+      "id": "context-09",
+      "dimension": "context",
+      "cohort": "constructed",
+      "chunks": [
+        {
+          "text": "验证误差是指在样本同分布时模型在验证数据上的误差，不能直接用于拟合参数。",
+          "page": 0,
+          "section": "课程",
+          "doc": "authored.md",
+          "source": null
+        }
+      ],
+      "expected": {
+        "concept": "验证误差",
+        "accept": true,
+        "required": [
+          "同分布",
+          "不能直接用于拟合参数"
+        ],
+        "forbidden": []
+      },
+      "rationale": "成立条件与否定限制必须同时保留。"
+    },
+    {
+      "id": "options-01",
+      "dimension": "options",
+      "cohort": "textbook",
+      "chunks": [
+        {
+          "text": "1. 平移不变性（translation invariance）：不管检测对象出现在图像中的哪个位置，神经网络的前面几层应该对相同的图像区域具有相似的反应，即为“平移不变性”。\n2. 局部性（locality）：神经网络的前面几层应该只探索输入图像中的局部区域，而不过度在意图像中相隔较远区域的关系，这就是“局部性”原则。",
+          "page": 237,
+          "section": "",
+          "doc": "d2l-zh-pytorch.pdf",
+          "source": "d2l"
+        }
+      ],
+      "expected": {
+        "required_groups": [
+          [
+            "平移不变性"
+          ],
+          [
+            "局部性"
+          ]
+        ],
+        "allowed_options": {
+          "平移不变性": [
+            "局部性"
+          ],
+          "局部性": [
+            "平移不变性"
+          ]
+        },
+        "stem_required": {},
+        "synonym_groups": []
+      },
+      "rationale": "原文并列原则可互为同类选项。"
+    },
+    {
+      "id": "options-02",
+      "dimension": "options",
+      "cohort": "textbook",
+      "chunks": [
+        {
+          "text": "在统计学中，前者（对超出已知观测范围进行预测）称为外推法（extrapolation），而后者（在现有观测值之间进行估计）称为内插法（interpolation）。",
+          "page": 308,
+          "section": "8.1 序列模型",
+          "doc": "d2l-zh-pytorch.pdf",
+          "source": "d2l"
+        }
+      ],
+      "expected": {
+        "required_groups": [
+          [
+            "外推法"
+          ],
+          [
+            "内插法"
+          ]
+        ],
+        "allowed_options": {
+          "外推法": [
+            "内插法"
+          ],
+          "内插法": [
+            "外推法"
+          ]
+        },
+        "stem_required": {},
+        "synonym_groups": []
+      },
+      "rationale": "两项预测范围的完整对比。"
+    },
+    {
+      "id": "options-03",
+      "dimension": "options",
+      "cohort": "textbook",
+      "chunks": [
+        {
+          "text": "通常，涉及一个、两个和三个变量的概率公式分别被称为一元语法（unigram）、二元语法（bigram）和三元语法（trigram）模型。",
+          "page": 323,
+          "section": "式：",
+          "doc": "d2l-zh-pytorch.pdf",
+          "source": "d2l"
+        }
+      ],
+      "expected": {
+        "required_groups": [
+          [
+            "一元语法"
+          ],
+          [
+            "二元语法"
+          ],
+          [
+            "三元语法"
+          ]
+        ],
+        "allowed_options": {
+          "一元语法": [
+            "二元语法",
+            "三元语法"
+          ],
+          "二元语法": [
+            "一元语法",
+            "三元语法"
+          ],
+          "三元语法": [
+            "一元语法",
+            "二元语法"
+          ]
+        },
+        "stem_required": {
+          "一元语法": [
+            "模型",
+            "涉及一个变量"
+          ],
+          "二元语法": [
+            "模型",
+            "涉及两个变量"
+          ],
+          "三元语法": [
+            "模型",
+            "涉及三个变量"
+          ]
+        },
+        "synonym_groups": []
+      },
+      "rationale": "同一枚举的三题只算一个样例，不代表三份独立教学证据。"
+    },
+    {
+      "id": "options-04",
+      "dimension": "options",
+      "cohort": "textbook",
+      "chunks": [
+        {
+          "text": "严格来说，仅包含一个数值被称为标量（scalar）。",
+          "page": 68,
+          "section": "2.3.1 标量",
+          "doc": "d2l-zh-pytorch.pdf",
+          "source": "d2l"
+        },
+        {
+          "text": "向量可以被视为标量值组成的列表。",
+          "page": 69,
+          "section": "2.3.2 向量",
+          "doc": "d2l-zh-pytorch.pdf",
+          "source": "d2l"
+        }
+      ],
+      "expected": {
+        "required_groups": [
+          [
+            "标量"
+          ]
+        ],
+        "allowed_options": {
+          "标量": [
+            "向量"
+          ],
+          "向量": [
+            "标量"
+          ]
+        },
+        "stem_required": {},
+        "synonym_groups": []
+      },
+      "rationale": "标量的单值定义可以用向量作同类对象的区分项。"
+    },
+    {
+      "id": "options-05",
+      "dimension": "options",
+      "cohort": "constructed",
+      "chunks": [
+        {
+          "text": "验证误差（validation error），又称开发误差（development error），是指模型在验证数据上的误差。",
+          "page": 0,
+          "section": "课程",
+          "doc": "authored.md",
+          "source": null
+        },
+        {
+          "text": "开发误差是指模型在开发数据上的误差。",
+          "page": 0,
+          "section": "课程",
+          "doc": "authored.md",
+          "source": null
+        }
+      ],
+      "expected": {
+        "required_groups": [],
+        "allowed_options": {},
+        "stem_required": {},
+        "synonym_groups": [
+          [
+            "验证误差",
+            "开发误差"
+          ]
+        ]
+      },
+      "rationale": "只给同义名称，不能凑出错误选项。"
+    },
+    {
+      "id": "options-06",
+      "dimension": "options",
+      "cohort": "constructed",
+      "chunks": [
+        {
+          "text": "过拟合是指模型在训练数据上表现良好，但在新数据上表现较差。",
+          "page": 0,
+          "section": "课程",
+          "doc": "authored.md",
+          "source": null
+        },
+        {
+          "text": "欠拟合是指模型表达能力不足，训练误差与验证误差都较高。",
+          "page": 0,
+          "section": "课程",
+          "doc": "authored.md",
+          "source": null
+        },
+        {
+          "text": "学习率控制每次参数更新的步长。",
+          "page": 0,
+          "section": "学习率",
+          "doc": "authored.md",
+          "source": null
+        }
+      ],
+      "expected": {
+        "required_groups": [
+          [
+            "过拟合"
+          ],
+          [
+            "欠拟合"
+          ]
+        ],
+        "allowed_options": {
+          "过拟合": [
+            "欠拟合"
+          ],
+          "欠拟合": [
+            "过拟合"
+          ]
+        },
+        "stem_required": {},
+        "synonym_groups": []
+      },
+      "rationale": "学习率不能补入拟合状态的对比。"
+    },
+    {
+      "id": "options-07",
+      "dimension": "options",
+      "cohort": "constructed",
+      "chunks": [
+        {
+          "text": "其中一个门用来从单元中输出条目，我们将其称为输出门。",
+          "page": 1,
+          "section": "课程",
+          "doc": "authored.md",
+          "source": null
+        },
+        {
+          "text": "另外一个门用来决定何时将数据读入单元，我们将其称为输入门。",
+          "page": 2,
+          "section": "课程",
+          "doc": "authored.md",
+          "source": null
+        }
+      ],
+      "expected": {
+        "required_groups": [],
+        "allowed_options": {},
+        "stem_required": {},
+        "synonym_groups": []
+      },
+      "rationale": "跨页且缺少对象介绍，不生成题。"
+    },
+    {
+      "id": "options-08",
+      "dimension": "options",
+      "cohort": "constructed",
+      "chunks": [
+        {
+          "text": "验证误差（validation error），又称开发误差（development error），是指模型在验证数据上的误差。",
+          "page": 0,
+          "section": "课程",
+          "doc": "authored.md",
+          "source": null
+        },
+        {
+          "text": "开发误差是指模型在开发数据上的误差。",
+          "page": 0,
+          "section": "课程",
+          "doc": "authored.md",
+          "source": null
+        },
+        {
+          "text": "训练误差是指模型在训练数据上的误差。",
+          "page": 0,
+          "section": "课程",
+          "doc": "authored.md",
+          "source": null
+        }
+      ],
+      "expected": {
+        "required_groups": [
+          [
+            "验证误差",
+            "开发误差"
+          ],
+          [
+            "训练误差"
+          ]
+        ],
+        "allowed_options": {
+          "验证误差": [
+            "训练误差"
+          ],
+          "开发误差": [
+            "训练误差"
+          ],
+          "训练误差": [
+            "验证误差",
+            "开发误差"
+          ]
+        },
+        "stem_required": {},
+        "synonym_groups": [
+          [
+            "验证误差",
+            "开发误差"
+          ]
+        ]
+      },
+      "rationale": "同义身份只生成一道；第三概念的选项也不能列出两个同义干扰项。"
+    },
+    {
+      "id": "options-09",
+      "dimension": "options",
+      "cohort": "textbook",
+      "chunks": [
+        {
+          "text": "严格来说，卷积层是个错误的叫法，因为它所表达的运算其实是互相关运算（cross‐correlation），而不是卷积运算。",
+          "page": 241,
+          "section": "6.2.1 互相关运算",
+          "doc": "d2l-zh-pytorch.pdf",
+          "source": "d2l"
+        }
+      ],
+      "expected": {
+        "required_groups": [
+          [
+            "互相关运算"
+          ]
+        ],
+        "allowed_options": {
+          "互相关运算": [
+            "卷积运算"
+          ]
+        },
+        "stem_required": {
+          "互相关运算": [
+            "严格来说"
+          ]
+        },
+        "synonym_groups": []
+      },
+      "rationale": "原文明示排除的运算是有依据的干扰项。"
+    }
+  ]
+}

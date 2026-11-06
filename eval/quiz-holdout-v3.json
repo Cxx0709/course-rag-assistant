@@ -1,0 +1,46 @@
+{
+  "purpose": "First observation after explicit source-relation support on three untouched chapters; frozen rules and unchanged quality rubric.",
+  "source": {
+    "path": "data/raw/datamining-notes/d2l-zh-pytorch.pdf",
+    "sha256": "db978acf18dac28f4de1412839ca1f804302c6a29b971b024595369afa69cbea"
+  },
+  "chapters": [
+    {
+      "title": "8.3 语言模型和数据集",
+      "recognized_pages": [
+        321,
+        330
+      ],
+      "role": "held_out"
+    },
+    {
+      "title": "9.3 深度循环神经网络",
+      "recognized_pages": [
+        367,
+        369
+      ],
+      "role": "held_out"
+    },
+    {
+      "title": "10.3 注意力评分函数",
+      "recognized_pages": [
+        411,
+        416
+      ],
+      "role": "held_out"
+    }
+  ],
+  "requested_count": 5,
+  "frozen_code_sha256": {
+    "src/course_rag_assistant/quiz.py": "0a7aeed525f8ced0a21207ebf64c7fb6e913d559d70f3ec3bb979e1176a4b8a6",
+    "src/course_rag_assistant/quiz_content.py": "fb3aebde0319782e21ff47f3135e8ff3ef8bfd965911f7048ce3e7c2df42d870",
+    "src/course_rag_assistant/quiz_candidates.py": "4424f4e3b9baec753378cfa07024d068ced30325978871a43d178f6bab30e57f",
+    "src/course_rag_assistant/quiz_relations.py": "ebb13b8dfac77a0a7c94ff7ca140808a9a5aaeb2b3c65075a37e81d116155634"
+  },
+  "review_protocol": {
+    "usable_item": "The cited page supports the keyed option with necessary conditions; the stem stands alone; no answer-hint translation, unresolved reference or missing formula; at least one meaningful alternative requires a conceptual distinction.",
+    "chapter_gate": "At least two usable questions per chapter, checked individually. No substitution of a different chapter for an empty result.",
+    "batch_gate": "Every chapter meets its gate and every generated item has a verified source.",
+    "not_measured": "Human learning gains, broad mastery and independent teacher assessment."
+  }
+}

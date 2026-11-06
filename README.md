@@ -52,12 +52,63 @@ course materials (PDF / PPTX / MD, page numbers preserved)
 
 ## Status
 
+A [locked diagnostic benchmark](docs/quiz-benchmark-v1.md) now separates concept
+boundaries, synonym identity, context and option coverage across 34 retrospective
+cases (22 textbook, 12 authored). Baseline case pass rates are 75%, 50%, 88.9% and
+88.9%; one unsafe stem is accepted even though it does not become a question.
+The benchmark fails its engineering targets. All 470 software tests pass; quiz
+rules are unchanged. These assistant labels do not establish general teaching quality.
+
+The following entries describe earlier evaluations; their reports are preserved.
+
+Explicit synonym identities now prevent duplicate questions and synonym distractors;
+counted enumerations yield three additional literal-recognition questions in D2L 8.3.
+All 446 tests and 25 scoped checks pass. **General question-quality acceptance still
+fails**: another three preselected chapters each produced zero questions. The three
+new items expand one source definition, rather than establish independent learning
+coverage. See the [current implementation and limits](docs/quiz-terms-v1.md) and
+[new holdout review](eval/reviews/quiz-holdout-v4.md).
+
+Explicit paired definitions and contiguous shared-object descriptions now produce
+four additional source-backed questions in D2L 8.1 and 9.2. All 423 tests, 25 scoped
+checks and the Chrome grading/review flow pass. **General question-quality acceptance
+still fails**: three further held-out chapters each produced zero questions.
+See the [current changes and coverage](docs/quiz-relations-v1.md) and
+[preserved new-chapter review](eval/reviews/quiz-holdout-v3.md).
+
+Concept extraction now records complete names, aliases and source evidence before
+building questions. Unresolved stems and unrelated fallback options are rejected.
+All 403 tests, 25 scoped checks and the Chrome flow pass, but **question-quality
+acceptance still fails**: three newly held-out chapters each produced zero questions.
+Several previously supported chapters now explicitly report insufficient content.
+See the [current implementation and coverage](docs/quiz-candidates-v1.md) and
+[new holdout review](eval/reviews/quiz-holdout-v2.md).
+
+The [three-chapter holdout review](eval/reviews/quiz-holdout-v1.md) failed the
+predeclared question-quality gate: seven questions had verified sources but
+unresolved context, answer hints or weak alternatives; one chapter produced no
+questions. This is an assistant content review, separate from passing software
+checks. The quiz rules were frozen during this observation.
+
+The padding question in D2L 6.3 now includes the edge-pixel loss it addresses
+and asks for the method once. Grading retains the full explanation on PDF page 246.
+See the [review and verification reports](docs/quiz-source-contrasts.md).
+
+The [source-contrast review](docs/quiz-source-contrasts.md) fixes the English hint
+and chapter-recall prompt in D2L 6.2. D2L 6.3 also exposed two inline glossary hints;
+the first observation and subsequent development regression are recorded separately.
+
+The [numbered-definition review](docs/numbered-definitions.md) traced D2L 6.1's
+empty quiz to two unrecognized glossary items. It now produces two questions
+from PDF page 237. The first observation on 6.2 yielded three questions,
+including an English hint and a weak recall prompt.
+
 The [quiz context update](docs/quiz-context-v2.md) replaces the underfitting
 summary with contiguous source context, removes generic relation-only prompts,
 and favors related alternatives. D2L 4.4 now yields four questions without padding.
 All 365 tests, 25 scoped checks and the browser flow pass. Two preselected chapters
 exposed additional defects: after fixes, linear regression yields three questions
-and convolution explicitly reports insufficient content. The first observations
+and convolution initially reported insufficient content. The first observations
 are preserved; general teaching quality has not passed acceptance.
 
 The [assistant learning-session review](eval/reviews/learning-session-v1.md)

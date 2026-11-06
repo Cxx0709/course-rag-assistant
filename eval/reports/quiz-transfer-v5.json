@@ -1,0 +1,271 @@
+{
+  "purpose": "Regression for numbered principles and explicit contrast; first observation on 6.3 without a minimum yield.",
+  "source": {
+    "path": "data/raw/datamining-notes/d2l-zh-pytorch.pdf",
+    "sha256": "db978acf18dac28f4de1412839ca1f804302c6a29b971b024595369afa69cbea"
+  },
+  "evaluation_phase": "see_individual_chapter_roles",
+  "manifest_sha256": "a590c996ad69a5162df3c580b0e7d85178531b6888bc0faf0d21765768089e16",
+  "default_library_modified": false,
+  "code_sha256": {
+    "src\\course_rag_assistant\\quiz.py": "fb9b06ada7d73fb8d4a6fa624b740a1030b9099942aab78164595d3c44ac8bac",
+    "src\\course_rag_assistant\\quiz_content.py": "4038eaed4c0e6c833720f9a618679ee8d483e092b553db84d4544705d8669a62"
+  },
+  "chapters": [
+    {
+      "title": "3.1 线性回归",
+      "role": "regression",
+      "recognized_pages": [
+        103,
+        105
+      ],
+      "status_code": 201,
+      "generated_count": 3,
+      "note": "当前范围生成 3 / 5 道原文识记题。同一概念不重复出题；题数不足时不扩大范围。",
+      "questions": [
+        {
+          "concept": "偏置",
+          "sentence": "偏置是指当所有特征都取值为0时，预测值应该为多少。",
+          "citation": "[d2l-zh-pytorch__2c5da2ae3ccf427baceecdee4e0bf4f2.pdf, p.104]",
+          "doc": "d2l-zh-pytorch__2c5da2ae3ccf427baceecdee4e0bf4f2.pdf",
+          "page": 104,
+          "section": "线性模型",
+          "id": "1",
+          "prompt": "按资料原文补全空缺：____是指当所有特征都取值为0时，预测值应该为多少。",
+          "options": [
+            "线性模型",
+            "偏置",
+            "损失函数"
+          ],
+          "correct_index": 1
+        },
+        {
+          "concept": "损失函数",
+          "sentence": "损失函数（loss function）能够量化目标的实际值与预测值之间的差距。",
+          "citation": "[d2l-zh-pytorch__2c5da2ae3ccf427baceecdee4e0bf4f2.pdf, p.105]",
+          "doc": "d2l-zh-pytorch__2c5da2ae3ccf427baceecdee4e0bf4f2.pdf",
+          "page": 105,
+          "section": "损失函数",
+          "id": "2",
+          "prompt": "按资料原文补全空缺：____能够量化目标的实际值与预测值之间的差距。",
+          "options": [
+            "损失函数",
+            "线性模型",
+            "偏置"
+          ],
+          "correct_index": 0
+        },
+        {
+          "concept": "线性模型",
+          "sentence": "输出的预测值由输入特征通过线性模型的仿射变换决定，仿射变换由所选权重和偏置确定。",
+          "citation": "[d2l-zh-pytorch__2c5da2ae3ccf427baceecdee4e0bf4f2.pdf, p.104]",
+          "doc": "d2l-zh-pytorch__2c5da2ae3ccf427baceecdee4e0bf4f2.pdf",
+          "page": 104,
+          "section": "线性模型",
+          "id": "3",
+          "prompt": "按资料原文补全空缺：输出的预测值由输入特征通过____的仿射变换决定，仿射变换由所选权重和偏置确定。",
+          "options": [
+            "线性模型",
+            "损失函数"
+          ],
+          "correct_index": 0
+        }
+      ],
+      "checks": {
+        "recognized_pages": true,
+        "explicit_result": true,
+        "bounded_count": true,
+        "contiguous_verified_source": true,
+        "options_in_scope": true,
+        "correct_option_hidden_in_prompt": true,
+        "public_key_hidden": true,
+        "shortfall_explained": true,
+        "observed_alias_hint_removed": true,
+        "observed_dangling_prompts_removed": true
+      },
+      "passed": true
+    },
+    {
+      "title": "6.1 从全连接层到卷积",
+      "role": "regression",
+      "recognized_pages": [
+        236,
+        240
+      ],
+      "status_code": 201,
+      "generated_count": 2,
+      "note": "当前范围生成 2 / 5 道原文识记题。同一概念不重复出题；题数不足时不扩大范围。",
+      "questions": [
+        {
+          "concept": "平移不变性",
+          "sentence": "1. 平移不变性（translation invariance）：不管检测对象出现在图像中的哪个位置，神经网络的前面几层应该对相同的图像区域具有相似的反应，即为“平移不变性”。",
+          "citation": "[d2l-zh-pytorch__2c5da2ae3ccf427baceecdee4e0bf4f2.pdf, p.237]",
+          "doc": "d2l-zh-pytorch__2c5da2ae3ccf427baceecdee4e0bf4f2.pdf",
+          "page": 237,
+          "section": "",
+          "id": "1",
+          "prompt": "按资料原文补全空缺：____：不管检测对象出现在图像中的哪个位置，神经网络的前面几层应该对相同的图像区域具有相似的反应。",
+          "options": [
+            "平移不变性",
+            "局部性"
+          ],
+          "correct_index": 0
+        },
+        {
+          "concept": "局部性",
+          "sentence": "2. 局部性（locality）：神经网络的前面几层应该只探索输入图像中的局部区域，而不过度在意图像中相隔较远区域的关系，这就是“局部性”原则。",
+          "citation": "[d2l-zh-pytorch__2c5da2ae3ccf427baceecdee4e0bf4f2.pdf, p.237]",
+          "doc": "d2l-zh-pytorch__2c5da2ae3ccf427baceecdee4e0bf4f2.pdf",
+          "page": 237,
+          "section": "",
+          "id": "2",
+          "prompt": "按资料原文补全空缺：____：神经网络的前面几层应该只探索输入图像中的局部区域，而不过度在意图像中相隔较远区域的关系。",
+          "options": [
+            "平移不变性",
+            "局部性"
+          ],
+          "correct_index": 1
+        }
+      ],
+      "checks": {
+        "recognized_pages": true,
+        "explicit_result": true,
+        "bounded_count": true,
+        "contiguous_verified_source": true,
+        "options_in_scope": true,
+        "correct_option_hidden_in_prompt": true,
+        "public_key_hidden": true,
+        "shortfall_explained": true,
+        "observed_alias_hint_removed": true,
+        "observed_dangling_prompts_removed": true,
+        "both_grounded_principles": true
+      },
+      "passed": true
+    },
+    {
+      "title": "6.2 图像卷积",
+      "role": "regression",
+      "recognized_pages": [
+        240,
+        246
+      ],
+      "status_code": 201,
+      "generated_count": 2,
+      "note": "当前范围生成 2 / 5 道原文识记题。同一概念不重复出题；题数不足时不扩大范围。",
+      "questions": [
+        {
+          "concept": "互相关运算",
+          "sentence": "严格来说，卷积层是个错误的叫法，因为它所表达的运算其实是互相关运算（cross‐correlation），而不是卷积运算。",
+          "citation": "[d2l-zh-pytorch__2c5da2ae3ccf427baceecdee4e0bf4f2.pdf, p.241]",
+          "doc": "d2l-zh-pytorch__2c5da2ae3ccf427baceecdee4e0bf4f2.pdf",
+          "page": 241,
+          "section": "6.2.1 互相关运算",
+          "id": "1",
+          "prompt": "按资料原文补全空缺：严格来说，卷积层是个错误的叫法，因为它所表达的运算其实是____。",
+          "options": [
+            "互相关运算",
+            "卷积运算"
+          ],
+          "correct_index": 0
+        },
+        {
+          "concept": "卷积层",
+          "sentence": "所以，卷积层中的两个被训练的参数是卷积核权重和标量偏置。",
+          "citation": "[d2l-zh-pytorch__2c5da2ae3ccf427baceecdee4e0bf4f2.pdf, p.242]",
+          "doc": "d2l-zh-pytorch__2c5da2ae3ccf427baceecdee4e0bf4f2.pdf",
+          "page": 242,
+          "section": "6.2.2 卷积层",
+          "id": "2",
+          "prompt": "按资料原文补全空缺：所以，____中的两个被训练的参数是卷积核权重和标量偏置。",
+          "options": [
+            "卷积层",
+            "互相关运算"
+          ],
+          "correct_index": 0
+        }
+      ],
+      "checks": {
+        "recognized_pages": true,
+        "explicit_result": true,
+        "bounded_count": true,
+        "contiguous_verified_source": true,
+        "options_in_scope": true,
+        "correct_option_hidden_in_prompt": true,
+        "public_key_hidden": true,
+        "shortfall_explained": true,
+        "observed_alias_hint_removed": true,
+        "observed_dangling_prompts_removed": true,
+        "source_contrast": true,
+        "no_chapter_recall": true
+      },
+      "passed": true
+    },
+    {
+      "title": "6.3 填充和步幅",
+      "role": "regression_after_preserved_first_observation",
+      "recognized_pages": [
+        246,
+        249
+      ],
+      "status_code": 201,
+      "generated_count": 2,
+      "note": "当前范围生成 2 / 5 道原文识记题。同一概念不重复出题；题数不足时不扩大范围。",
+      "questions": [
+        {
+          "concept": "填充",
+          "sentence": "如上所述，在应用多层卷积时，我们常常丢失边缘像素。由于我们通常使用小卷积核，因此对于任何单个卷积，我们可能只会丢失几个像素。但随着我们应用许多连续卷积层，累积丢失的像素数就多了。解决这个问题的简单方法即为填充（padding）：在输入图像的边界填充元素（通常填充元素是0）。",
+          "citation": "[d2l-zh-pytorch__2c5da2ae3ccf427baceecdee4e0bf4f2.pdf, p.246]",
+          "doc": "d2l-zh-pytorch__2c5da2ae3ccf427baceecdee4e0bf4f2.pdf",
+          "page": 246,
+          "section": "6.3.1 填充",
+          "id": "1",
+          "prompt": "按资料原文补全空缺：在应用多层卷积时，我们常常丢失边缘像素。由于我们通常使用小卷积核，因此对于任何单个卷积，我们可能只会丢失几个像素。但随着我们应用许多连续卷积层，累积丢失的像素数就多了。解决这个问题的简单方法即为____。",
+          "options": [
+            "填充",
+            "步幅"
+          ],
+          "correct_index": 0
+        },
+        {
+          "concept": "步幅",
+          "sentence": "我们将每次滑动元素的数量称为步幅（stride）。",
+          "citation": "[d2l-zh-pytorch__2c5da2ae3ccf427baceecdee4e0bf4f2.pdf, p.248]",
+          "doc": "d2l-zh-pytorch__2c5da2ae3ccf427baceecdee4e0bf4f2.pdf",
+          "page": 248,
+          "section": "6.3.2 步幅",
+          "id": "2",
+          "prompt": "按资料原文补全空缺：我们将每次滑动元素的数量称为____。",
+          "options": [
+            "步幅",
+            "填充"
+          ],
+          "correct_index": 0
+        }
+      ],
+      "checks": {
+        "recognized_pages": true,
+        "explicit_result": true,
+        "bounded_count": true,
+        "contiguous_verified_source": true,
+        "options_in_scope": true,
+        "correct_option_hidden_in_prompt": true,
+        "public_key_hidden": true,
+        "shortfall_explained": true,
+        "observed_alias_hint_removed": true,
+        "observed_dangling_prompts_removed": true,
+        "observed_inline_glosses_removed": true,
+        "padding_problem_and_single_blank": true
+      },
+      "passed": true
+    }
+  ],
+  "human_teaching_review": "pending",
+  "passed": true,
+  "all_chapters_produce_practice": true,
+  "teaching_acceptance": "not_established",
+  "limitations": [
+    "Structural checks do not establish question value or semantic uniqueness.",
+    "No minimum quiz yield is assumed; empty output is reported explicitly.",
+    "Chapter scope depends on extracted headings and requires source review."
+  ]
+}

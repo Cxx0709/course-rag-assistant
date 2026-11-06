@@ -1,0 +1,47 @@
+{
+  "purpose": "First observation after explicit synonym and counted-enumeration support on previously untuned chapters; frozen implementation and unchanged quality rubric.",
+  "source": {
+    "path": "data/raw/datamining-notes/d2l-zh-pytorch.pdf",
+    "sha256": "db978acf18dac28f4de1412839ca1f804302c6a29b971b024595369afa69cbea"
+  },
+  "chapters": [
+    {
+      "title": "2.3 线性代数",
+      "recognized_pages": [
+        68,
+        77
+      ],
+      "role": "held_out"
+    },
+    {
+      "title": "4.5 权重衰减",
+      "recognized_pages": [
+        167,
+        174
+      ],
+      "role": "held_out"
+    },
+    {
+      "title": "7.2 使用块的网络（VGG）",
+      "recognized_pages": [
+        273,
+        277
+      ],
+      "role": "held_out"
+    }
+  ],
+  "requested_count": 5,
+  "frozen_code_sha256": {
+    "src/course_rag_assistant/quiz.py": "5825d775c3963918288fcb2aa59e0412347e910ac8600ff99e0459a64dd25aee",
+    "src/course_rag_assistant/quiz_content.py": "fb3aebde0319782e21ff47f3135e8ff3ef8bfd965911f7048ce3e7c2df42d870",
+    "src/course_rag_assistant/quiz_candidates.py": "8549d0f9e9bbce9b7caf6c75ae032120003a24eadf10c820fd7170ddc959ecd2",
+    "src/course_rag_assistant/quiz_relations.py": "5d67885c1781dd0dfb6d014e672958d8cd9f73b3313c85738f788b89a07108f2",
+    "src/course_rag_assistant/quiz_terms.py": "66934dd95e55f546c5c8187ed48fa579e916540d98e8d7f5b7022250c13b33db"
+  },
+  "review_protocol": {
+    "usable_item": "The cited page supports the keyed option with necessary conditions; the stem stands alone; no answer-hint translation, unresolved reference or missing formula; at least one meaningful alternative requires a conceptual distinction.",
+    "chapter_gate": "At least two usable questions per chapter, checked individually. No substitution of a different chapter for an empty result.",
+    "batch_gate": "Every chapter meets its gate and every generated item has a verified source.",
+    "not_measured": "Human learning gains, broad mastery and independent teacher assessment."
+  }
+}

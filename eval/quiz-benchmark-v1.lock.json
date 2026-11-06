@@ -1,0 +1,16 @@
+{
+  "dataset_sha256": "29dd2f49e2d73e043d995e3b8a240ee18b42039e71f7f9ba1089e135667ab54e",
+  "case_count": 34,
+  "dimensions": [
+    "boundary",
+    "identity",
+    "context",
+    "options"
+  ],
+  "gates": {
+    "minimum_case_pass_rate": 0.9,
+    "maximum_unsafe_context_accepts": 0,
+    "maximum_invalid_questions": 0
+  },
+  "policy": "Engineering regression targets fixed before first scoring; freeze v1 labels and publish a new version for intentional label changes."
+}

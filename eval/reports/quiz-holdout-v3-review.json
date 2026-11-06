@@ -1,0 +1,38 @@
+{
+  "completed_on": "2026-11-06",
+  "reviewer": "assistant",
+  "raw_report": "eval/reports/quiz-holdout-v3.json",
+  "raw_report_sha256": "ee1db2cb207e7cb52853375f10aaf0fad0c60631d46f2aa81533ddb3be1abdaa",
+  "protocol": "eval/quiz-holdout-v3.json",
+  "software_checks_passed": true,
+  "quality_passed": false,
+  "generated_questions": 0,
+  "usable_questions": 0,
+  "chapters_passed": 0,
+  "chapters": [
+    {
+      "title": "8.3 语言模型和数据集",
+      "generated": 0,
+      "usable": 0,
+      "chapter_passed": false,
+      "reason": "Minimum of two usable questions not met."
+    },
+    {
+      "title": "9.3 深度循环神经网络",
+      "generated": 0,
+      "usable": 0,
+      "chapter_passed": false,
+      "reason": "Minimum of two usable questions not met."
+    },
+    {
+      "title": "10.3 注意力评分函数",
+      "generated": 0,
+      "usable": 0,
+      "chapter_passed": false,
+      "reason": "Minimum of two usable questions not met."
+    }
+  ],
+  "human_review": "not_performed",
+  "source_page_item_review": "not_applicable_no_generated_items",
+  "interpretation": "Yield gate failed. Zero questions do not indicate absence of knowledge in the textbook; development regression gains do not establish general coverage."
+}

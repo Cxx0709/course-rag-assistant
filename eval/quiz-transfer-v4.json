@@ -1,0 +1,11 @@
+{
+  "purpose": "Regression for numbered principles and explicit contrast; first observation on 6.3 without a minimum yield.",
+  "source": {"path": "data/raw/datamining-notes/d2l-zh-pytorch.pdf", "sha256": "db978acf18dac28f4de1412839ca1f804302c6a29b971b024595369afa69cbea"},
+  "chapters": [
+    {"title": "3.1 线性回归", "recognized_pages": [103, 105], "role": "regression"},
+    {"title": "6.1 从全连接层到卷积", "recognized_pages": [236, 240], "role": "regression", "principles_page": 237},
+    {"title": "6.2 图像卷积", "recognized_pages": [240, 246], "role": "regression", "contrast_page": 241},
+    {"title": "6.3 填充和步幅", "recognized_pages": [246, 249], "role": "first_observation"}
+  ],
+  "requested_count": 5
+}

@@ -1,0 +1,158 @@
+{
+  "purpose": "Development regression for counted enumerations and explicit synonym identity; old holdout outputs are preserved.",
+  "source": {
+    "path": "data/raw/datamining-notes/d2l-zh-pytorch.pdf",
+    "sha256": "db978acf18dac28f4de1412839ca1f804302c6a29b971b024595369afa69cbea"
+  },
+  "excluded_question_report": "eval/reports/quiz-holdout-v1.json",
+  "chapters": [
+    {
+      "title": "3.1 线性回归",
+      "recognized_pages": [
+        103,
+        105
+      ],
+      "role": "development_regression"
+    },
+    {
+      "title": "6.1 从全连接层到卷积",
+      "recognized_pages": [
+        236,
+        240
+      ],
+      "role": "development_regression",
+      "principles_page": 237
+    },
+    {
+      "title": "6.2 图像卷积",
+      "recognized_pages": [
+        240,
+        246
+      ],
+      "role": "development_regression",
+      "contrast_page": 241
+    },
+    {
+      "title": "6.3 填充和步幅",
+      "recognized_pages": [
+        246,
+        249
+      ],
+      "role": "development_regression",
+      "padding_problem_required": false
+    },
+    {
+      "title": "8.1 序列模型",
+      "recognized_pages": [
+        308,
+        316
+      ],
+      "role": "development_regression_after_failed_holdout",
+      "expected_relation": {
+        "terms": [
+          "外推法",
+          "内插法"
+        ],
+        "page": 308,
+        "excluded_hints": [
+          "前者",
+          "后者",
+          "extrapolation",
+          "interpolation"
+        ]
+      }
+    },
+    {
+      "title": "9.1 门控循环单元（GRU）",
+      "recognized_pages": [
+        353,
+        360
+      ],
+      "role": "development_regression_after_failed_holdout"
+    },
+    {
+      "title": "10.1 注意力提示",
+      "recognized_pages": [
+        400,
+        404
+      ],
+      "role": "development_regression_after_failed_holdout"
+    },
+    {
+      "title": "8.2 文本预处理",
+      "recognized_pages": [
+        316,
+        321
+      ],
+      "role": "development_regression_after_failed_holdout"
+    },
+    {
+      "title": "9.2 长短期记忆网络（LSTM）",
+      "recognized_pages": [
+        360,
+        367
+      ],
+      "role": "development_regression_after_failed_holdout",
+      "expected_relation": {
+        "terms": [
+          "输出门",
+          "输入门"
+        ],
+        "page": 360,
+        "excluded_hints": [
+          "其中一个",
+          "另外一个",
+          "gate",
+          "cell"
+        ]
+      }
+    },
+    {
+      "title": "10.2 注意力汇聚：Nadaraya-Watson 核回归",
+      "recognized_pages": [
+        404,
+        411
+      ],
+      "role": "development_regression_after_failed_holdout"
+    },
+    {
+      "title": "8.3 语言模型和数据集",
+      "recognized_pages": [
+        321,
+        330
+      ],
+      "role": "development_regression_after_failed_holdout",
+      "expected_relation": {
+        "terms": [
+          "一元语法",
+          "二元语法",
+          "三元语法"
+        ],
+        "page": 323,
+        "excluded_hints": [
+          "unigram",
+          "bigram",
+          "trigram",
+          "分别"
+        ]
+      }
+    },
+    {
+      "title": "9.3 深度循环神经网络",
+      "recognized_pages": [
+        367,
+        369
+      ],
+      "role": "development_regression_after_failed_holdout"
+    },
+    {
+      "title": "10.3 注意力评分函数",
+      "recognized_pages": [
+        411,
+        416
+      ],
+      "role": "development_regression_after_failed_holdout"
+    }
+  ],
+  "requested_count": 5
+}

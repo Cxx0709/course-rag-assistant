@@ -1,0 +1,45 @@
+{
+  "purpose": "First observation after concept candidate refactoring on three chapters not used for tuning; frozen implementation and unchanged quality rubric.",
+  "source": {
+    "path": "data/raw/datamining-notes/d2l-zh-pytorch.pdf",
+    "sha256": "db978acf18dac28f4de1412839ca1f804302c6a29b971b024595369afa69cbea"
+  },
+  "chapters": [
+    {
+      "title": "8.2 文本预处理",
+      "recognized_pages": [
+        316,
+        321
+      ],
+      "role": "held_out"
+    },
+    {
+      "title": "9.2 长短期记忆网络（LSTM）",
+      "recognized_pages": [
+        360,
+        367
+      ],
+      "role": "held_out"
+    },
+    {
+      "title": "10.2 注意力汇聚：Nadaraya-Watson 核回归",
+      "recognized_pages": [
+        404,
+        411
+      ],
+      "role": "held_out"
+    }
+  ],
+  "requested_count": 5,
+  "frozen_code_sha256": {
+    "src/course_rag_assistant/quiz.py": "1573a1b68668cb314e1c2c4cb7ad6cedfda6dfb3818673fee7fa01a626ad693c",
+    "src/course_rag_assistant/quiz_content.py": "fb3aebde0319782e21ff47f3135e8ff3ef8bfd965911f7048ce3e7c2df42d870",
+    "src/course_rag_assistant/quiz_candidates.py": "7880bdf249315e36b1b5a25c208c758382fcdaf6f0fa96b7a10bad409e8658b4"
+  },
+  "review_protocol": {
+    "usable_item": "The cited page supports the keyed option with necessary conditions; the stem stands alone; no answer-hint translation, unresolved reference or missing formula; at least one meaningful alternative requires a conceptual distinction.",
+    "chapter_gate": "At least two usable questions per chapter, checked individually. No substitution of a different chapter for an empty result.",
+    "batch_gate": "Every chapter meets its gate and every generated item has a verified source.",
+    "not_measured": "Human learning gains, broad mastery and independent teacher assessment."
+  }
+}

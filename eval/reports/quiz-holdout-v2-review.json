@@ -1,0 +1,42 @@
+{
+  "completed_on": "2026-11-05",
+  "reviewer": "assistant",
+  "raw_report": "eval/reports/quiz-holdout-v2.json",
+  "raw_report_sha256": "9d1896c092ecc24cce59aa18e2e10d2283ebe5d28146968aa6bf3426ab9f0912",
+  "protocol": "eval/quiz-holdout-v2.json",
+  "protocol_sha256": "47b0650892684c0de42aeffcc9fb44575dda3e291206660d9d739bf5cdf4ef08",
+  "software_checks_passed": true,
+  "quality_passed": false,
+  "generated_questions": 0,
+  "usable_questions": 0,
+  "chapters_passed": 0,
+  "chapters": [
+    {
+      "title": "8.2 文本预处理",
+      "generated": 0,
+      "usable": 0,
+      "chapter_passed": false,
+      "reason": "No questions generated; minimum of two usable items was not met.",
+      "candidate_count": 1
+    },
+    {
+      "title": "9.2 长短期记忆网络（LSTM）",
+      "generated": 0,
+      "usable": 0,
+      "chapter_passed": false,
+      "reason": "No questions generated; minimum of two usable items was not met.",
+      "candidate_count": 3
+    },
+    {
+      "title": "10.2 注意力汇聚：Nadaraya-Watson 核回归",
+      "generated": 0,
+      "usable": 0,
+      "chapter_passed": false,
+      "reason": "No questions generated; minimum of two usable items was not met.",
+      "candidate_count": 0
+    }
+  ],
+  "human_review": "not_performed",
+  "source_page_item_review": "not_applicable_no_generated_items",
+  "interpretation": "Yield gate failed on this batch. Empty output does not establish absence of knowledge in the textbook or semantic validity of the retained candidates."
+}

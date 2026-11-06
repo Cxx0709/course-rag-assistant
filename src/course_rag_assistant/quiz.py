@@ -7,123 +7,66 @@ from __future__ import annotations
 
 import hashlib
 import json
-import re
 import sqlite3
 from contextlib import closing
 from pathlib import Path
 from uuid import uuid4
 
-from .answer import (
-    CitedAnswer,
-    _sentences,
-    _source_units,
-    format_citation,
-    verify_citations,
-)
-from .compare import _named_statement, _topic_heading
 from .ingest import Chunk
-from .prerequisites import is_prerequisite_statement
-from .quiz_content import (
-    chapter_number,
-    cloze_prompt,
-    contextual_definitions,
-    contextual_name,
-    definition_concept,
-    statement_rank,
-    teaching_statement,
-    usable_concept,
+from .quiz_candidates import (
+    candidate_prompt,
+    compatible_options,
+    extract_candidates,
+    prompt_rejection,
 )
-from .retrieval import Hit
+from .quiz_content import explicit_contrast, statement_rank
 
 
 def make_questions(chunks: list[Chunk], count: int = 5, *, target_concept: str | None = None) -> list[dict]:
-    candidates = []
-    seen = set()
-    chapters = {}
-    for chunk in chunks:
-        number = chapter_number(chunk.section)
-        if number is not None:
-            chapters[chunk.doc] = number
-        # Prefer explicit tags or the innermost heading. Headingless PDFs can
-        # contribute simple, explicitly phrased Chinese definitions.
-        concepts = chunk.concepts or [chunk.section.rsplit(" / ", 1)[-1]]
-        units = _source_units(chunk)
-        passages = [(sentence, None) for sentence in units]
-        passages.extend((text, concept) for concept, text in contextual_definitions(units, chunk.text))
-        for sentence, contextual_concept in passages:
-            if contextual_concept is None and contextual_name(sentence):
-                continue
-            # A declared reading order is metadata for the review path, not a
-            # lesson assessing knowledge of the concept itself.
-            if any(is_prerequisite_statement(s) or not teaching_statement(s) for s in _sentences(sentence)):
-                continue
-            defined = contextual_concept or definition_concept(sentence)
-            definitions = [defined] if defined else []
-            target = [target_concept] if target_concept and (not defined or defined == target_concept) and (
-                _named_statement(target_concept, sentence) or _topic_heading(target_concept, chunk.section)
-                or target_concept in chunk.concepts) else []
-            for concept in [*target, *definitions, *concepts]:
-                concept = re.sub(r"^\d+(?:\.\d+)*[.、\s]*", "", concept).strip()
-                if not usable_concept(concept, defined=concept == defined):
-                    continue
-                if not 2 <= len(concept) <= 40 or concept not in sentence:
-                    continue
-                if not 12 <= len(sentence) <= 400 or re.match(r"^(?:它|这|其|该|上述|因此|其中)", sentence):
-                    continue
-                hit = Hit(chunk, 1, "quiz")
-                citation = format_citation(hit)
-                verified = verify_citations(CitedAnswer(
-                    "\n".join(f"{s} {citation}" for s in _sentences(sentence)), [hit], []))
-                if verified.abstention_reason or verified.unsupported_claims:
-                    continue
-                key = re.sub(r"\s+", "", sentence)
-                if key in seen:
-                    continue
-                seen.add(key)
-                candidates.append({"concept": concept, "sentence": sentence, "citation": citation,
-                                   "doc": chunk.doc, "page": chunk.page, "section": chunk.section,
-                                   "_chapter": chapters.get(chunk.doc), "_contextual": bool(contextual_concept)})
-                break
-    # Prefer substantive statements in every mode, not merely the first
-    # sentence mentioning a heading. Stable sorting retains source order ties.
     def rank(candidate):
-        return 0 if candidate["_contextual"] else statement_rank(candidate["concept"], candidate["sentence"])
+        return 0 if candidate.origin in {"contextual", "source_relation", "definition"} else statement_rank(candidate.concept, candidate.sentence)
 
-    candidates.sort(key=rank)
+    # Invalid stems cannot supply distractors either. Extraction is independent
+    # of the requested target; filtering cannot turn a substring into a name.
+    eligible = []
+    for candidate in sorted(extract_candidates(chunks), key=rank):
+        contrast = explicit_contrast(candidate.concept, candidate.sentence) if (
+            candidate.list_group is None and candidate.relation_group is None) else None
+        prompt = candidate_prompt(candidate)
+        if not prompt_rejection(candidate, prompt):
+            eligible.append((candidate, prompt, contrast))
     questions = []
     used_concepts = set()
-    for candidate in candidates:
-        concept, sentence = candidate["concept"], candidate["sentence"]
+    for candidate, prompt, contrast in eligible:
+        concept, sentence = candidate.concept, candidate.sentence
         if target_concept and concept != target_concept:
             continue
         if concept in used_concepts:
             continue
-        # Distractors that already appear in the sentence give away or confuse
-        # the task. The prompt explicitly asks for the original source wording.
-        # Prefer the same recognized numbered section, then defined concepts
-        # in nearby 20-page bands. This ranks candidates; scope remains strict.
-        nearby = sorted(candidates, key=lambda c: (
-            c["doc"] != candidate["doc"],
-            candidate["_chapter"] is not None and c["_chapter"] != candidate["_chapter"],
-            abs(c["page"] - candidate["page"]) // 20,
-            rank(c), abs(c["page"] - candidate["page"]),
-            c["section"] != candidate["section"], c["concept"]))
-        concepts = dict.fromkeys(c["concept"] for c in nearby)
-        distractors = [c for c in concepts if c != concept and c not in sentence
-                       and c not in concept and concept not in c]
-        # A shared multi-character Chinese suffix is a limited type hint
-        # (e.g. two errors or two fitting states), never semantic equivalence.
-        peers = [c for c in distractors if re.search(r"[\u4e00-\u9fff]{2}$", concept)
-                 and c.endswith(concept[-2:])]
-        distractors = (peers or distractors)[:3]
+        nearby = sorted((c for c, _, _ in eligible if compatible_options(candidate, c)), key=lambda c: (
+            abs(c.page - candidate.page) // 20, rank(c), abs(c.page - candidate.page),
+            c.section != candidate.section, c.concept))
+        concepts = []
+        option_names = set()
+        for other in nearby:
+            names = {other.concept, *other.synonyms}
+            if not names & option_names:
+                concepts.append(other.concept)
+                option_names.update(names)
+        visible = prompt if candidate.relation_group is not None else sentence
+        distractors = [c for c in concepts if c != concept and c not in visible
+                       and c not in concept and concept not in c][:3]
+        if contrast:
+            if contrast[1] in candidate.synonyms:
+                continue
+            distractors = [contrast[1]]
         if not distractors:
             continue
         options = sorted([concept, *distractors],
                          key=lambda c: hashlib.sha256((sentence + c).encode()).hexdigest())
-        questions.append({**{k: v for k, v in candidate.items() if not k.startswith("_")}, "id": str(len(questions) + 1),
-                          "prompt": cloze_prompt(concept, sentence),
-                          "options": options, "correct_index": options.index(concept)})
-        used_concepts.add(concept)
+        questions.append({**candidate.evidence(), "id": str(len(questions) + 1),
+                          "prompt": prompt, "options": options, "correct_index": options.index(concept)})
+        used_concepts.update((concept, *candidate.synonyms))
         if len(questions) >= count:
             break
     return questions

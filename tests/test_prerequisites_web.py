@@ -8,8 +8,8 @@ NOTES = """# 机器学习
 先修概念：训练集与测试集。
 
 过拟合是指模型在训练集上表现良好，但在新数据上表现较差。
-## 梯度下降
-梯度下降沿着损失函数减小的方向更新模型参数。
+## 欠拟合
+欠拟合是指模型表达能力不足，训练误差与验证误差都较高。
 """
 PRIOR = "# 训练集与测试集\n\n训练集用于拟合模型参数，测试集用于评估模型在新数据上的表现。"
 
@@ -38,7 +38,9 @@ def test_answer_quiz_review_scope_and_restart(tmp_path):
         assert ask([current], "火星的卫星有多少？")["learning_plans"] == []
 
         scope = {"document_ids": [current, prior], "count": 2}
-        public = client.post("/api/quiz", json=scope).json()
+        response = client.post("/api/quiz", json=scope)
+        assert response.status_code == 201, response.text
+        public = response.json()
         stored = QuizStore(tmp_path / "quiz.sqlite3").load(public["quiz_id"])
         choices = {q["id"]: (q["correct_index"] + (q["concept"] == "过拟合")) % len(q["options"])
                    for q in stored["questions"]}

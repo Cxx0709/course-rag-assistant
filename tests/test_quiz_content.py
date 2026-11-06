@@ -2,6 +2,108 @@ import pytest
 
 from course_rag_assistant.ingest import Chunk
 from course_rag_assistant.quiz import make_questions
+from course_rag_assistant.quiz_candidates import extract_candidates, prompt_rejection
+from course_rag_assistant.quiz_content import (
+    cloze_prompt,
+    definition_concept,
+    explicit_contrast,
+    teaching_statement,
+)
+
+PROBLEM = "多层网络反复裁剪图像时，边缘像素逐渐丢失。"
+METHOD = "解决这个问题的简单方法即为填充（padding）：在输入图像的边界填充元素（通常填充元素是0）。"
+PEER = Chunk("我们将每次滑动元素的数量称为步幅（stride）。", "book.pdf", 9, "步幅")
+
+
+def test_problem_and_method_have_one_blank_and_complete_feedback():
+    chunks = [Chunk(PROBLEM + METHOD, "book.pdf", 8, "填充"), PEER]
+    candidate = next(c for c in extract_candidates(chunks) if c.concept == "填充")
+    prompt = cloze_prompt(candidate.concept, candidate.sentence)
+    assert prompt.count("____") == 1 and PROBLEM in prompt
+    assert all(s not in prompt for s in ("填充", "padding", "通常"))
+    assert candidate.sentence == PROBLEM + METHOD and candidate.page == 8
+    assert prompt_rejection(candidate, prompt) is None
+    # A well-formed stem alone is insufficient: a method and a step quantity
+    # have no supported common option class.
+    assert make_questions(chunks, target_concept="填充") == []
+
+
+@pytest.mark.parametrize("source", [
+    METHOD, PROBLEM + "\n\n" + METHOD, PROBLEM + "\n附录\n" + METHOD,
+    PROBLEM + "本章介绍其他内容。" + METHOD,
+    PROBLEM + METHOD.replace("通常", "仅当"),
+])
+def test_unresolved_or_qualified_method_is_not_used_as_a_shortened_prompt(source):
+    assert not make_questions([Chunk(source, "book.pdf", 8, "填充"), PEER], target_concept="填充")
+
+
+@pytest.mark.parametrize("hyphen", ["-", "‐", "‑", "–"])
+def test_source_contrast_hides_alias_and_both_choices_but_keeps_evidence(hyphen):
+    sentence = f"在规定条件下，它所表达的运算其实是互相关运算（cross{hyphen}correlation），而不是卷积运算。"
+    q, = make_questions([Chunk(sentence, "notes.pdf", 3, "互相关运算")])
+    assert q["sentence"] == sentence and q["page"] == 3
+    assert set(q["options"]) == {"互相关运算", "卷积运算"}
+    assert q["options"][q["correct_index"]] == "互相关运算"
+    assert q["prompt"].endswith("在规定条件下，它所表达的运算其实是____。")
+
+
+@pytest.mark.parametrize("tail", [
+    "（when inputs match），而不是卷积运算。",
+    "，而不是一定能够得到结果。",
+    "，而不是卷积运算，这只在边界处成立。",
+])
+def test_contrast_does_not_discard_qualifications_or_invent_a_peer(tail):
+    assert explicit_contrast("互相关运算", "这里表达的运算其实是互相关运算" + tail) is None
+
+
+def test_chapter_recall_direction_is_not_a_standalone_explanation():
+    assert not teaching_statement("回想一下我们在6.1节中观察到的两种运算之间的对应关系。")
+    assert not teaching_statement("回顾上一章中提到的模型选择过程。")
+    assert teaching_statement("根据6.1节的描述，模型通过输入与卷积核的互相关运算产生输出。")
+
+
+def test_inline_gloss_removed_but_condition_and_original_remain():
+    from course_rag_assistant.quiz_content import cloze_prompt
+
+    sentence = "我们将每次滑动元素的数量称为步幅（stride），边界条件（when needed）仍需考虑。"
+    prompt = cloze_prompt("步幅", sentence)
+    assert "stride" not in prompt and "步幅" not in prompt
+    assert "（when needed）" in prompt
+    assert "（when inputs match）" in cloze_prompt(
+        "步幅", "我们将这个数量称为步幅（when inputs match）。")
+
+
+def test_numbered_glosses_in_headingless_pdf_keep_evidence_and_conditions():
+    a = "1. 互斥性（exclusion）：同一时刻不能同时进入同一个临界区，即为“互斥性”。"
+    b = "2. 并发性（concurrency）：多个任务的执行可以在时间上发生重叠，这就是“并发性”原则。"
+    rows = make_questions([Chunk(a + "\n" + b, "a.pdf", 7, "")])
+    assert [(q["sentence"], q["page"]) for q in rows] == [(a, 7), (b, 7)]
+    for q, alias in zip(rows, ("exclusion", "concurrency")):
+        assert set(q["options"]) == {"互斥性", "并发性"}
+        assert alias not in q["prompt"] and q["concept"] not in q["prompt"]
+    assert "不能同时进入同一个临界区" in rows[0]["prompt"]
+
+
+@pytest.mark.parametrize("text", [
+    "1. 局部性：下面介绍这个概念的一种应用。",
+    "1. 局部性：只根据近邻而非远处的信息进行计算，这就是“平移不变性”原则。",
+    "1. 局部性（when independent）：只根据近邻而非远处的信息进行计算，即为“局部性”。",
+])
+def test_numbered_label_alone_is_not_a_definition(text):
+    assert definition_concept(text) is None
+
+
+@pytest.mark.parametrize("separation", ["chunk", "heading", "restart"])
+def test_numbered_items_cannot_borrow_unrelated_alternatives(separation):
+    a = "1. 互斥性：同一时刻不能同时进入同一个临界区，即为“互斥性”。"
+    b = "2. 并发性：多个任务的执行可以在时间上发生重叠，即为“并发性”。"
+    if separation == "chunk":
+        chunks = [Chunk(a, "a.pdf", 7, ""), Chunk(b, "a.pdf", 8, "")]
+    else:
+        middle = "\n新主题\n" if separation == "heading" else "\n"
+        chunks = [Chunk(a + middle + (b if separation == "heading" else b.replace("2.", "1.")), "a.pdf", 7, "")]
+    chunks.append(Chunk("缓冲区用于临时保存等待发送的数据。", "a.pdf", 8, "缓冲区"))
+    assert make_questions(chunks) == []
 
 
 @pytest.mark.parametrize("preview", [
@@ -40,11 +142,13 @@ def test_alias_is_hidden_at_repeated_term_but_preserved_in_evidence(parenthesis)
     sentence = f"训练误差{parenthesis}是指模型在训练集上的误差，训练误差{parenthesis}不能代表泛化误差。"
     chunks = [Chunk(sentence, "a.md", 0, "误差"),
               Chunk("学习率控制每次参数更新的步长。", "a.md", 0, "学习率")]
-    q = make_questions(chunks, target_concept="训练误差")[0]
-    assert q["sentence"] == sentence
-    assert "training error" not in q["prompt"]
-    assert "不能代表泛化误差" in q["prompt"]
-    assert q["prompt"].count("____") == 2
+    candidate = next(c for c in extract_candidates(chunks) if c.concept == "训练误差")
+    prompt = cloze_prompt(candidate.concept, candidate.sentence)
+    assert candidate.sentence == sentence
+    assert "training error" not in prompt and "不能代表泛化误差" in prompt
+    assert prompt.count("____") == 2
+    assert prompt_rejection(candidate, prompt) == "multiple_or_missing_blanks"
+    assert make_questions(chunks, target_concept="训练误差") == []
 
 
 @pytest.mark.parametrize("condition", ["（仅在同分布时）", "（when data is independent）", "（x > 0）", "（2026）"])
@@ -57,13 +161,13 @@ def test_cloze_keeps_parenthesized_conditions_and_formulas(condition):
 
 def test_later_definition_replaces_first_mention_without_changing_negation_or_conditions():
     strong = "过拟合是指模型在训练集表现良好但在新数据表现较差，不能只凭训练误差判断泛化性能。"
-    other = "当数据来自相同分布时，测试集用于评价模型的泛化性能。"
+    other = "当模型表达能力不足时，欠拟合是指训练误差与验证误差都较高的情况。"
     chunks = [Chunk("过拟合在许多机器学习任务中都会出现。", "a.md", 0, "过拟合"),
-              Chunk(strong, "a.md", 0, "过拟合"), Chunk(other, "a.md", 0, "测试集")]
+              Chunk(strong, "a.md", 0, "过拟合"), Chunk(other, "a.md", 0, "欠拟合")]
     questions = make_questions(chunks)
     assert [q["sentence"] for q in questions] == [strong, other]
     assert "不能只凭" in questions[0]["prompt"]
-    assert "当数据来自相同分布时" in questions[1]["prompt"]
+    assert "当模型表达能力不足时" in questions[1]["prompt"]
 
 
 def test_procedure_headings_do_not_displace_concepts_from_same_numbered_section():
@@ -81,7 +185,7 @@ def test_procedure_headings_do_not_displace_concepts_from_same_numbered_section(
 
 def test_explicit_definition_can_override_a_procedural_heading_name():
     chunks = [Chunk("训练模型是指利用训练数据调整模型参数的过程。", "a.md", 0, "训练模型"),
-              Chunk("学习率控制每次参数更新的步长。", "a.md", 0, "学习率")]
+              Chunk("模型评估是指在留出数据上测量模型性能的过程。", "a.md", 0, "模型评估")]
     assert make_questions(chunks, target_concept="训练模型")[0]["concept"] == "训练模型"
 
 

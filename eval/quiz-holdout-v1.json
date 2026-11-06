@@ -1,0 +1,20 @@
+{
+  "purpose": "First quiz-quality observation on three chapters outside the previous tuning set; frozen rules and assistant review.",
+  "source": {"path": "data/raw/datamining-notes/d2l-zh-pytorch.pdf", "sha256": "db978acf18dac28f4de1412839ca1f804302c6a29b971b024595369afa69cbea"},
+  "chapters": [
+    {"title": "8.1 序列模型", "recognized_pages": [308, 316], "role": "held_out"},
+    {"title": "9.1 门控循环单元（GRU）", "recognized_pages": [353, 360], "role": "held_out"},
+    {"title": "10.1 注意力提示", "recognized_pages": [400, 404], "role": "held_out"}
+  ],
+  "requested_count": 5,
+  "frozen_code_sha256": {
+    "src/course_rag_assistant/quiz.py": "fb9b06ada7d73fb8d4a6fa624b740a1030b9099942aab78164595d3c44ac8bac",
+    "src/course_rag_assistant/quiz_content.py": "4038eaed4c0e6c833720f9a618679ee8d483e092b553db84d4544705d8669a62"
+  },
+  "review_protocol": {
+    "usable_item": "The cited page supports the keyed option with necessary conditions; the stem stands alone; no answer-hint translation, unresolved reference or missing formula; at least one meaningful alternative requires a conceptual distinction.",
+    "chapter_gate": "At least two usable questions per chapter, checked individually. No substitution of a different chapter for an empty result.",
+    "batch_gate": "Every chapter meets its gate and every generated item has a verified source.",
+    "not_measured": "Human learning gains, broad mastery and independent teacher assessment."
+  }
+}

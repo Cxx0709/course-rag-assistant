@@ -1,0 +1,285 @@
+{
+  "purpose": "First observation after explicit synonym and counted-enumeration support on previously untuned chapters; frozen implementation and unchanged quality rubric.",
+  "source": {
+    "path": "data/raw/datamining-notes/d2l-zh-pytorch.pdf",
+    "sha256": "db978acf18dac28f4de1412839ca1f804302c6a29b971b024595369afa69cbea"
+  },
+  "evaluation_phase": "see_individual_chapter_roles",
+  "manifest_sha256": "e248f1350fd0af205dffc71668c53e1f1360bec41f749d1b782ecda11feb77ec",
+  "default_library_modified": false,
+  "code_sha256": {
+    "src\\course_rag_assistant\\quiz.py": "5825d775c3963918288fcb2aa59e0412347e910ac8600ff99e0459a64dd25aee",
+    "src\\course_rag_assistant\\quiz_content.py": "fb3aebde0319782e21ff47f3135e8ff3ef8bfd965911f7048ce3e7c2df42d870",
+    "src\\course_rag_assistant\\quiz_candidates.py": "8549d0f9e9bbce9b7caf6c75ae032120003a24eadf10c820fd7170ddc959ecd2",
+    "src\\course_rag_assistant\\quiz_relations.py": "5d67885c1781dd0dfb6d014e672958d8cd9f73b3313c85738f788b89a07108f2",
+    "src\\course_rag_assistant\\quiz_terms.py": "66934dd95e55f546c5c8187ed48fa579e916540d98e8d7f5b7022250c13b33db"
+  },
+  "chapters": [
+    {
+      "title": "2.3 线性代数",
+      "role": "held_out",
+      "recognized_pages": [
+        68,
+        77
+      ],
+      "status_code": 422,
+      "generated_count": 0,
+      "note": "当前范围没有足够的完整概念句或可区分的选项。请调整概念或章节，或补充课程笔记；不会从范围外凑题。",
+      "questions": [],
+      "candidate_audit": [
+        {
+          "concept": "标量",
+          "sentence": "严格来说，仅包含一个数值被称为标量（scalar）。",
+          "citation": "[d2l-zh-pytorch__bbd31365e4d245729741e4afb4c511d1.pdf, p.68]",
+          "doc": "d2l-zh-pytorch__bbd31365e4d245729741e4afb4c511d1.pdf",
+          "page": 68,
+          "section": "2.3.1 标量",
+          "aliases": [
+            "scalar"
+          ],
+          "synonyms": [],
+          "origin": "naming",
+          "option_class": null,
+          "relation_group": null,
+          "prompt": "按资料原文补全空缺：严格来说，仅包含一个数值被称为____。",
+          "stem_rejection": null,
+          "selected": false
+        },
+        {
+          "concept": "变量",
+          "sentence": "符号c和f称为变量（variable），它们表示未知的标量值。",
+          "citation": "[d2l-zh-pytorch__bbd31365e4d245729741e4afb4c511d1.pdf, p.68]",
+          "doc": "d2l-zh-pytorch__bbd31365e4d245729741e4afb4c511d1.pdf",
+          "page": 68,
+          "section": "2.3.1 标量",
+          "aliases": [
+            "variable"
+          ],
+          "synonyms": [],
+          "origin": "naming",
+          "option_class": "变量",
+          "relation_group": null,
+          "prompt": "按资料原文补全空缺：符号c和f称为____，它们表示未知的标量值。",
+          "stem_rejection": "notation_or_latin_context",
+          "selected": false
+        },
+        {
+          "concept": "向量",
+          "sentence": "向量可以被视为标量值组成的列表。",
+          "citation": "[d2l-zh-pytorch__bbd31365e4d245729741e4afb4c511d1.pdf, p.69]",
+          "doc": "d2l-zh-pytorch__bbd31365e4d245729741e4afb4c511d1.pdf",
+          "page": 69,
+          "section": "2.3.2 向量",
+          "aliases": [],
+          "synonyms": [],
+          "origin": "role",
+          "option_class": null,
+          "relation_group": null,
+          "prompt": "按资料原文补全空缺：____可以被视为标量值组成的列表。",
+          "stem_rejection": null,
+          "selected": false
+        },
+        {
+          "concept": "方阵",
+          "sentence": "因此，它被称为方阵（square matrix）。",
+          "citation": "[d2l-zh-pytorch__bbd31365e4d245729741e4afb4c511d1.pdf, p.70]",
+          "doc": "d2l-zh-pytorch__bbd31365e4d245729741e4afb4c511d1.pdf",
+          "page": 70,
+          "section": "",
+          "aliases": [
+            "square matrix"
+          ],
+          "synonyms": [],
+          "origin": "naming",
+          "option_class": null,
+          "relation_group": null,
+          "prompt": "按资料原文补全空缺：因此，它被称为____。",
+          "stem_rejection": "unresolved_reference",
+          "selected": false
+        },
+        {
+          "concept": "Hadamard积",
+          "sentence": "具体而言，两个矩阵的按元素乘法称为Hadamard积（Hadamard product） （数学符号⊙）。",
+          "citation": "[d2l-zh-pytorch__bbd31365e4d245729741e4afb4c511d1.pdf, p.73]",
+          "doc": "d2l-zh-pytorch__bbd31365e4d245729741e4afb4c511d1.pdf",
+          "page": 73,
+          "section": "",
+          "aliases": [
+            "Hadamard product"
+          ],
+          "synonyms": [],
+          "origin": "naming",
+          "option_class": null,
+          "relation_group": null,
+          "prompt": "按资料原文补全空缺：具体而言，两个矩阵的按元素乘法称为____ （数学符号⊙）。",
+          "stem_rejection": null,
+          "selected": false
+        }
+      ],
+      "checks": {
+        "recognized_pages": true,
+        "explicit_result": true,
+        "bounded_count": true,
+        "contiguous_verified_source": true,
+        "options_in_scope": true,
+        "correct_option_hidden_in_prompt": true,
+        "single_blank": true,
+        "public_key_hidden": true,
+        "shortfall_explained": true,
+        "observed_alias_hint_removed": true,
+        "observed_dangling_prompts_removed": true
+      },
+      "passed": true
+    },
+    {
+      "title": "4.5 权重衰减",
+      "role": "held_out",
+      "recognized_pages": [
+        167,
+        174
+      ],
+      "status_code": 422,
+      "generated_count": 0,
+      "note": "当前范围没有足够的完整概念句或可区分的选项。请调整概念或章节，或补充课程笔记；不会从范围外凑题。",
+      "questions": [],
+      "candidate_audit": [
+        {
+          "concept": "单项式",
+          "sentence": "多项式对多变量数据的自然扩展称为单项式（monomials），也可以说是变量幂的乘积。",
+          "citation": "[d2l-zh-pytorch__bbd31365e4d245729741e4afb4c511d1.pdf, p.167]",
+          "doc": "d2l-zh-pytorch__bbd31365e4d245729741e4afb4c511d1.pdf",
+          "page": 167,
+          "section": "4.5 权重衰减",
+          "aliases": [
+            "monomials"
+          ],
+          "synonyms": [],
+          "origin": "naming",
+          "option_class": null,
+          "relation_group": null,
+          "prompt": "按资料原文补全空缺：多项式对多变量数据的自然扩展称为____，也可以说是变量幂的乘积。",
+          "stem_rejection": null,
+          "selected": false
+        },
+        {
+          "concept": "L2正则化",
+          "sentence": "在训练参数化机器学习模型时，权重衰减（weight decay）是最广泛使用的正则化的技术之一，它通常也被称为L2正则化。",
+          "citation": "[d2l-zh-pytorch__bbd31365e4d245729741e4afb4c511d1.pdf, p.168]",
+          "doc": "d2l-zh-pytorch__bbd31365e4d245729741e4afb4c511d1.pdf",
+          "page": 168,
+          "section": "",
+          "aliases": [],
+          "synonyms": [],
+          "origin": "naming",
+          "option_class": null,
+          "relation_group": null,
+          "prompt": "按资料原文补全空缺：在训练参数化机器学习模型时，权重衰减（weight decay）是最广泛使用的正则化的技术之一，它通常也被称为____。",
+          "stem_rejection": "notation_or_latin_context",
+          "selected": false
+        },
+        {
+          "concept": "套索回归",
+          "sentence": "L2正则化线性模型构成经典的岭回归（ridge regression）算法，L1正则化线性回归是统计学中类似的基本模型，通常被称为套索回归（lasso regression）。",
+          "citation": "[d2l-zh-pytorch__bbd31365e4d245729741e4afb4c511d1.pdf, p.168]",
+          "doc": "d2l-zh-pytorch__bbd31365e4d245729741e4afb4c511d1.pdf",
+          "page": 168,
+          "section": "w⊤x(i) + b −y(i)\u00112",
+          "aliases": [
+            "lasso regression"
+          ],
+          "synonyms": [],
+          "origin": "naming",
+          "option_class": null,
+          "relation_group": null,
+          "prompt": "按资料原文补全空缺：L2正则化线性模型构成经典的岭回归（ridge regression）算法，L1正则化线性回归是统计学中类似的基本模型，通常被称为____。",
+          "stem_rejection": "notation_or_latin_context",
+          "selected": false
+        },
+        {
+          "concept": "特征选择",
+          "sentence": "这称为特征选择（feature selection），这可能是其他场景下需要的。",
+          "citation": "[d2l-zh-pytorch__bbd31365e4d245729741e4afb4c511d1.pdf, p.168]",
+          "doc": "d2l-zh-pytorch__bbd31365e4d245729741e4afb4c511d1.pdf",
+          "page": 168,
+          "section": "w⊤x(i) + b −y(i)\u00112",
+          "aliases": [
+            "feature selection"
+          ],
+          "synonyms": [],
+          "origin": "naming",
+          "option_class": null,
+          "relation_group": null,
+          "prompt": "按资料原文补全空缺：这称为____，这可能是其他场景下需要的。",
+          "stem_rejection": "unresolved_reference",
+          "selected": false
+        },
+        {
+          "concept": "权重衰减",
+          "sentence": "这就是为什么这种方法有时被称为权重衰减。",
+          "citation": "[d2l-zh-pytorch__bbd31365e4d245729741e4afb4c511d1.pdf, p.168]",
+          "doc": "d2l-zh-pytorch__bbd31365e4d245729741e4afb4c511d1.pdf",
+          "page": 168,
+          "section": "w⊤x(i) + b −y(i)\u0011",
+          "aliases": [],
+          "synonyms": [],
+          "origin": "naming",
+          "option_class": null,
+          "relation_group": null,
+          "prompt": "按资料原文补全空缺：这就是为什么这种方法有时被称为____。",
+          "stem_rejection": "unresolved_reference",
+          "selected": false
+        }
+      ],
+      "checks": {
+        "recognized_pages": true,
+        "explicit_result": true,
+        "bounded_count": true,
+        "contiguous_verified_source": true,
+        "options_in_scope": true,
+        "correct_option_hidden_in_prompt": true,
+        "single_blank": true,
+        "public_key_hidden": true,
+        "shortfall_explained": true,
+        "observed_alias_hint_removed": true,
+        "observed_dangling_prompts_removed": true
+      },
+      "passed": true
+    },
+    {
+      "title": "7.2 使用块的网络（VGG）",
+      "role": "held_out",
+      "recognized_pages": [
+        273,
+        277
+      ],
+      "status_code": 422,
+      "generated_count": 0,
+      "note": "当前范围没有足够的完整概念句或可区分的选项。请调整概念或章节，或补充课程笔记；不会从范围外凑题。",
+      "questions": [],
+      "candidate_audit": [],
+      "checks": {
+        "recognized_pages": true,
+        "explicit_result": true,
+        "bounded_count": true,
+        "contiguous_verified_source": true,
+        "options_in_scope": true,
+        "correct_option_hidden_in_prompt": true,
+        "single_blank": true,
+        "public_key_hidden": true,
+        "shortfall_explained": true,
+        "observed_alias_hint_removed": true,
+        "observed_dangling_prompts_removed": true
+      },
+      "passed": true
+    }
+  ],
+  "human_teaching_review": "pending",
+  "passed": true,
+  "all_chapters_produce_practice": false,
+  "teaching_acceptance": "not_established",
+  "limitations": [
+    "Structural checks do not establish question value or semantic uniqueness.",
+    "No minimum quiz yield is assumed; empty output is reported explicitly.",
+    "Chapter scope depends on extracted headings and requires source review."
+  ]
+}

@@ -1,0 +1,215 @@
+{
+  "purpose": "First quiz-quality observation on three chapters outside the previous tuning set; frozen rules and assistant review.",
+  "source": {
+    "path": "data/raw/datamining-notes/d2l-zh-pytorch.pdf",
+    "sha256": "db978acf18dac28f4de1412839ca1f804302c6a29b971b024595369afa69cbea"
+  },
+  "evaluation_phase": "see_individual_chapter_roles",
+  "manifest_sha256": "37dfb80fa381dd4d1ef2eda2bcf4bf0762d77373c3e93daa7c92d65367fbae26",
+  "default_library_modified": false,
+  "code_sha256": {
+    "src\\course_rag_assistant\\quiz.py": "fb9b06ada7d73fb8d4a6fa624b740a1030b9099942aab78164595d3c44ac8bac",
+    "src\\course_rag_assistant\\quiz_content.py": "4038eaed4c0e6c833720f9a618679ee8d483e092b553db84d4544705d8669a62"
+  },
+  "chapters": [
+    {
+      "title": "8.1 序列模型",
+      "role": "held_out",
+      "recognized_pages": [
+        308,
+        316
+      ],
+      "status_code": 201,
+      "generated_count": 3,
+      "note": "当前范围生成 3 / 5 道原文识记题。同一概念不重复出题；题数不足时不扩大范围。",
+      "questions": [
+        {
+          "concept": "统计工具",
+          "sentence": "处理序列数据需要统计工具和新的深度神经网络架构。",
+          "citation": "[d2l-zh-pytorch__3847cb425dd148c38906c5659f5f4968.pdf, p.308]",
+          "doc": "d2l-zh-pytorch__3847cb425dd148c38906c5659f5f4968.pdf",
+          "page": 308,
+          "section": "8.1.1 统计工具",
+          "id": "1",
+          "prompt": "按资料原文补全空缺：处理序列数据需要____和新的深度神经网络架构。",
+          "options": [
+            "自回归模型",
+            "预测",
+            "统计工具"
+          ],
+          "correct_index": 2
+        },
+        {
+          "concept": "自回归模型",
+          "sentence": "由于ht从未被观测到，这类模型也被称为隐变量自回归模型（latent autoregressive models）。",
+          "citation": "[d2l-zh-pytorch__3847cb425dd148c38906c5659f5f4968.pdf, p.309]",
+          "doc": "d2l-zh-pytorch__3847cb425dd148c38906c5659f5f4968.pdf",
+          "page": 309,
+          "section": "自回归模型",
+          "id": "2",
+          "prompt": "按资料原文补全空缺：由于ht从未被观测到，这类模型也被称为隐变量____（latent autoregressive models）。",
+          "options": [
+            "自回归模型",
+            "统计工具",
+            "预测"
+          ],
+          "correct_index": 0
+        },
+        {
+          "concept": "预测",
+          "sentence": "首先是检查模型预测下一个时间步的能力，也就是单步预测（one‐step‐ahead prediction）。",
+          "citation": "[d2l-zh-pytorch__3847cb425dd148c38906c5659f5f4968.pdf, p.313]",
+          "doc": "d2l-zh-pytorch__3847cb425dd148c38906c5659f5f4968.pdf",
+          "page": 313,
+          "section": "8.1.3 预测",
+          "id": "3",
+          "prompt": "按资料原文补全空缺：首先是检查模型____下一个时间步的能力，也就是单步____（one‐step‐ahead prediction）。",
+          "options": [
+            "统计工具",
+            "自回归模型",
+            "预测"
+          ],
+          "correct_index": 2
+        }
+      ],
+      "checks": {
+        "recognized_pages": true,
+        "explicit_result": true,
+        "bounded_count": true,
+        "contiguous_verified_source": true,
+        "options_in_scope": true,
+        "correct_option_hidden_in_prompt": true,
+        "public_key_hidden": true,
+        "shortfall_explained": true,
+        "observed_alias_hint_removed": true,
+        "observed_dangling_prompts_removed": true
+      },
+      "passed": true
+    },
+    {
+      "title": "9.1 门控循环单元（GRU）",
+      "role": "held_out",
+      "recognized_pages": [
+        353,
+        360
+      ],
+      "status_code": 201,
+      "generated_count": 4,
+      "note": "当前范围生成 4 / 5 道原文识记题。同一概念不重复出题；题数不足时不扩大范围。",
+      "questions": [
+        {
+          "concept": "重置门和更新门",
+          "sentence": "图9.1.1 描述了门控循环单元中的重置门和更新门的输入，输入是由当前时间步的输入和前一时间步的隐状态给出。",
+          "citation": "[d2l-zh-pytorch__3847cb425dd148c38906c5659f5f4968.pdf, p.354]",
+          "doc": "d2l-zh-pytorch__3847cb425dd148c38906c5659f5f4968.pdf",
+          "page": 354,
+          "section": "重置门和更新门",
+          "id": "1",
+          "prompt": "按资料原文补全空缺：图9.1.1 描述了门控循环单元中的____的输入，输入是由当前时间步的输入和前一时间步的隐状态给出。",
+          "options": [
+            "从零开始实现",
+            "候选隐状态",
+            "重置门和更新门"
+          ],
+          "correct_index": 2
+        },
+        {
+          "concept": "候选隐状态",
+          "sentence": "接下来，让我们将重置门Rt 与(8.4.5) 中的常规隐状态更新机制集成，得到在时间步t的候选隐状态（candidate hidden state）˜Ht ∈Rn×h。",
+          "citation": "[d2l-zh-pytorch__3847cb425dd148c38906c5659f5f4968.pdf, p.355]",
+          "doc": "d2l-zh-pytorch__3847cb425dd148c38906c5659f5f4968.pdf",
+          "page": 355,
+          "section": "候选隐状态",
+          "id": "2",
+          "prompt": "按资料原文补全空缺：接下来，让我们将重置门Rt 与(8.4.5) 中的常规隐状态更新机制集成，得到在时间步t的____（candidate hidden state）˜Ht ∈Rn×h。",
+          "options": [
+            "候选隐状态",
+            "从零开始实现",
+            "重置门和更新门"
+          ],
+          "correct_index": 0
+        },
+        {
+          "concept": "隐状态",
+          "sentence": "相反，当Zt接近0时，新的隐状态Ht就会接近候选隐状态˜Ht。",
+          "citation": "[d2l-zh-pytorch__3847cb425dd148c38906c5659f5f4968.pdf, p.356]",
+          "doc": "d2l-zh-pytorch__3847cb425dd148c38906c5659f5f4968.pdf",
+          "page": 356,
+          "section": "隐状态",
+          "id": "3",
+          "prompt": "按资料原文补全空缺：相反，当Zt接近0时，新的____Ht就会接近候选____˜Ht。",
+          "options": [
+            "从零开始实现",
+            "重置门和更新门",
+            "隐状态"
+          ],
+          "correct_index": 2
+        },
+        {
+          "concept": "从零开始实现",
+          "sentence": "为了更好地理解门控循环单元模型，我们从零开始实现它。",
+          "citation": "[d2l-zh-pytorch__3847cb425dd148c38906c5659f5f4968.pdf, p.356]",
+          "doc": "d2l-zh-pytorch__3847cb425dd148c38906c5659f5f4968.pdf",
+          "page": 356,
+          "section": "9.1.2 从零开始实现",
+          "id": "4",
+          "prompt": "按资料原文补全空缺：为了更好地理解门控循环单元模型，我们____它。",
+          "options": [
+            "从零开始实现",
+            "候选隐状态",
+            "重置门和更新门",
+            "隐状态"
+          ],
+          "correct_index": 0
+        }
+      ],
+      "checks": {
+        "recognized_pages": true,
+        "explicit_result": true,
+        "bounded_count": true,
+        "contiguous_verified_source": true,
+        "options_in_scope": true,
+        "correct_option_hidden_in_prompt": true,
+        "public_key_hidden": true,
+        "shortfall_explained": true,
+        "observed_alias_hint_removed": true,
+        "observed_dangling_prompts_removed": true
+      },
+      "passed": true
+    },
+    {
+      "title": "10.1 注意力提示",
+      "role": "held_out",
+      "recognized_pages": [
+        400,
+        404
+      ],
+      "status_code": 422,
+      "generated_count": 0,
+      "note": "当前范围没有足够的完整概念句或可区分的选项。请调整概念或章节，或补充课程笔记；不会从范围外凑题。",
+      "questions": [],
+      "checks": {
+        "recognized_pages": true,
+        "explicit_result": true,
+        "bounded_count": true,
+        "contiguous_verified_source": true,
+        "options_in_scope": true,
+        "correct_option_hidden_in_prompt": true,
+        "public_key_hidden": true,
+        "shortfall_explained": true,
+        "observed_alias_hint_removed": true,
+        "observed_dangling_prompts_removed": true
+      },
+      "passed": true
+    }
+  ],
+  "human_teaching_review": "pending",
+  "passed": true,
+  "all_chapters_produce_practice": false,
+  "teaching_acceptance": "not_established",
+  "limitations": [
+    "Structural checks do not establish question value or semantic uniqueness.",
+    "No minimum quiz yield is assumed; empty output is reported explicitly.",
+    "Chapter scope depends on extracted headings and requires source review."
+  ]
+}

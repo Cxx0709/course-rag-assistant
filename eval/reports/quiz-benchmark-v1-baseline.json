@@ -1,0 +1,860 @@
+{
+  "benchmark": "quiz-benchmark-v1",
+  "dataset_sha256": "29dd2f49e2d73e043d995e3b8a240ee18b42039e71f7f9ba1089e135667ab54e",
+  "lock_sha256": "ed2f59178bfe9c453b0751da8021c051dc03264214f2ac4aaa9fe0bce8b4bc56",
+  "evaluator_sha256": "6ef43966d0106aaab68cd99b9a5c821409a19c91c71029373d44b68a3947f98a",
+  "source_verification": {
+    "verified": true,
+    "passage_occurrences_checked": 24
+  },
+  "code_sha256": {
+    "src/course_rag_assistant/quiz.py": "5825d775c3963918288fcb2aa59e0412347e910ac8600ff99e0459a64dd25aee",
+    "src/course_rag_assistant/quiz_candidates.py": "8549d0f9e9bbce9b7caf6c75ae032120003a24eadf10c820fd7170ddc959ecd2",
+    "src/course_rag_assistant/quiz_content.py": "fb3aebde0319782e21ff47f3135e8ff3ef8bfd965911f7048ce3e7c2df42d870",
+    "src/course_rag_assistant/quiz_relations.py": "5d67885c1781dd0dfb6d014e672958d8cd9f73b3313c85738f788b89a07108f2",
+    "src/course_rag_assistant/quiz_terms.py": "66934dd95e55f546c5c8187ed48fa579e916540d98e8d7f5b7022250c13b33db"
+  },
+  "annotation_policy": {
+    "author": "assistant",
+    "independent_review": false,
+    "sampling": "Purposive known failures, known successes and authored boundary cases; not representative.",
+    "weighting": "One case per unit of evaluation; an enumeration is not counted as several independent cases.",
+    "target": "Source recognition and pipeline diagnostics, not teaching effectiveness."
+  },
+  "cohorts": {
+    "textbook": {
+      "cases": 22,
+      "passed": 16
+    },
+    "constructed": {
+      "cases": 12,
+      "passed": 10
+    }
+  },
+  "summary": {
+    "passed": false,
+    "dimensions": {
+      "boundary": {
+        "cases": 8,
+        "passed": 6,
+        "pass_rate": 0.75
+      },
+      "context": {
+        "cases": 9,
+        "passed": 8,
+        "pass_rate": 0.8888888888888888
+      },
+      "identity": {
+        "cases": 8,
+        "passed": 4,
+        "pass_rate": 0.5
+      },
+      "options": {
+        "cases": 9,
+        "passed": 8,
+        "pass_rate": 0.8888888888888888
+      }
+    },
+    "unsafe_context_accepts": 1,
+    "positive_context_cases": 4,
+    "positive_context_passed": 4,
+    "required_question_groups": 13,
+    "covered_question_groups": 12,
+    "question_group_coverage": 0.9230769230769231,
+    "invalid_questions": 0,
+    "failure_cases_by_category": {
+      "concept_boundary": 2,
+      "alias_identity": 4,
+      "unsafe_context_accept": 1,
+      "no_compatible_options_or_selection": 1
+    }
+  },
+  "cases": [
+    {
+      "id": "boundary-01",
+      "dimension": "boundary",
+      "cohort": "textbook",
+      "passed": true,
+      "failures": [],
+      "facts": {
+        "candidate_count": 2,
+        "question_count": 2,
+        "true_positive": 2,
+        "false_positive": 0,
+        "false_negative": 0,
+        "missing": [],
+        "extra": []
+      }
+    },
+    {
+      "id": "boundary-02",
+      "dimension": "boundary",
+      "cohort": "textbook",
+      "passed": true,
+      "failures": [],
+      "facts": {
+        "candidate_count": 1,
+        "question_count": 0,
+        "true_positive": 1,
+        "false_positive": 0,
+        "false_negative": 0,
+        "missing": [],
+        "extra": []
+      }
+    },
+    {
+      "id": "boundary-03",
+      "dimension": "boundary",
+      "cohort": "textbook",
+      "passed": true,
+      "failures": [],
+      "facts": {
+        "candidate_count": 4,
+        "question_count": 3,
+        "true_positive": 3,
+        "false_positive": 0,
+        "false_negative": 0,
+        "missing": [],
+        "extra": []
+      }
+    },
+    {
+      "id": "boundary-04",
+      "dimension": "boundary",
+      "cohort": "textbook",
+      "passed": false,
+      "failures": [
+        "concept_boundary"
+      ],
+      "facts": {
+        "candidate_count": 1,
+        "question_count": 0,
+        "true_positive": 0,
+        "false_positive": 1,
+        "false_negative": 1,
+        "missing": [
+          "记忆元"
+        ],
+        "extra": [
+          "单元"
+        ]
+      }
+    },
+    {
+      "id": "boundary-05",
+      "dimension": "boundary",
+      "cohort": "textbook",
+      "passed": true,
+      "failures": [],
+      "facts": {
+        "candidate_count": 1,
+        "question_count": 0,
+        "true_positive": 1,
+        "false_positive": 0,
+        "false_negative": 0,
+        "missing": [],
+        "extra": []
+      }
+    },
+    {
+      "id": "boundary-06",
+      "dimension": "boundary",
+      "cohort": "textbook",
+      "passed": true,
+      "failures": [],
+      "facts": {
+        "candidate_count": 0,
+        "question_count": 0,
+        "true_positive": 0,
+        "false_positive": 0,
+        "false_negative": 0,
+        "missing": [],
+        "extra": []
+      }
+    },
+    {
+      "id": "boundary-07",
+      "dimension": "boundary",
+      "cohort": "textbook",
+      "passed": true,
+      "failures": [],
+      "facts": {
+        "candidate_count": 0,
+        "question_count": 0,
+        "true_positive": 0,
+        "false_positive": 0,
+        "false_negative": 0,
+        "missing": [],
+        "extra": []
+      }
+    },
+    {
+      "id": "boundary-08",
+      "dimension": "boundary",
+      "cohort": "constructed",
+      "passed": false,
+      "failures": [
+        "concept_boundary"
+      ],
+      "facts": {
+        "candidate_count": 0,
+        "question_count": 0,
+        "true_positive": 0,
+        "false_positive": 0,
+        "false_negative": 1,
+        "missing": [
+          "缓存命中"
+        ],
+        "extra": []
+      }
+    },
+    {
+      "id": "identity-01",
+      "dimension": "identity",
+      "cohort": "constructed",
+      "passed": true,
+      "failures": [],
+      "facts": {
+        "candidate_count": 1,
+        "question_count": 0,
+        "checks": [
+          {
+            "kind": "synonym",
+            "names": [
+              "验证误差",
+              "开发误差"
+            ],
+            "expected": true,
+            "actual": true,
+            "passed": true
+          },
+          {
+            "kind": "aliases",
+            "concept": "验证误差",
+            "expected": [
+              "development error",
+              "validation error"
+            ],
+            "actual": [
+              "development error",
+              "validation error"
+            ],
+            "passed": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "identity-02",
+      "dimension": "identity",
+      "cohort": "constructed",
+      "passed": false,
+      "failures": [
+        "alias_identity"
+      ],
+      "facts": {
+        "candidate_count": 1,
+        "question_count": 0,
+        "checks": [
+          {
+            "kind": "synonym",
+            "names": [
+              "验证误差",
+              "开发误差"
+            ],
+            "expected": true,
+            "actual": false,
+            "passed": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "identity-03",
+      "dimension": "identity",
+      "cohort": "constructed",
+      "passed": true,
+      "failures": [],
+      "facts": {
+        "candidate_count": 0,
+        "question_count": 0,
+        "checks": [
+          {
+            "kind": "synonym",
+            "names": [
+              "先进先出策略",
+              "最近最少使用策略"
+            ],
+            "expected": false,
+            "actual": false,
+            "passed": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "identity-04",
+      "dimension": "identity",
+      "cohort": "textbook",
+      "passed": false,
+      "failures": [
+        "alias_identity"
+      ],
+      "facts": {
+        "candidate_count": 1,
+        "question_count": 0,
+        "checks": [
+          {
+            "kind": "synonym",
+            "names": [
+              "训练数据集",
+              "训练集"
+            ],
+            "expected": true,
+            "actual": false,
+            "passed": false
+          },
+          {
+            "kind": "aliases",
+            "concept": "训练数据集",
+            "expected": [
+              "training data set",
+              "training set"
+            ],
+            "actual": [
+              "training data set"
+            ],
+            "passed": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "identity-05",
+      "dimension": "identity",
+      "cohort": "textbook",
+      "passed": false,
+      "failures": [
+        "alias_identity"
+      ],
+      "facts": {
+        "candidate_count": 1,
+        "question_count": 0,
+        "checks": [
+          {
+            "kind": "synonym",
+            "names": [
+              "标签",
+              "目标"
+            ],
+            "expected": true,
+            "actual": false,
+            "passed": false
+          },
+          {
+            "kind": "aliases",
+            "concept": "标签",
+            "expected": [
+              "label",
+              "target"
+            ],
+            "actual": [
+              "label"
+            ],
+            "passed": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "identity-06",
+      "dimension": "identity",
+      "cohort": "textbook",
+      "passed": false,
+      "failures": [
+        "alias_identity"
+      ],
+      "facts": {
+        "candidate_count": 1,
+        "question_count": 0,
+        "checks": [
+          {
+            "kind": "synonym",
+            "names": [
+              "记忆元",
+              "单元"
+            ],
+            "expected": true,
+            "actual": false,
+            "passed": false
+          },
+          {
+            "kind": "aliases",
+            "concept": "记忆元",
+            "expected": [
+              "cell",
+              "memory cell"
+            ],
+            "actual": [],
+            "passed": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "identity-07",
+      "dimension": "identity",
+      "cohort": "textbook",
+      "passed": true,
+      "failures": [],
+      "facts": {
+        "candidate_count": 1,
+        "question_count": 0,
+        "checks": [
+          {
+            "kind": "aliases",
+            "concept": "训练误差",
+            "expected": [
+              "training error"
+            ],
+            "actual": [
+              "training error"
+            ],
+            "passed": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "identity-08",
+      "dimension": "identity",
+      "cohort": "constructed",
+      "passed": true,
+      "failures": [],
+      "facts": {
+        "candidate_count": 1,
+        "question_count": 0,
+        "checks": [
+          {
+            "kind": "synonym",
+            "names": [
+              "验证误差",
+              "测试误差"
+            ],
+            "expected": false,
+            "actual": false,
+            "passed": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "context-01",
+      "dimension": "context",
+      "cohort": "constructed",
+      "passed": true,
+      "failures": [],
+      "facts": {
+        "candidate_count": 1,
+        "question_count": 0,
+        "stems": [
+          {
+            "prompt": "按资料原文补全空缺：____是指模型在训练数据上表现良好，但在新数据上表现较差。",
+            "rejection": null,
+            "constraints_met": true
+          }
+        ],
+        "expected_accept": true,
+        "accepted": 1,
+        "unsafe_accept": 0,
+        "blocked_at": null
+      }
+    },
+    {
+      "id": "context-02",
+      "dimension": "context",
+      "cohort": "textbook",
+      "passed": true,
+      "failures": [],
+      "facts": {
+        "candidate_count": 1,
+        "question_count": 0,
+        "stems": [
+          {
+            "prompt": "按资料原文补全空缺：其中一个门用来从单元中输出条目，我们将其称为____。",
+            "rejection": "unresolved_reference",
+            "constraints_met": true
+          }
+        ],
+        "expected_accept": false,
+        "accepted": 0,
+        "unsafe_accept": 0,
+        "blocked_at": "stem_gate"
+      }
+    },
+    {
+      "id": "context-03",
+      "dimension": "context",
+      "cohort": "textbook",
+      "passed": true,
+      "failures": [],
+      "facts": {
+        "candidate_count": 1,
+        "question_count": 0,
+        "stems": [
+          {
+            "prompt": "按资料原文补全空缺：另外一个门用来决定何时将数据读入单元，我们将其称为____。",
+            "rejection": "unresolved_reference",
+            "constraints_met": true
+          }
+        ],
+        "expected_accept": false,
+        "accepted": 0,
+        "unsafe_accept": 0,
+        "blocked_at": "stem_gate"
+      }
+    },
+    {
+      "id": "context-04",
+      "dimension": "context",
+      "cohort": "textbook",
+      "passed": true,
+      "failures": [],
+      "facts": {
+        "candidate_count": 5,
+        "question_count": 2,
+        "stems": [
+          {
+            "prompt": "按资料原文补全空缺：长短期记忆网络引入了记忆元，或简称为单元。有些文献认为记忆元是隐状态的一种特殊类型，它们与隐状态具有相同的形状，其设计目的是用于记录附加的信息。为了控制记忆元，我们需要许多门。门用来从单元中输出条目，我们将其称为____。",
+            "rejection": null,
+            "constraints_met": true
+          },
+          {
+            "prompt": "按资料原文补全空缺：其中一个门用来从单元中输出条目，我们将其称为____。",
+            "rejection": "unresolved_reference",
+            "constraints_met": false
+          }
+        ],
+        "expected_accept": true,
+        "accepted": 1,
+        "unsafe_accept": 0,
+        "blocked_at": null
+      }
+    },
+    {
+      "id": "context-05",
+      "dimension": "context",
+      "cohort": "textbook",
+      "passed": true,
+      "failures": [],
+      "facts": {
+        "candidate_count": 0,
+        "question_count": 0,
+        "stems": [],
+        "expected_accept": false,
+        "accepted": 0,
+        "unsafe_accept": 0,
+        "blocked_at": "not_extracted"
+      }
+    },
+    {
+      "id": "context-06",
+      "dimension": "context",
+      "cohort": "textbook",
+      "passed": false,
+      "failures": [
+        "unsafe_context_accept"
+      ],
+      "facts": {
+        "candidate_count": 1,
+        "question_count": 0,
+        "stems": [
+          {
+            "prompt": "按资料原文补全空缺：正如我们所看到的，最流行的词看起来很无聊，这些词通常被称为____，因此可以被过滤掉。",
+            "rejection": null,
+            "constraints_met": true
+          }
+        ],
+        "expected_accept": false,
+        "accepted": 1,
+        "unsafe_accept": 1,
+        "blocked_at": null
+      }
+    },
+    {
+      "id": "context-07",
+      "dimension": "context",
+      "cohort": "constructed",
+      "passed": true,
+      "failures": [],
+      "facts": {
+        "candidate_count": 1,
+        "question_count": 0,
+        "stems": [
+          {
+            "prompt": "按资料原文补全空缺：____用于计算图9.1.1中所示的输出。",
+            "rejection": "external_figure_or_formula",
+            "constraints_met": true
+          }
+        ],
+        "expected_accept": false,
+        "accepted": 0,
+        "unsafe_accept": 0,
+        "blocked_at": "stem_gate"
+      }
+    },
+    {
+      "id": "context-08",
+      "dimension": "context",
+      "cohort": "textbook",
+      "passed": true,
+      "failures": [],
+      "facts": {
+        "candidate_count": 1,
+        "question_count": 1,
+        "stems": [
+          {
+            "prompt": "按资料原文补全空缺：严格来说，卷积层是个错误的叫法，因为它所表达的运算其实是____。",
+            "rejection": null,
+            "constraints_met": true
+          }
+        ],
+        "expected_accept": true,
+        "accepted": 1,
+        "unsafe_accept": 0,
+        "blocked_at": null
+      }
+    },
+    {
+      "id": "context-09",
+      "dimension": "context",
+      "cohort": "constructed",
+      "passed": true,
+      "failures": [],
+      "facts": {
+        "candidate_count": 1,
+        "question_count": 0,
+        "stems": [
+          {
+            "prompt": "按资料原文补全空缺：____是指在样本同分布时模型在验证数据上的误差，不能直接用于拟合参数。",
+            "rejection": null,
+            "constraints_met": true
+          }
+        ],
+        "expected_accept": true,
+        "accepted": 1,
+        "unsafe_accept": 0,
+        "blocked_at": null
+      }
+    },
+    {
+      "id": "options-01",
+      "dimension": "options",
+      "cohort": "textbook",
+      "passed": true,
+      "failures": [],
+      "facts": {
+        "candidate_count": 2,
+        "question_count": 2,
+        "required": 2,
+        "covered": 2,
+        "missing": [],
+        "invalid_questions": 0,
+        "questions": [
+          {
+            "concept": "平移不变性",
+            "errors": []
+          },
+          {
+            "concept": "局部性",
+            "errors": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "options-02",
+      "dimension": "options",
+      "cohort": "textbook",
+      "passed": true,
+      "failures": [],
+      "facts": {
+        "candidate_count": 3,
+        "question_count": 2,
+        "required": 2,
+        "covered": 2,
+        "missing": [],
+        "invalid_questions": 0,
+        "questions": [
+          {
+            "concept": "外推法",
+            "errors": []
+          },
+          {
+            "concept": "内插法",
+            "errors": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "options-03",
+      "dimension": "options",
+      "cohort": "textbook",
+      "passed": true,
+      "failures": [],
+      "facts": {
+        "candidate_count": 4,
+        "question_count": 3,
+        "required": 3,
+        "covered": 3,
+        "missing": [],
+        "invalid_questions": 0,
+        "questions": [
+          {
+            "concept": "一元语法",
+            "errors": []
+          },
+          {
+            "concept": "二元语法",
+            "errors": []
+          },
+          {
+            "concept": "三元语法",
+            "errors": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "options-04",
+      "dimension": "options",
+      "cohort": "textbook",
+      "passed": false,
+      "failures": [
+        "no_compatible_options_or_selection"
+      ],
+      "facts": {
+        "candidate_count": 2,
+        "question_count": 0,
+        "required": 1,
+        "covered": 0,
+        "missing": [
+          [
+            "标量"
+          ]
+        ],
+        "invalid_questions": 0,
+        "questions": []
+      }
+    },
+    {
+      "id": "options-05",
+      "dimension": "options",
+      "cohort": "constructed",
+      "passed": true,
+      "failures": [],
+      "facts": {
+        "candidate_count": 2,
+        "question_count": 0,
+        "required": 0,
+        "covered": 0,
+        "missing": [],
+        "invalid_questions": 0,
+        "questions": []
+      }
+    },
+    {
+      "id": "options-06",
+      "dimension": "options",
+      "cohort": "constructed",
+      "passed": true,
+      "failures": [],
+      "facts": {
+        "candidate_count": 3,
+        "question_count": 2,
+        "required": 2,
+        "covered": 2,
+        "missing": [],
+        "invalid_questions": 0,
+        "questions": [
+          {
+            "concept": "过拟合",
+            "errors": []
+          },
+          {
+            "concept": "欠拟合",
+            "errors": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "options-07",
+      "dimension": "options",
+      "cohort": "constructed",
+      "passed": true,
+      "failures": [],
+      "facts": {
+        "candidate_count": 2,
+        "question_count": 0,
+        "required": 0,
+        "covered": 0,
+        "missing": [],
+        "invalid_questions": 0,
+        "questions": []
+      }
+    },
+    {
+      "id": "options-08",
+      "dimension": "options",
+      "cohort": "constructed",
+      "passed": true,
+      "failures": [],
+      "facts": {
+        "candidate_count": 3,
+        "question_count": 2,
+        "required": 2,
+        "covered": 2,
+        "missing": [],
+        "invalid_questions": 0,
+        "questions": [
+          {
+            "concept": "验证误差",
+            "errors": []
+          },
+          {
+            "concept": "训练误差",
+            "errors": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "options-09",
+      "dimension": "options",
+      "cohort": "textbook",
+      "passed": true,
+      "failures": [],
+      "facts": {
+        "candidate_count": 1,
+        "question_count": 1,
+        "required": 1,
+        "covered": 1,
+        "missing": [],
+        "invalid_questions": 0,
+        "questions": [
+          {
+            "concept": "互相关运算",
+            "errors": []
+          }
+        ]
+      }
+    }
+  ],
+  "limitations": [
+    "Retrospective purposive corpus; not an unseen or representative sample.",
+    "Assistant labels and lexical assertions do not replace independent teacher review.",
+    "Candidate absence and context rejection are reported separately."
+  ]
+}

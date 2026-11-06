@@ -1,0 +1,169 @@
+{
+  "purpose": "First observation after concept candidate refactoring on three chapters not used for tuning; frozen implementation and unchanged quality rubric.",
+  "source": {
+    "path": "data/raw/datamining-notes/d2l-zh-pytorch.pdf",
+    "sha256": "db978acf18dac28f4de1412839ca1f804302c6a29b971b024595369afa69cbea"
+  },
+  "evaluation_phase": "see_individual_chapter_roles",
+  "manifest_sha256": "47b0650892684c0de42aeffcc9fb44575dda3e291206660d9d739bf5cdf4ef08",
+  "default_library_modified": false,
+  "code_sha256": {
+    "src\\course_rag_assistant\\quiz.py": "1573a1b68668cb314e1c2c4cb7ad6cedfda6dfb3818673fee7fa01a626ad693c",
+    "src\\course_rag_assistant\\quiz_content.py": "fb3aebde0319782e21ff47f3135e8ff3ef8bfd965911f7048ce3e7c2df42d870",
+    "src\\course_rag_assistant\\quiz_candidates.py": "7880bdf249315e36b1b5a25c208c758382fcdaf6f0fa96b7a10bad409e8658b4"
+  },
+  "chapters": [
+    {
+      "title": "8.2 文本预处理",
+      "role": "held_out",
+      "recognized_pages": [
+        316,
+        321
+      ],
+      "status_code": 422,
+      "generated_count": 0,
+      "note": "当前范围没有足够的完整概念句或可区分的选项。请调整概念或章节，或补充课程笔记；不会从范围外凑题。",
+      "questions": [],
+      "candidate_audit": [
+        {
+          "concept": "词表",
+          "sentence": "现在，让我们构建一个字典，通常也叫做词表（vocabulary），用来将字符串类型的词元映射到从0开始的数字索引中。",
+          "citation": "[d2l-zh-pytorch__b94911d7596e455f8366bec4fdbcdfb8.pdf, p.318]",
+          "doc": "d2l-zh-pytorch__b94911d7596e455f8366bec4fdbcdfb8.pdf",
+          "page": 318,
+          "section": "8.2.3 词表",
+          "aliases": [
+            "vocabulary"
+          ],
+          "origin": "naming",
+          "option_class": null,
+          "stem_rejection": null,
+          "selected": false
+        }
+      ],
+      "checks": {
+        "recognized_pages": true,
+        "explicit_result": true,
+        "bounded_count": true,
+        "contiguous_verified_source": true,
+        "options_in_scope": true,
+        "correct_option_hidden_in_prompt": true,
+        "single_blank": true,
+        "public_key_hidden": true,
+        "shortfall_explained": true,
+        "observed_alias_hint_removed": true,
+        "observed_dangling_prompts_removed": true
+      },
+      "passed": true
+    },
+    {
+      "title": "9.2 长短期记忆网络（LSTM）",
+      "role": "held_out",
+      "recognized_pages": [
+        360,
+        367
+      ],
+      "status_code": 422,
+      "generated_count": 0,
+      "note": "当前范围没有足够的完整概念句或可区分的选项。请调整概念或章节，或补充课程笔记；不会从范围外凑题。",
+      "questions": [],
+      "candidate_audit": [
+        {
+          "concept": "单元",
+          "sentence": "长短期记忆网络引入了记忆元（memory cell），或简称为单元（cell）。",
+          "citation": "[d2l-zh-pytorch__b94911d7596e455f8366bec4fdbcdfb8.pdf, p.360]",
+          "doc": "d2l-zh-pytorch__b94911d7596e455f8366bec4fdbcdfb8.pdf",
+          "page": 360,
+          "section": "9.2.1 门控记忆元",
+          "aliases": [
+            "cell"
+          ],
+          "origin": "naming",
+          "option_class": null,
+          "stem_rejection": "answer_hint",
+          "selected": false
+        },
+        {
+          "concept": "输出门",
+          "sentence": "其中一个门用来从单元中输出条目，我们将其称为输出门（output gate）。",
+          "citation": "[d2l-zh-pytorch__b94911d7596e455f8366bec4fdbcdfb8.pdf, p.360]",
+          "doc": "d2l-zh-pytorch__b94911d7596e455f8366bec4fdbcdfb8.pdf",
+          "page": 360,
+          "section": "9.2.1 门控记忆元",
+          "aliases": [
+            "output gate"
+          ],
+          "origin": "naming",
+          "option_class": "门",
+          "stem_rejection": "unresolved_reference",
+          "selected": false
+        },
+        {
+          "concept": "输入门",
+          "sentence": "另外一个门用来决定何时将数据读入单元，我们将其称为输入门（input gate）。",
+          "citation": "[d2l-zh-pytorch__b94911d7596e455f8366bec4fdbcdfb8.pdf, p.360]",
+          "doc": "d2l-zh-pytorch__b94911d7596e455f8366bec4fdbcdfb8.pdf",
+          "page": 360,
+          "section": "9.2.1 门控记忆元",
+          "aliases": [
+            "input gate"
+          ],
+          "origin": "naming",
+          "option_class": "门",
+          "stem_rejection": null,
+          "selected": false
+        }
+      ],
+      "checks": {
+        "recognized_pages": true,
+        "explicit_result": true,
+        "bounded_count": true,
+        "contiguous_verified_source": true,
+        "options_in_scope": true,
+        "correct_option_hidden_in_prompt": true,
+        "single_blank": true,
+        "public_key_hidden": true,
+        "shortfall_explained": true,
+        "observed_alias_hint_removed": true,
+        "observed_dangling_prompts_removed": true
+      },
+      "passed": true
+    },
+    {
+      "title": "10.2 注意力汇聚：Nadaraya-Watson 核回归",
+      "role": "held_out",
+      "recognized_pages": [
+        404,
+        411
+      ],
+      "status_code": 422,
+      "generated_count": 0,
+      "note": "当前范围没有足够的完整概念句或可区分的选项。请调整概念或章节，或补充课程笔记；不会从范围外凑题。",
+      "questions": [],
+      "candidate_audit": [],
+      "checks": {
+        "recognized_pages": true,
+        "explicit_result": true,
+        "bounded_count": true,
+        "contiguous_verified_source": true,
+        "options_in_scope": true,
+        "correct_option_hidden_in_prompt": true,
+        "single_blank": true,
+        "public_key_hidden": true,
+        "shortfall_explained": true,
+        "observed_alias_hint_removed": true,
+        "observed_dangling_prompts_removed": true
+      },
+      "passed": true
+    }
+  ],
+  "human_teaching_review": "pending",
+  "passed": true,
+  "all_chapters_produce_practice": false,
+  "teaching_acceptance": "not_established",
+  "limitations": [
+    "Structural checks do not establish question value or semantic uniqueness.",
+    "No minimum quiz yield is assumed; empty output is reported explicitly.",
+    "Chapter scope depends on extracted headings and requires source review."
+  ]
+}

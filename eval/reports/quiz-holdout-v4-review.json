@@ -1,0 +1,38 @@
+{
+  "completed_on": "2026-11-06",
+  "reviewer": "assistant",
+  "raw_report": "eval/reports/quiz-holdout-v4.json",
+  "raw_report_sha256": "b3003848b82893028ead86dcec94fd4d67e0825044ac98da25d2bbe6bd1d5f6f",
+  "protocol": "eval/quiz-holdout-v4.json",
+  "software_checks_passed": true,
+  "quality_passed": false,
+  "generated_questions": 0,
+  "usable_questions": 0,
+  "chapters_passed": 0,
+  "chapters": [
+    {
+      "title": "2.3 线性代数",
+      "generated": 0,
+      "usable": 0,
+      "chapter_passed": false,
+      "reason": "Minimum of two usable questions not met."
+    },
+    {
+      "title": "4.5 权重衰减",
+      "generated": 0,
+      "usable": 0,
+      "chapter_passed": false,
+      "reason": "Minimum of two usable questions not met."
+    },
+    {
+      "title": "7.2 使用块的网络（VGG）",
+      "generated": 0,
+      "usable": 0,
+      "chapter_passed": false,
+      "reason": "Minimum of two usable questions not met."
+    }
+  ],
+  "human_review": "not_performed",
+  "source_page_item_review": "not_applicable_no_generated_items",
+  "interpretation": "Yield gate failed. Development examples and passing empty-set structural checks do not establish general question quality."
+}

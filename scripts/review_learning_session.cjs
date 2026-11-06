@@ -72,6 +72,16 @@ let server, browser, logs = '';
     await page.locator('#quiz-form').waitFor({state:'visible'});
     return quiz;
   }
+  async function insufficient() {
+    const pending=page.waitForResponse(r=>r.url().endsWith('/api/quiz'));
+    await page.locator('#quiz-create').click();
+    const response=await pending, payload=await response.json();
+    assert.equal(response.status(),422);
+    assert(payload.detail.includes('不会从范围外凑题'));
+    await page.getByText(payload.detail,{exact:true}).waitFor();
+    assert(await page.locator('#quiz-form').isHidden());
+    return {status:response.status(),detail:payload.detail,staleQuizHidden:true};
+  }
   async function submit(quiz, terms) {
     for(const [i,q] of quiz.questions.entries()) {
       const index=q.options.indexOf(terms[i]); assert(index>=0);
@@ -128,23 +138,71 @@ let server, browser, logs = '';
   await page.locator('#quiz-mode').selectOption('section');
   const transferSections=(await (await transferResponse).json()).sections;
   await page.locator('#quiz-section').selectOption(transferSections.find(s=>s.title==='3.1 线性回归').id);
-  const linear=await generate();
-  assert.equal(linear.questions.length,3);
-  assert(!linear.questions.some(q=>q.prompt.includes('loss function')));
+  const linear=await insufficient();
   await page.locator('#quiz-section').selectOption(transferSections.find(s=>s.title==='6.1 从全连接层到卷积').id);
-  const insufficientResponse=page.waitForResponse(r=>r.url().endsWith('/api/quiz'));
-  await page.locator('#quiz-create').click();
-  const insufficient=await insufficientResponse;
-  assert.equal(insufficient.status(),422);
-  await page.locator('#error').waitFor({state:'visible'});
   assert(await page.locator('#quiz-form').isHidden());
-  report.transferObservations={linearQuestions:linear.questions.length,convolutionStatus:422,
-    convolutionMessage:(await insufficient.json()).detail,staleQuizHidden:true};
+  const principles=await generate();
+  assert.equal(principles.questions.length,2);
+  assert(principles.questions.every(q=>!/平移不变性|局部性|translation invariance|locality/.test(q.prompt)));
+  const terms=principles.questions.map(q=>q.prompt.includes('相似的反应')?'平移不变性':'局部性');
+  assert.equal(new Set(terms).size,2);
+  const graded=await submit(principles,terms);
+  assert.equal(graded.score,2);
+  assert(graded.results.every(q=>q.page===237 && q.source_url.endsWith('#page=237')));
+  report.transferObservations={linearInsufficient:linear,principles:principles.questions,
+    grade:graded.score,sourcePages:graded.results.map(q=>q.page),staleQuizHidden:true};
+  await page.locator('#quiz-section').selectOption(transferSections.find(s=>s.title==='6.2 图像卷积').id);
+  const imageQuiz=await generate();
+  assert.equal(imageQuiz.questions.length,1);
+  const contrast=imageQuiz.questions.find(q=>q.prompt.includes('其实是____'));
+  assert(contrast && !contrast.prompt.includes('correlation'));
+  assert.deepEqual([...contrast.options].sort(),['互相关运算','卷积运算'].sort());
+  assert(!imageQuiz.questions.some(q=>q.prompt.includes('回想一下')));
+  const choices=imageQuiz.questions.map(q=>q.id===contrast.id?'卷积运算':'卷积层');
+  const marked=await submit(imageQuiz,choices);
+  assert.equal(marked.score,marked.total-1);
+  const mistake=marked.results.find(q=>!q.correct);
+  assert.equal(mistake.concept,'互相关运算');
+  assert(mistake.source_url.endsWith('#page=241') && mistake.sentence.includes('cross‐correlation'));
+  assert.equal((await review()).gaps[0].concept,'互相关运算');
+  report.transferObservations.imageConvolution={questions:imageQuiz.questions,sourcePage:mistake.page,
+    wrongChoice:'卷积运算',expected:mistake.concept};
+  await page.locator('#quiz-section').selectOption(transferSections.find(s=>s.title==='6.3 填充和步幅').id);
+  report.transferObservations.paddingStrideInsufficient=await insufficient();
+  for(const [title,terms,pageNumber,words] of [
+    ['8.1 序列模型',['外推法','内插法'],308,['超出已知观测范围','现有观测值之间']],
+    ['9.2 长短期记忆网络（LSTM）',['输出门','输入门'],360,['从单元中输出条目','何时将数据读入单元']],
+    ['8.3 语言模型和数据集',['一元语法','二元语法','三元语法'],323,['涉及一个变量','涉及两个变量','涉及三个变量']],
+  ]) {
+    await page.locator('#quiz-section').selectOption(transferSections.find(s=>s.title===title).id);
+    const related=await generate();
+    assert.equal(related.questions.length,terms.length);
+    related.questions.forEach((q,i)=>{
+      assert(q.prompt.includes(words[i]));
+      assert(words.every((word,j)=>i===j || !q.prompt.includes(word)));
+      assert.deepEqual([...q.options].sort(),[...terms].sort());
+      assert(!terms.some(term=>q.prompt.includes(term)));
+      assert(!/[A-Za-z]/.test(q.prompt));
+    });
+    await page.setViewportSize({width:390,height:844});
+    assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
+    await page.locator('#quiz-form').screenshot({path:`.tmp/learning-agent-review/relations-${pageNumber}-mobile.png`});
+    await page.setViewportSize({width:1440,height:1100});
+    const wrongRelated=await submit(related,terms.map((_,i)=>terms[(i+1)%terms.length]));
+    assert.equal(wrongRelated.score,0);
+    assert(wrongRelated.results.every(q=>q.page===pageNumber && q.source_url.endsWith(`#page=${pageNumber}`)
+      && terms.every(term=>q.sentence.includes(term))));
+    assert.equal((await review()).gaps.length,terms.length);
+    const retryRelated=await submit(await generate(),terms);
+    assert.equal(retryRelated.score,terms.length);
+    assert.equal((await review()).gaps.length,0);
+    report.transferObservations[title]={questions:related.questions,wrongGrade:wrongRelated.score,
+      correctRetry:retryRelated.score,sourcePage:pageNumber,mobileOverflow:false};
+  }
   assert.deepEqual(errors,[]); report.passed=true;
   await fs.writeFile(`.tmp/learning-agent-review/${phase}.json`,JSON.stringify(report,null,2)+'\n');
   if(phase==='after') {
-    await fs.copyFile('.tmp/learning-agent-review/after-desktop.png','docs/quiz-context-workspace.png');
-    await fs.writeFile('eval/reports/learning-session-browser-v2.json',JSON.stringify(report,null,2)+'\n');
+    await fs.writeFile('eval/reports/learning-session-browser-v8.json',JSON.stringify(report,null,2)+'\n');
   }
   console.log(JSON.stringify({phase,passed:true,chapterScore:report.chapterGrade.score,mobileOverflow:report.mobileOverflow,answers:report.answers.map(a=>({question:a.question,claims:a.answer.claims,sources:a.answer.sources.map(s=>({name:s.name,page:s.page}))})),browserErrors:errors},null,2));
 })().catch(e=>{console.error(e);process.exitCode=1;}).finally(async()=>{await browser?.close();server?.kill();});

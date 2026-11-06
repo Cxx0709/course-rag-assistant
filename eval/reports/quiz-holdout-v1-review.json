@@ -1,0 +1,101 @@
+{
+  "reviewer": "Codex assistant",
+  "date": "2026-11-05",
+  "raw_report_sha256": "5bc877a920d52466d9b3df6cf91e8e3094b70ac8a0a2fdca31c1aff2426e9033",
+  "protocol": "eval/quiz-holdout-v1.json",
+  "software_checks_passed": true,
+  "quality_passed": false,
+  "generated_questions": 7,
+  "usable_questions": 0,
+  "chapters_passed": 0,
+  "chapters": [
+    {
+      "title": "8.1 序列模型",
+      "generated": 3,
+      "usable": 0,
+      "chapter_passed": false,
+      "items": [
+        {
+          "id": "1",
+          "concept": "统计工具",
+          "page": 308,
+          "sentence_sha256": "cd297c0d22d0c388f9d14a5924c202e90647c50d60d63cdbe210dcc3243aac29",
+          "source_page_checked": true,
+          "usable": false,
+          "reason": "generic introduction; alternatives differ in category"
+        },
+        {
+          "id": "2",
+          "concept": "自回归模型",
+          "page": 309,
+          "sentence_sha256": "aebfc2baf021ef13a3aa32d106237bb757e2f97fec2c3f6518815e36a46e3e5e",
+          "source_page_checked": true,
+          "usable": false,
+          "reason": "qualified concept reduced to a substring; English hint; undefined ht"
+        },
+        {
+          "id": "3",
+          "concept": "预测",
+          "page": 313,
+          "sentence_sha256": "3c6e97e9f54b9960dd1f52afa5958c7662b26d2963c797d77e6ee3a7bd67de0b",
+          "source_page_checked": true,
+          "usable": false,
+          "reason": "English hint; repeated blanks and grammatical cue"
+        }
+      ]
+    },
+    {
+      "title": "9.1 门控循环单元（GRU）",
+      "generated": 4,
+      "usable": 0,
+      "chapter_passed": false,
+      "items": [
+        {
+          "id": "1",
+          "concept": "重置门和更新门",
+          "page": 354,
+          "sentence_sha256": "d12c3f6acf118d775f136a9f3cb46ad478d9ef7b7721939612c6b1d0170a5140",
+          "source_page_checked": true,
+          "usable": false,
+          "reason": "figure reference and category-mismatched alternatives"
+        },
+        {
+          "id": "2",
+          "concept": "候选隐状态",
+          "page": 355,
+          "sentence_sha256": "71ba00e227913fa9372254e98094c876369cd98a459d3abd5d69254b8daa2e7e",
+          "source_page_checked": true,
+          "usable": false,
+          "reason": "English hint and undefined symbols/formula reference"
+        },
+        {
+          "id": "3",
+          "concept": "隐状态",
+          "page": 356,
+          "sentence_sha256": "ea6237b4aa143a7d5ec6678ac5c905651185add5a5b6ee56d96864320bcbfa24",
+          "source_page_checked": true,
+          "usable": false,
+          "reason": "undefined update-gate notation and repeated blanks"
+        },
+        {
+          "id": "4",
+          "concept": "从零开始实现",
+          "page": 356,
+          "sentence_sha256": "801fccb2d401010a0828025d003c3ebf54967f34cd148075f40c339a2c68ff0a",
+          "source_page_checked": true,
+          "usable": false,
+          "reason": "procedure heading treated as a knowledge concept"
+        }
+      ]
+    },
+    {
+      "title": "10.1 注意力提示",
+      "generated": 0,
+      "usable": 0,
+      "chapter_passed": false,
+      "items": []
+    }
+  ],
+  "human_review": "not_performed",
+  "interpretation": "Assistant judgment under the predeclared rubric, not a statistical estimate of general teaching quality."
+}

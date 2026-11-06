@@ -1,0 +1,158 @@
+{
+  "purpose": "First observation after explicit source-relation support on three untouched chapters; frozen rules and unchanged quality rubric.",
+  "source": {
+    "path": "data/raw/datamining-notes/d2l-zh-pytorch.pdf",
+    "sha256": "db978acf18dac28f4de1412839ca1f804302c6a29b971b024595369afa69cbea"
+  },
+  "evaluation_phase": "see_individual_chapter_roles",
+  "manifest_sha256": "1f3e5cb5711f5c104efd7dbc71048566d491215370fafae4d4511980a4592277",
+  "default_library_modified": false,
+  "code_sha256": {
+    "src\\course_rag_assistant\\quiz.py": "0a7aeed525f8ced0a21207ebf64c7fb6e913d559d70f3ec3bb979e1176a4b8a6",
+    "src\\course_rag_assistant\\quiz_content.py": "fb3aebde0319782e21ff47f3135e8ff3ef8bfd965911f7048ce3e7c2df42d870",
+    "src\\course_rag_assistant\\quiz_candidates.py": "4424f4e3b9baec753378cfa07024d068ced30325978871a43d178f6bab30e57f",
+    "src\\course_rag_assistant\\quiz_relations.py": "ebb13b8dfac77a0a7c94ff7ca140808a9a5aaeb2b3c65075a37e81d116155634"
+  },
+  "chapters": [
+    {
+      "title": "8.3 语言模型和数据集",
+      "role": "held_out",
+      "recognized_pages": [
+        321,
+        330
+      ],
+      "status_code": 422,
+      "generated_count": 0,
+      "note": "当前范围没有足够的完整概念句或可区分的选项。请调整概念或章节，或补充课程笔记；不会从范围外凑题。",
+      "questions": [],
+      "candidate_audit": [
+        {
+          "concept": "一元语法",
+          "sentence": "通常，涉及一个、两个和三个变量的概率公式分别被称为一元语法（unigram）、二元语法（bigram）和三元语法（trigram）模型。",
+          "citation": "[d2l-zh-pytorch__fb1d63f9510144e7a50f5abdfed47b81.pdf, p.323]",
+          "doc": "d2l-zh-pytorch__fb1d63f9510144e7a50f5abdfed47b81.pdf",
+          "page": 323,
+          "section": "式：",
+          "aliases": [
+            "unigram"
+          ],
+          "origin": "naming",
+          "option_class": null,
+          "relation_group": null,
+          "prompt": "按资料原文补全空缺：通常，涉及一个、两个和三个变量的概率公式分别被称为____、二元语法（bigram）和三元语法（trigram）模型。",
+          "stem_rejection": "notation_or_latin_context",
+          "selected": false
+        },
+        {
+          "concept": "停用词",
+          "sentence": "正如我们所看到的，最流行的词看起来很无聊，这些词通常被称为停用词（stop words），因此可以被过滤掉。",
+          "citation": "[d2l-zh-pytorch__fb1d63f9510144e7a50f5abdfed47b81.pdf, p.323]",
+          "doc": "d2l-zh-pytorch__fb1d63f9510144e7a50f5abdfed47b81.pdf",
+          "page": 323,
+          "section": "from d2l import torch as d2l",
+          "aliases": [
+            "stop words"
+          ],
+          "origin": "naming",
+          "option_class": null,
+          "relation_group": null,
+          "prompt": "按资料原文补全空缺：正如我们所看到的，最流行的词看起来很无聊，这些词通常被称为____，因此可以被过滤掉。",
+          "stem_rejection": null,
+          "selected": false
+        },
+        {
+          "concept": "顺序分区",
+          "sentence": "这种策略在基于小批量的迭代过程中保留了拆分的子序列的顺序，因此称为顺序分区。",
+          "citation": "[d2l-zh-pytorch__fb1d63f9510144e7a50f5abdfed47b81.pdf, p.328]",
+          "doc": "d2l-zh-pytorch__fb1d63f9510144e7a50f5abdfed47b81.pdf",
+          "page": 328,
+          "section": "顺序分区",
+          "aliases": [],
+          "origin": "naming",
+          "option_class": null,
+          "relation_group": null,
+          "prompt": "按资料原文补全空缺：这种策略在基于小批量的迭代过程中保留了拆分的子序列的顺序，因此称为____。",
+          "stem_rejection": "unresolved_reference",
+          "selected": false
+        }
+      ],
+      "checks": {
+        "recognized_pages": true,
+        "explicit_result": true,
+        "bounded_count": true,
+        "contiguous_verified_source": true,
+        "options_in_scope": true,
+        "correct_option_hidden_in_prompt": true,
+        "single_blank": true,
+        "public_key_hidden": true,
+        "shortfall_explained": true,
+        "observed_alias_hint_removed": true,
+        "observed_dangling_prompts_removed": true
+      },
+      "passed": true
+    },
+    {
+      "title": "9.3 深度循环神经网络",
+      "role": "held_out",
+      "recognized_pages": [
+        367,
+        369
+      ],
+      "status_code": 422,
+      "generated_count": 0,
+      "note": "当前范围没有足够的完整概念句或可区分的选项。请调整概念或章节，或补充课程笔记；不会从范围外凑题。",
+      "questions": [],
+      "candidate_audit": [],
+      "checks": {
+        "recognized_pages": true,
+        "explicit_result": true,
+        "bounded_count": true,
+        "contiguous_verified_source": true,
+        "options_in_scope": true,
+        "correct_option_hidden_in_prompt": true,
+        "single_blank": true,
+        "public_key_hidden": true,
+        "shortfall_explained": true,
+        "observed_alias_hint_removed": true,
+        "observed_dangling_prompts_removed": true
+      },
+      "passed": true
+    },
+    {
+      "title": "10.3 注意力评分函数",
+      "role": "held_out",
+      "recognized_pages": [
+        411,
+        416
+      ],
+      "status_code": 422,
+      "generated_count": 0,
+      "note": "当前范围没有足够的完整概念句或可区分的选项。请调整概念或章节，或补充课程笔记；不会从范围外凑题。",
+      "questions": [],
+      "candidate_audit": [],
+      "checks": {
+        "recognized_pages": true,
+        "explicit_result": true,
+        "bounded_count": true,
+        "contiguous_verified_source": true,
+        "options_in_scope": true,
+        "correct_option_hidden_in_prompt": true,
+        "single_blank": true,
+        "public_key_hidden": true,
+        "shortfall_explained": true,
+        "observed_alias_hint_removed": true,
+        "observed_dangling_prompts_removed": true
+      },
+      "passed": true
+    }
+  ],
+  "human_teaching_review": "pending",
+  "passed": true,
+  "all_chapters_produce_practice": false,
+  "teaching_acceptance": "not_established",
+  "limitations": [
+    "Structural checks do not establish question value or semantic uniqueness.",
+    "No minimum quiz yield is assumed; empty output is reported explicitly.",
+    "Chapter scope depends on extracted headings and requires source review."
+  ]
+}

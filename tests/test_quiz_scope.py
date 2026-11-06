@@ -81,9 +81,9 @@ def test_review_chapter_checks_exact_passage_not_just_page():
 
 def test_max_length_target_supported_and_single_concept_cannot_borrow_options():
     target = "课" * 40
-    chunk = Chunk(f"{target}是指本课程中的特定训练过程。", "a.md", 0, target)
+    chunk = Chunk(f"{target}是指本课程中调整参数的过程。", "a.md", 0, target)
     assert make_questions([chunk], target_concept=target) == []
-    other = Chunk("学习率控制每次参数更新的步长。", "a.md", 0, "学习率")
+    other = Chunk("模型评估是指在留出数据上测量模型性能的过程。", "a.md", 0, "模型评估")
     assert make_questions([chunk, other], target_concept=target)[0]["concept"] == target
 
 
@@ -142,7 +142,7 @@ def test_api_scope_intersection_review_and_restart(tmp_path):
         assert client.post("/api/quiz/sections", json=base).json()["sections"] == sections
         retry = client.post("/api/quiz", json={**base, "section_id": chapter["id"]}).json()
         keys = QuizStore(tmp_path / "quiz.sqlite3").load(retry["quiz_id"])["questions"]
-        assert {q["concept"] for q in keys} == {"过拟合", "欠拟合", "学习率"}
+        assert {q["concept"] for q in keys} == {"过拟合", "欠拟合"}
         response = client.post(f"/api/quiz/{retry['quiz_id']}/grade", json={"choices": {q["id"]: q["correct_index"] for q in keys}})
         assert response.status_code == 200
         assert client.post("/api/review", json=scope).json()["gaps"] == []

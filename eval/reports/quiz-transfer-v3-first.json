@@ -1,0 +1,245 @@
+{
+  "purpose": "Development regressions on 3.1/6.1 and one preselected first observation on 6.2. No minimum yield assumed on the new section.",
+  "source": {
+    "path": "data/raw/datamining-notes/d2l-zh-pytorch.pdf",
+    "sha256": "db978acf18dac28f4de1412839ca1f804302c6a29b971b024595369afa69cbea"
+  },
+  "evaluation_phase": "see_individual_chapter_roles",
+  "manifest_sha256": "b11f801b4033592e15cd98717a05f7ed6c3ca40e00e3b9d66713a85ea7416915",
+  "default_library_modified": false,
+  "code_sha256": {
+    "src\\course_rag_assistant\\quiz.py": "cefe885e21bf6aa0a1651d806f0851f6bf0262736541c09386ece46672e82096",
+    "src\\course_rag_assistant\\quiz_content.py": "e1c626d06b96b71596e92e04bd17797ed20ab68f67868682f59708a37482c92d"
+  },
+  "chapters": [
+    {
+      "title": "3.1 线性回归",
+      "role": "regression",
+      "recognized_pages": [
+        103,
+        105
+      ],
+      "status_code": 201,
+      "generated_count": 3,
+      "note": "当前范围生成 3 / 5 道原文识记题。同一概念不重复出题；题数不足时不扩大范围。",
+      "questions": [
+        {
+          "concept": "偏置",
+          "sentence": "偏置是指当所有特征都取值为0时，预测值应该为多少。",
+          "citation": "[d2l-zh-pytorch__6804d292f7a043949f85ac4a72dd0a0e.pdf, p.104]",
+          "doc": "d2l-zh-pytorch__6804d292f7a043949f85ac4a72dd0a0e.pdf",
+          "page": 104,
+          "section": "线性模型",
+          "id": "1",
+          "prompt": "按资料原文补全空缺：____是指当所有特征都取值为0时，预测值应该为多少。",
+          "options": [
+            "线性模型",
+            "偏置",
+            "损失函数"
+          ],
+          "correct_index": 1
+        },
+        {
+          "concept": "损失函数",
+          "sentence": "损失函数（loss function）能够量化目标的实际值与预测值之间的差距。",
+          "citation": "[d2l-zh-pytorch__6804d292f7a043949f85ac4a72dd0a0e.pdf, p.105]",
+          "doc": "d2l-zh-pytorch__6804d292f7a043949f85ac4a72dd0a0e.pdf",
+          "page": 105,
+          "section": "损失函数",
+          "id": "2",
+          "prompt": "按资料原文补全空缺：____能够量化目标的实际值与预测值之间的差距。",
+          "options": [
+            "损失函数",
+            "线性模型",
+            "偏置"
+          ],
+          "correct_index": 0
+        },
+        {
+          "concept": "线性模型",
+          "sentence": "输出的预测值由输入特征通过线性模型的仿射变换决定，仿射变换由所选权重和偏置确定。",
+          "citation": "[d2l-zh-pytorch__6804d292f7a043949f85ac4a72dd0a0e.pdf, p.104]",
+          "doc": "d2l-zh-pytorch__6804d292f7a043949f85ac4a72dd0a0e.pdf",
+          "page": 104,
+          "section": "线性模型",
+          "id": "3",
+          "prompt": "按资料原文补全空缺：输出的预测值由输入特征通过____的仿射变换决定，仿射变换由所选权重和偏置确定。",
+          "options": [
+            "线性模型",
+            "损失函数"
+          ],
+          "correct_index": 0
+        }
+      ],
+      "checks": {
+        "recognized_pages": true,
+        "explicit_result": true,
+        "bounded_count": true,
+        "contiguous_verified_source": true,
+        "options_in_scope": true,
+        "correct_option_hidden_in_prompt": true,
+        "public_key_hidden": true,
+        "shortfall_explained": true,
+        "observed_alias_hint_removed": true,
+        "observed_dangling_prompts_removed": true
+      },
+      "passed": true
+    },
+    {
+      "title": "6.1 从全连接层到卷积",
+      "role": "regression",
+      "recognized_pages": [
+        236,
+        240
+      ],
+      "status_code": 201,
+      "generated_count": 3,
+      "note": "当前范围生成 3 / 5 道原文识记题。同一概念不重复出题；题数不足时不扩大范围。",
+      "questions": [
+        {
+          "concept": "平移不变性",
+          "sentence": "1. 平移不变性（translation invariance）：不管检测对象出现在图像中的哪个位置，神经网络的前面几层应该对相同的图像区域具有相似的反应，即为“平移不变性”。",
+          "citation": "[d2l-zh-pytorch__6804d292f7a043949f85ac4a72dd0a0e.pdf, p.237]",
+          "doc": "d2l-zh-pytorch__6804d292f7a043949f85ac4a72dd0a0e.pdf",
+          "page": 237,
+          "section": "",
+          "id": "1",
+          "prompt": "按资料原文补全空缺：____：不管检测对象出现在图像中的哪个位置，神经网络的前面几层应该对相同的图像区域具有相似的反应。",
+          "options": [
+            "通道",
+            "平移不变性",
+            "局部性"
+          ],
+          "correct_index": 1
+        },
+        {
+          "concept": "局部性",
+          "sentence": "2. 局部性（locality）：神经网络的前面几层应该只探索输入图像中的局部区域，而不过度在意图像中相隔较远区域的关系，这就是“局部性”原则。",
+          "citation": "[d2l-zh-pytorch__6804d292f7a043949f85ac4a72dd0a0e.pdf, p.237]",
+          "doc": "d2l-zh-pytorch__6804d292f7a043949f85ac4a72dd0a0e.pdf",
+          "page": 237,
+          "section": "",
+          "id": "2",
+          "prompt": "按资料原文补全空缺：____：神经网络的前面几层应该只探索输入图像中的局部区域，而不过度在意图像中相隔较远区域的关系。",
+          "options": [
+            "通道",
+            "平移不变性",
+            "局部性"
+          ],
+          "correct_index": 2
+        },
+        {
+          "concept": "通道",
+          "sentence": "直观上可以想象在靠近输入的底层，一些通道专门识别边缘，而一些通道专门识别纹理。",
+          "citation": "[d2l-zh-pytorch__6804d292f7a043949f85ac4a72dd0a0e.pdf, p.239]",
+          "doc": "d2l-zh-pytorch__6804d292f7a043949f85ac4a72dd0a0e.pdf",
+          "page": 239,
+          "section": "通道",
+          "id": "3",
+          "prompt": "按资料原文补全空缺：直观上可以想象在靠近输入的底层，一些____专门识别边缘，而一些____专门识别纹理。",
+          "options": [
+            "局部性",
+            "通道",
+            "平移不变性"
+          ],
+          "correct_index": 1
+        }
+      ],
+      "checks": {
+        "recognized_pages": true,
+        "explicit_result": true,
+        "bounded_count": true,
+        "contiguous_verified_source": true,
+        "options_in_scope": true,
+        "correct_option_hidden_in_prompt": true,
+        "public_key_hidden": true,
+        "shortfall_explained": true,
+        "observed_alias_hint_removed": true,
+        "observed_dangling_prompts_removed": true,
+        "both_grounded_principles": false
+      },
+      "passed": false
+    },
+    {
+      "title": "6.2 图像卷积",
+      "role": "first_observation",
+      "recognized_pages": [
+        240,
+        246
+      ],
+      "status_code": 201,
+      "generated_count": 3,
+      "note": "当前范围生成 3 / 5 道原文识记题。同一概念不重复出题；题数不足时不扩大范围。",
+      "questions": [
+        {
+          "concept": "互相关运算",
+          "sentence": "严格来说，卷积层是个错误的叫法，因为它所表达的运算其实是互相关运算（cross‐correlation），而不是卷积运算。",
+          "citation": "[d2l-zh-pytorch__6804d292f7a043949f85ac4a72dd0a0e.pdf, p.241]",
+          "doc": "d2l-zh-pytorch__6804d292f7a043949f85ac4a72dd0a0e.pdf",
+          "page": 241,
+          "section": "6.2.1 互相关运算",
+          "id": "1",
+          "prompt": "按资料原文补全空缺：严格来说，卷积层是个错误的叫法，因为它所表达的运算其实是____（cross‐correlation），而不是卷积运算。",
+          "options": [
+            "互相关运算",
+            "互相关和卷积"
+          ],
+          "correct_index": 0
+        },
+        {
+          "concept": "卷积层",
+          "sentence": "卷积层对输入和卷积核权重进行互相关运算，并在添加标量偏置之后产生输出。",
+          "citation": "[d2l-zh-pytorch__6804d292f7a043949f85ac4a72dd0a0e.pdf, p.242]",
+          "doc": "d2l-zh-pytorch__6804d292f7a043949f85ac4a72dd0a0e.pdf",
+          "page": 242,
+          "section": "6.2.2 卷积层",
+          "id": "2",
+          "prompt": "按资料原文补全空缺：____对输入和卷积核权重进行互相关运算，并在添加标量偏置之后产生输出。",
+          "options": [
+            "互相关和卷积",
+            "卷积层"
+          ],
+          "correct_index": 1
+        },
+        {
+          "concept": "互相关和卷积",
+          "sentence": "回想一下我们在6.1节中观察到的互相关和卷积运算之间的对应关系。",
+          "citation": "[d2l-zh-pytorch__6804d292f7a043949f85ac4a72dd0a0e.pdf, p.245]",
+          "doc": "d2l-zh-pytorch__6804d292f7a043949f85ac4a72dd0a0e.pdf",
+          "page": 245,
+          "section": "6.2.5 互相关和卷积",
+          "id": "3",
+          "prompt": "按资料原文补全空缺：回想一下我们在6.1节中观察到的____运算之间的对应关系。",
+          "options": [
+            "卷积层",
+            "互相关运算",
+            "互相关和卷积"
+          ],
+          "correct_index": 2
+        }
+      ],
+      "checks": {
+        "recognized_pages": true,
+        "explicit_result": true,
+        "bounded_count": true,
+        "contiguous_verified_source": true,
+        "options_in_scope": true,
+        "correct_option_hidden_in_prompt": true,
+        "public_key_hidden": true,
+        "shortfall_explained": true,
+        "observed_alias_hint_removed": true,
+        "observed_dangling_prompts_removed": true
+      },
+      "passed": true
+    }
+  ],
+  "human_teaching_review": "pending",
+  "passed": false,
+  "all_chapters_produce_practice": true,
+  "teaching_acceptance": "not_established",
+  "limitations": [
+    "Structural checks do not establish question value or semantic uniqueness.",
+    "No minimum quiz yield is assumed; empty output is reported explicitly.",
+    "Chapter scope depends on extracted headings and requires source review."
+  ]
+}
